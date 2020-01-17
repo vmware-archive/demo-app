@@ -1,0 +1,7 @@
+six
+pyyaml
+requests
+Django>=2.0.0
+djangorestframework>=3.0,<4.0
+opentracing>=2.0
+django_opentracing>=1.0

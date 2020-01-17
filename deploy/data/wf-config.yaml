@@ -1,0 +1,7 @@
+reportingMechanism: direct
+
+## demo
+server: https://YOUR_CLUSTER.wavefront.com
+token: YOUR_API_TOKEN
+
+reportTraces: true

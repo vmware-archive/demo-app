@@ -1,0 +1,3 @@
+grpcPort: 50053
+applicationTagsYamlFile: "./packaging/applicationTags.yaml"
+wfReportingConfigYamlFile: "./wfReportingConfig.yaml"

@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sandbox
+    service: shopping
+    shard: blue
+  name: shopping-blue
+  namespace: sandbox
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sandbox
+      service: shopping
+      shard: blue
+  template:
+    metadata:
+      labels:
+        app: sandbox
+        service: shopping
+        shard: blue
+    spec:
+      containers:
+      - name: shopping
+        image: wfharbor.eng.vmware.com/demo-app/shopping:latest
+        imagePullPolicy: Always
+        command:
+        - "java"
+        - "-jar"
+        - "/shopping.jar"
+        - "server"
+        - "/conf/shopping-app.yaml"
+        ports:
+        - containerPort: 50050
+          name: application
+          protocol: TCP
+        - containerPort: 50150
+          name: admin
+          protocol: TCP
+        volumeMounts:
+        - name: conf
+          mountPath: /conf
+      volumes:
+      - name: conf
+        configMap:
+          name: app-config-blue
+          defaultMode: 0744
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sandbox
+    service: shopping
+    shard: green
+  name: shopping-green
+  namespace: sandbox
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sandbox
+      service: shopping
+      shard: green
+  template:
+    metadata:
+      labels:
+        app: sandbox
+        service: shopping
+        shard: green
+    spec:
+      containers:
+        - name: shopping
+          image: wfharbor.eng.vmware.com/demo-app/shopping:latest
+          imagePullPolicy: Always
+          command:
+            - "java"
+            - "-jar"
+            - "/shopping.jar"
+            - "server"
+            - "/conf/shopping-app.yaml"
+          ports:
+            - containerPort: 50050
+              name: application
+              protocol: TCP
+            - containerPort: 50150
+              name: admin
+              protocol: TCP
+          volumeMounts:
+            - name: conf
+              mountPath: /conf
+      volumes:
+        - name: conf
+          configMap:
+            name: app-config-green
+            defaultMode: 0744
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping
+  namespace: sandbox
+spec: 
+  selector:
+    app: sandbox
+    service: shopping
+  type: ClusterIP
+  ports:
+  - name: application
+    port: 50050
+  - name: admin
+    port: 50150
+

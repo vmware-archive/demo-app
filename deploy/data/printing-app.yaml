@@ -1,0 +1,3 @@
+grpcPort: 50052
+applicationTagsYamlFile: "/conf/printing-app-tags.yaml"
+wfReportingConfigYamlFile: "/conf/wf-config.yaml"

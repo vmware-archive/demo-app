@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sandbox
+    service: inventory
+    shard: blue
+  name: inventory-blue
+  namespace: sandbox
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sandbox
+      service: inventory
+      shard: blue
+  template:
+    metadata:
+      labels:
+        app: sandbox
+        service: inventory
+        shard: blue
+    spec:
+      containers:
+      - name: inventory
+        image: wfharbor.eng.vmware.com/demo-app/inventory:latest
+        imagePullPolicy: Always
+        command:
+        - "/inventory"
+        - "/conf/inventory.conf"
+        ports:
+        - containerPort: 60001
+          name: application
+          protocol: TCP
+        volumeMounts:
+        - name: conf
+          mountPath: /conf
+      volumes:
+      - name: conf
+        configMap:
+          name: app-config-blue
+          defaultMode: 0744
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sandbox
+    service: inventory
+    shard: green
+  name: inventory-green
+  namespace: sandbox
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sandbox
+      service: inventory
+      shard: green
+  template:
+    metadata:
+      labels:
+        app: sandbox
+        service: inventory
+        shard: green
+    spec:
+      containers:
+        - name: inventory
+          image: wfharbor.eng.vmware.com/demo-app/inventory:latest
+          imagePullPolicy: Always
+          command:
+            - "/inventory"
+            - "/conf/inventory.conf"
+          ports:
+            - containerPort: 60001
+              name: application
+              protocol: TCP
+          volumeMounts:
+            - name: conf
+              mountPath: /conf
+      volumes:
+        - name: conf
+          configMap:
+            name: app-config-green
+            defaultMode: 0744
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory
+  namespace: sandbox
+spec: 
+  selector:
+    app: sandbox
+    service: inventory  
+  type: ClusterIP
+  ports:
+  - name: application
+    port: 60001
+

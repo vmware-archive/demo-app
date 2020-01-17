@@ -1,0 +1,30 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments", "src\Payments\Payments.csproj", "{C92B6050-5CD0-4C88-B12B-E19FFBC8F2FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C92B6050-5CD0-4C88-B12B-E19FFBC8F2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92B6050-5CD0-4C88-B12B-E19FFBC8F2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92B6050-5CD0-4C88-B12B-E19FFBC8F2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92B6050-5CD0-4C88-B12B-E19FFBC8F2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 100
+		$1.TabsToSpaces = True
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 80
+		$3.TabsToSpaces = True
+		$3.scope = text/plain
+	EndGlobalSection
+EndGlobal

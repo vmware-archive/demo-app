@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sandbox
+    service: loadgen
+  name: loadgen
+  namespace: sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sandbox
+      service: loadgen
+  template:
+    metadata:
+      labels:
+        app: sandbox
+        service: loadgen
+    spec:
+      containers:
+      - name: loadgen
+        image: wfharbor.eng.vmware.com/demo-app/loadgen:latest
+        imagePullPolicy: Always
+        command:
+        - "java"
+        - "-jar"
+        - "/loadgen.jar"
+        - "shopping"
+        - "50050"
+        - "styling"
+        - "50051"
+        - "5"
+        - "5"
+        - "0"

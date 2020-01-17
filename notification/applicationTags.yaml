@@ -1,0 +1,7 @@
+application: beachshirts-polyglot
+cluster: us-west
+service: notification
+shard: primary
+customTags:
+  location: Palo-Alto
+  env: production

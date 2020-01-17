@@ -1,0 +1,7 @@
+application: sandbox
+cluster: us-west
+service: printing
+shard: blue
+customTags:
+  location: Palo-Alto
+  env: production

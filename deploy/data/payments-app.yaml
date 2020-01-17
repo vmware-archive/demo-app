@@ -1,0 +1,3 @@
+port: 50063
+applicationTagsYamlFile: "/conf/payments-app-tags.yaml"
+wfReportingConfigYamlFile: "/conf/wf-config.yaml"

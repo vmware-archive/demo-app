@@ -1,0 +1,20 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 50051
+  adminConnectors:
+  - type: http
+    port: 50151
+
+inventoryPort: 60001
+printingPort: 50052
+packagingPort: 50053
+shoppingPort: 50050
+
+inventoryHost: "localhost"
+printingHost: "localhost"
+packagingHost: "localhost"
+shoppingHost: "localhost"
+
+applicationTagsYamlFile: "./styling/applicationTags.yaml"
+wfReportingConfigYamlFile: "./wfReportingConfig.yaml"

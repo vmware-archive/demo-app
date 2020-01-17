@@ -1,0 +1,7 @@
+reportingMechanism: proxy
+proxyHost: sandbox-wavefront-proxy
+proxyMetricsPort: 2878
+proxyDistributionsPort: 2878
+proxyTracingPort: 30000
+
+reportTraces: true

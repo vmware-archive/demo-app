@@ -1,0 +1,10 @@
+server:
+  port: 50056
+
+cxf:
+  path: /
+  jaxrs:
+    component-scan: true
+
+applicationTagsYamlFile: "./notification/applicationTags.yaml"
+wfReportingConfigYamlFile: "./wfReportingConfig.yaml"

@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.wfsample.beachshirts";
+option java_outer_classname = "BeachShirts";
+
+service Printing {
+    rpc printShirts (PrintRequest) returns (stream Shirt) {}
+    rpc addPrintColor(Color) returns (Status) {}
+    rpc restockColor(Color) returns (Status) {}
+    rpc getAvailableColors(Void) returns (AvailableColors) {}
+}
+
+service Packaging {
+    rpc wrapShirts (WrapRequest) returns (PackedShirts) {}
+    rpc giftWrap (WrapRequest) returns (GiftPack) {}
+    rpc restockMaterial(WrappingType) returns (Status) {}
+    rpc getPackingTypes(Void) returns (WrappingTypes) {}
+}
+
+message ShirtStyle {
+    string name = 1;
+    string imageUrl = 2;
+}
+
+message Shirt {
+    ShirtStyle style = 1;
+}
+
+message PackedShirts {
+    repeated Shirt shirts = 1;
+}
+
+message PrintRequest {
+    ShirtStyle styleToPrint = 1;
+    int32 quantity = 2;
+}
+
+message PrintResponse{
+    repeated Shirt shirts = 1;
+}
+
+message WrapRequest {
+    repeated Shirt shirts = 1;
+}
+
+message GiftPack {
+    bytes giftMaterial = 1;
+}
+
+message Color {
+    string color = 1;
+}
+
+message Status {
+    bool status = 1;
+}
+
+message AvailableColors {
+    repeated Color colors = 1;
+}
+
+message Void {
+}
+
+message WrappingType {
+    string wrappingType = 1;
+}
+
+message WrappingTypes {
+    repeated WrappingType wrappingType = 1;
+}

@@ -1,2 +1,3 @@
-# demo-app
-Demo App for DT &amp; k8s and misc.
+# Wavefront demo-app
+
+Wavefront demo app for Distributed Tracing on K8s.
