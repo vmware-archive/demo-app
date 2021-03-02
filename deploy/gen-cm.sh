@@ -14,4 +14,5 @@ echo "data:"
 for f in $FILE/*.* ; do
 	echo "  $(basename $f): |"
 	sed 's_^_    _' $f
+	echo "\n"
 done
