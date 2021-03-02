@@ -8,9 +8,9 @@ kind: Deployment
 metadata:
   labels:
     app: wavefront-proxy
-    name: tacocat-wavefront-proxy
-  name: tacocat-wavefront-proxy
-  namespace: tacocat
+    name: sandbox-wavefront-proxy
+  name: sandbox-wavefront-proxy
+  namespace: sandbox
 spec:
   replicas: 1
   selector:
@@ -22,7 +22,7 @@ spec:
         app: wavefront-proxy
     spec:
       containers:
-      - name: tacocat-wavefront-proxy
+      - name: sandbox-wavefront-proxy
         image: wavefronthq/proxy:9.1
         imagePullPolicy: IfNotPresent
         env:
@@ -48,10 +48,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tacocat-wavefront-proxy
+  name: sandbox-wavefront-proxy
   labels:
     app: wavefront-proxy
-  namespace: tacocat
+  namespace: sandbox
 spec:
   ports:
   - name: wavefront
