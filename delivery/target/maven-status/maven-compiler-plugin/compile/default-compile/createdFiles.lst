@@ -1,4 +1,5 @@
 com/wfsample/delivery/JerseyConfig.class
+com/wfsample/delivery/DeliveryController$2.class
 com/wfsample/delivery/DeliveryService.class
 com/wfsample/delivery/WavefrontConfiguration.class
 com/wfsample/delivery/DeliveryController$MemoryLeak.class

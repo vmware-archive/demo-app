@@ -14,6 +14,7 @@ com/wfsample/service/NotificationApi.class
 com/wfsample/beachshirts/WrappingTypesOrBuilder.class
 com/wfsample/beachshirts/Status$Builder.class
 com/wfsample/common/dto/OrderStatusDTO.class
+com/wfsample/service/CORSFilter.class
 com/wfsample/beachshirts/ShirtStyle$1.class
 com/wfsample/beachshirts/PackedShirts.class
 com/wfsample/beachshirts/PrintingGrpc.class
