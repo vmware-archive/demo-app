@@ -1,22 +1,8 @@
 # Tanzu Observability demo-app
-This demo app is what powers the TACOCAT (beachshirt) application that is running in our demo environment.
-
-Please make sure you understand how it works by visiting the SE confluence page.
-Users are advised not to make drastic changes, unless necessary for application to run properly.
-Codes are located per each individual applications. Their implementations vary per technologies.
-Keeping the versions of libraries and packages will be performed as necessary (e.g. JDK)
-Pulled images are all maintained in the local harbor (wfharbor) repository. Make sure it is running.
-User Interfaces that powers the web front end is located here: https://github.com/wavefrontHQ/sample-app-java/tree/master/shopping/src/main/ui
-Confluence page to refer: https://confluence.eng.vmware.com/pages/viewpage.action?pageId=534315523
-Kerrupt is the name of the cluster that TACOCAT is currently running, on top of generic K8s. 
-
-Last updated: Feb 24th
+This is a polyglot demo app for showcasing Tanzu Observability.
 
 #### TODO
-1. Clean up build and deploy scripts / process (rogerssc - 3/2/21 - this is about half done :) 
-1. Add frontend portion that engineering built (node)
-1. Add a MySQL tier connected to Inventory (go) and delivery (java) services
-1. Create and propagate transaction details as tags through entire trace 
+1. Add UI repo link 
 
 ## Build, Package and Deploy
 ---
