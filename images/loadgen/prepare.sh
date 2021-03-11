@@ -1,3 +1,3 @@
 #! /bin/bash
 
-cp ../../loadgen/target/loadgen-1.0.0.jar loadgen.jar
+cp ../../loadgen/target/loadgen-*.*.*.jar loadgen.jar

@@ -23,8 +23,7 @@ type InventoryConfig struct {
 	SimFailCheckout  float32
 	SimFailAvailable float32
 	SimDelayChance   float32
-	SimDelayMS       int     // milliseconds
-	SimDelayCpuPct   float64 // cpu pct
+	SimDelayMS       int // milliseconds
 }
 
 var GlobalConfig InventoryConfig
@@ -44,15 +43,14 @@ func InitGlobalConfig() {
 		ProxyDistributionsPort: 40000,
 		ProxyTracingPort:       30000,
 
-		Cluster: "us-west",
+		Cluster: "bare-metal",
 		Shard:   "primary",
 
 		Source: "",
 
-		SimFailCheckout:  0.04,
-		SimFailAvailable: 0.06,
+		SimFailCheckout:  0.02,
+		SimFailAvailable: 0.03,
 		SimDelayChance:   0.3333,
 		SimDelayMS:       1000,
-		SimDelayCpuPct:   0.4,
 	}
 }

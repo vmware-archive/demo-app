@@ -1,0 +1,35 @@
+clusterName: kerrupt
+wavefront:
+  url: https://<add your TO URL here>.wavefront.com
+  token: <add your api key here>
+collector:
+  enabled: false
+
+proxy:
+  enabled: true
+  image:
+
+  port: 2878
+  tracePort: 30000
+  jaegerPort: 30001
+  zipkinPort: 9411
+
+  ## Sampling rate to apply to tracing spans sent to the proxy.
+  ## This rate is applied to all data formats the proxy is listening on.
+  ## Value should be between 0.0 and 1.0.  Default is 1.0
+  # traceSamplingRate: 0.25
+
+  ## When this is set to a value greater than 0,
+  ## spans that are greater than or equal to this value will be sampled.
+  # traceSamplingDuration: 500
+
+  histogramPort: 40000
+
+  histogramMinutePort: 40001
+
+  deltaCounterPort: 50000
+
+kubeStateMetrics:
+  enabled: false
+
+

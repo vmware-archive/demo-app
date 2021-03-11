@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"math"
 	"math/rand"
 	"net/http"
 	"time"
@@ -23,26 +22,7 @@ func NewOrderNum() string {
 
 func RandSimDelay() {
 	if RAND.Float32() < GlobalConfig.SimDelayChance {
-
-		millis := RAND.Intn(GlobalConfig.SimDelayMS)
-		chunks := 10
-		if chunks*3 < millis {
-			chunks = 1
-		}
-
-		chunkMillis := millis / chunks
-		loadedMillis := float64(chunkMillis) * (RAND.Float64() * GlobalConfig.SimDelayCpuPct)
-
-		for i := 0; i < chunks; i++ {
-			endTime := time.Now().Add(time.Duration(loadedMillis) * time.Millisecond)
-
-			// load cpu
-			for time.Now().Before(endTime) {
-			}
-
-			// sleep for remainder of chunk
-			time.Sleep(time.Duration(math.Max(float64(chunkMillis)-loadedMillis, 0)) * time.Millisecond)
-		}
+		time.Sleep(time.Duration(RAND.Intn(GlobalConfig.SimDelayMS)) * time.Millisecond)
 	}
 }
 

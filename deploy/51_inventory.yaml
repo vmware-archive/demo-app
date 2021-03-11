@@ -2,28 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: sandbox
+    app: tacocat
     service: inventory
     shard: blue
   name: inventory-blue
-  namespace: sandbox
+  namespace: tacocat
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: sandbox
+      app: tacocat
       service: inventory
       shard: blue
   template:
     metadata:
       labels:
-        app: sandbox
+        app: tacocat
         service: inventory
         shard: blue
     spec:
       containers:
       - name: inventory
-        image: wfharbor.eng.vmware.com/demo-app/inventory:latest
+        image: <add your repository here>/inventory:latest
         imagePullPolicy: Always
         command:
         - "/inventory"
@@ -35,6 +35,11 @@ spec:
         volumeMounts:
         - name: conf
           mountPath: /conf
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 350Mi
       volumes:
       - name: conf
         configMap:
@@ -45,28 +50,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: sandbox
+    app: tacocat
     service: inventory
     shard: green
   name: inventory-green
-  namespace: sandbox
+  namespace: tacocat
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: sandbox
+      app: tacocat
       service: inventory
       shard: green
   template:
     metadata:
       labels:
-        app: sandbox
+        app: tacocat
         service: inventory
         shard: green
     spec:
       containers:
         - name: inventory
-          image: wfharbor.eng.vmware.com/demo-app/inventory:latest
+          image: <add your repository here>/inventory:latest
           imagePullPolicy: Always
           command:
             - "/inventory"
@@ -78,6 +83,11 @@ spec:
           volumeMounts:
             - name: conf
               mountPath: /conf
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 350Mi
       volumes:
         - name: conf
           configMap:
@@ -88,10 +98,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: inventory
-  namespace: sandbox
+  namespace: tacocat
 spec: 
   selector:
-    app: sandbox
+    app: tacocat
     service: inventory  
   type: ClusterIP
   ports:

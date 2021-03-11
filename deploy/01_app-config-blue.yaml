@@ -2,16 +2,17 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config-blue
-  namespace: sandbox
+  namespace: tacocat
 data:
   delivery-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: delivery
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
   delivery-app.yml: |
     server:
       port: 50054
@@ -21,18 +22,21 @@ data:
     
     applicationTagsYamlFile: "/conf/delivery-app-tags.yaml"
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
+
   inventory.conf: |
     {
-    	"application": "sandbox",
+    	"application": "tacocat",
     	"service":     "inventory",
-    	"cluster":     "us-west",
-    	"shard":       "blue",
+    	"cluster":     "kerrupt",
+    	"shard":       "blue",	
     
     	"inventoryHost": "0.0.0.0:60001",
     	"warehouseHost": "warehouse:50060",
     
-        "server":"https://YOUR_CLUSTER.wavefront.com",
-        "token":"YOUR_API_TOKEN",
+    	"proxyHost":              "tacocat-wavefront-proxy",
+    	"proxyPort":              2878,
+    	"proxyDistributionsPort": 40000,
+    	"proxyTracingPort":       30000,
     
     	"simFailCheckout":  0.02,
     	"simFailAvailable": 0.03,
@@ -40,14 +44,16 @@ data:
     	"simDelayMS":       1000,
     	"simDelayCpuPct":   0.4
     }
+
   notification-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: notification
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
   notification-app.yml: |
     server:
       port: 50056
@@ -59,50 +65,62 @@ data:
     
     applicationTagsYamlFile: "/conf/notification-app-tags.yaml"
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
+
+
   packaging-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: packaging
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
   packaging-app.yaml: |
     grpcPort: 50053
     applicationTagsYamlFile: "/conf/packaging-app-tags.yaml"
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
+
   payments-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: payments
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
+
   payments-app.yaml: |
     port: 50063
     applicationTagsYamlFile: "/conf/payments-app-tags.yaml"
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
+
+
   printing-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: printing
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
+
   printing-app.yaml: |
     grpcPort: 50052
     applicationTagsYamlFile: "/conf/printing-app-tags.yaml"
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
+
   shopping-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: shopping
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
   shopping-app.yaml: |
     server:
       applicationConnectors:
@@ -124,14 +142,29 @@ data:
     
     applicationTagsYamlFile: "/conf/shopping-app-tags.yaml"
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
+
+  shop-ui-app-tags.yaml: |
+    application: tacocat
+    cluster: to-cp-demo-cluster-12
+    service: shop-ui
+    shard: blue
+    customTags:
+      location: eks
+      env: production
+    server:
+      applicationConnectors:
+      - type: http
+      port: 8080
+
   styling-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: styling
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
   styling-app.yaml: |
     server:
       applicationConnectors:
@@ -153,19 +186,24 @@ data:
     
     applicationTagsYamlFile: "/conf/styling-app-tags.yaml"
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
+
   warehouse-app-tags.yaml: |
-    application: sandbox
-    cluster: us-west
+    application: tacocat
+    cluster: kerrupt
     service: warehouse
     shard: blue
     customTags:
       location: Palo-Alto
       env: production
+
+
   wf-config.yaml: |
-    reportingMechanism: direct
-    
-    ## demo
-    server: https://YOUR_CLUSTER.wavefront.com
-    token: YOUR_API_TOKEN
+    reportingMechanism: proxy
+    proxyHost: tacocat-wavefront-proxy
+    proxyMetricsPort: 2878
+    proxyDistributionsPort: 2878
+    proxyTracingPort: 30000
     
     reportTraces: true
+
+

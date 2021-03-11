@@ -1,3 +1,3 @@
 #! /bin/bash
 
-cp ../../packaging/target/packaging-1.0.0.jar packaging.jar
+cp ../../packaging/target/packaging-*.*.*.jar packaging.jar

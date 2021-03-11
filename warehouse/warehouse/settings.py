@@ -14,15 +14,15 @@ import os
 import yaml
 import socket
 from wavefront_sdk.common import heartbeater_service
+from wavefront_sdk.common.proxy_connection_handler import ProxyConnectionHandler
 from wavefront_opentracing_sdk.reporting import CompositeReporter, \
     WavefrontSpanReporter, ConsoleReporter
-from wavefront_sdk import WavefrontDirectClient, WavefrontProxyClient
+from wavefront_pyformance.tagged_registry import TaggedRegistry
 from wavefront_sdk.common import ApplicationTags
 from wavefront_opentracing_sdk import reporting, WavefrontTracer
 from wavefront_django_sdk.tracing import DjangoTracing
 from wavefront_pyformance.wavefront_reporter import WavefrontDirectReporter
 from wavefront_pyformance.wavefront_reporter import WavefrontProxyReporter
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -129,11 +129,11 @@ STATIC_URL = '/static/'
 
 WF_REPORTING_CONFIG = None
 with open("/conf/wf-config.yaml", "r") as stream:
-    WF_REPORTING_CONFIG = yaml.load(stream)
+    WF_REPORTING_CONFIG = yaml.load(stream, Loader=yaml.FullLoader)
 
 APPLICATION_TAGS = None
 with open("/conf/warehouse-app-tags.yaml", "r") as stream:
-    application_tags_yaml = yaml.load(stream)
+    application_tags_yaml = yaml.load(stream, Loader=yaml.FullLoader)
     APPLICATION_TAGS = ApplicationTags(
         application=application_tags_yaml.get('application'),
         service=application_tags_yaml.get('service'),
@@ -143,24 +143,6 @@ with open("/conf/warehouse-app-tags.yaml", "r") as stream:
     )
 
 SOURCE = WF_REPORTING_CONFIG.get('source') or socket.gethostname()
-
-# WF_CLIENT = None
-# if WF_REPORTING_CONFIG and \
-#         WF_REPORTING_CONFIG.get('reportingMechanism') == 'direct':
-#     WF_CLIENT = WavefrontDirectClient(
-#         server=WF_REPORTING_CONFIG.get('server'),
-#         token=WF_REPORTING_CONFIG.get('token')
-#     )
-# elif WF_REPORTING_CONFIG and \
-#         WF_REPORTING_CONFIG.get('reportingMechanism') == 'proxy':
-#     WF_CLIENT = WavefrontProxyClient(
-#         host=WF_REPORTING_CONFIG.get('proxyHost'),
-#         metrics_port=WF_REPORTING_CONFIG.get('proxyMetricsPort'),
-#         distribution_port=WF_REPORTING_CONFIG.get('proxyDistributionsPort'),
-#         tracing_port=WF_REPORTING_CONFIG.get('proxyTracingPort')
-#     )
-#
-# SPAN_REPORTER = WavefrontSpanReporter(client=WF_CLIENT, source=SOURCE)
 
 WF_REPORTER = None
 if WF_REPORTING_CONFIG and \
@@ -174,19 +156,23 @@ if WF_REPORTING_CONFIG and \
 elif WF_REPORTING_CONFIG and \
         WF_REPORTING_CONFIG.get('reportingMechanism') == 'proxy':
     WF_REPORTER = WavefrontProxyReporter(
-         host=WF_REPORTING_CONFIG.get('proxyHost'),
+        host=WF_REPORTING_CONFIG.get('proxyHost'),
         port=WF_REPORTING_CONFIG.get('proxyMetricsPort'),
         distribution_port=WF_REPORTING_CONFIG.get('proxyDistributionsPort'),
-        tracing_port=WF_REPORTING_CONFIG.get('proxyTracingPort'),
+        # tracing_port=WF_REPORTING_CONFIG.get('proxyTracingPort'),
         reporting_interval=5,
         source=SOURCE
     ).report_minute_distribution()
 
-SPAN_REPORTER = WavefrontSpanReporter(client=WF_REPORTER.wavefront_client, source=SOURCE)
+    WF_REPORTER.wavefront_client._tracing_proxy_connection_handler = \
+            ProxyConnectionHandler(WF_REPORTING_CONFIG.get('proxyHost'),
+                WF_REPORTING_CONFIG.get('proxyTracingPort'),
+                WF_REPORTER.wavefront_client._sdk_metrics_registry,
+                'tracingHandler',
+                timeout=10)
 
-
-
-
+SPAN_REPORTER = WavefrontSpanReporter(client=WF_REPORTER.wavefront_client,
+                                      source=SOURCE)
 
 OPENTRACING_TRACING = DjangoTracing(WavefrontTracer(
     reporter=SPAN_REPORTER, application_tags=APPLICATION_TAGS))

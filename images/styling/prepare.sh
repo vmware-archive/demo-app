@@ -1,3 +1,3 @@
 #! /bin/bash
 
-cp ../../styling/target/styling-1.0.0.jar styling.jar
+cp ../../styling/target/styling-*.*.*.jar styling.jar

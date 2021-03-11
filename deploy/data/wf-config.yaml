@@ -1,7 +1,7 @@
-reportingMechanism: direct
-
-## demo
-server: https://YOUR_CLUSTER.wavefront.com
-token: YOUR_API_TOKEN
+reportingMechanism: proxy
+proxyHost: tacocat-wavefront-proxy
+proxyMetricsPort: 2878
+proxyDistributionsPort: 2878
+proxyTracingPort: 30000
 
 reportTraces: true

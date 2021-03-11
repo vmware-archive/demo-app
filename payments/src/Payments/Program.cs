@@ -27,7 +27,7 @@ namespace Payments
                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
                })
-               .UseUrls($"http://0.0.0.0:{appConfig["port"]}")
+               .UseUrls($"http://*:{appConfig["port"]}")
                .UseStartup<Startup>();
         }
        

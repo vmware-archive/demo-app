@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ptessier/Documents/sample-polyglot-app/payments/src/Payments/Payments.csproj": {}
+    "/home/scottr/demo-app-1/payments/src/Payments/Payments.csproj": {}
   },
   "projects": {
-    "/Users/ptessier/Documents/sample-polyglot-app/payments/src/Payments/Payments.csproj": {
+    "/home/scottr/demo-app-1/payments/src/Payments/Payments.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ptessier/Documents/sample-polyglot-app/payments/src/Payments/Payments.csproj",
+        "projectUniqueName": "/home/scottr/demo-app-1/payments/src/Payments/Payments.csproj",
         "projectName": "Payments",
-        "projectPath": "/Users/ptessier/Documents/sample-polyglot-app/payments/src/Payments/Payments.csproj",
-        "packagesPath": "/Users/ptessier/.nuget/packages/",
-        "outputPath": "/Users/ptessier/Documents/sample-polyglot-app/payments/src/Payments/obj/",
+        "projectPath": "/home/scottr/demo-app-1/payments/src/Payments/Payments.csproj",
+        "packagesPath": "/home/scottr/.nuget/packages/",
+        "outputPath": "/home/scottr/demo-app-1/payments/src/Payments/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/ptessier/.config/NuGet/NuGet.Config"
+          "/home/scottr/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.1"
@@ -27,6 +24,7 @@
         },
         "frameworks": {
           "netcoreapp2.1": {
+            "targetAlias": "netcoreapp2.1",
             "projectReferences": {}
           }
         },
@@ -41,6 +39,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
           "dependencies": {
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
@@ -73,7 +72,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.103/RuntimeIdentifierGraph.json"
         }
       }
     }

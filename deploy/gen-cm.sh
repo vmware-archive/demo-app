@@ -1,5 +1,11 @@
 #! /bin/zsh
 
+### 
+## Writes the configmap yaml file
+##
+## sed adds spaces to the yaml files in data/
+### 
+
 FILE=${1:-.}
 NAME=${2:-config}
 NAMESPACE=${3:-default}
