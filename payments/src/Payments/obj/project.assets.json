@@ -4570,23 +4570,23 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "TDigest/1.0.6": {
+      "TDigest/1.0.8": {
         "type": "package",
         "dependencies": {
           "C5": "2.3.0.1"
         },
         "compile": {
-          "lib/TDigest.dll": {}
+          "lib/net45/TDigest.dll": {}
         },
         "runtime": {
-          "lib/TDigest.dll": {}
+          "lib/net45/TDigest.dll": {}
         }
       },
-      "Wavefront.AppMetrics.SDK.CSharp/2.3.2": {
+      "Wavefront.AppMetrics.SDK.CSharp/2.4.0": {
         "type": "package",
         "dependencies": {
           "App.Metrics": "2.0.0",
-          "Wavefront.SDK.CSharp": "1.4.2"
+          "Wavefront.SDK.CSharp": "1.5.0"
         },
         "compile": {
           "lib/netstandard2.0/Wavefront.AppMetrics.SDK.CSharp.dll": {}
@@ -4595,13 +4595,13 @@
           "lib/netstandard2.0/Wavefront.AppMetrics.SDK.CSharp.dll": {}
         }
       },
-      "Wavefront.AspNetCore.SDK.CSharp/1.2.1": {
+      "Wavefront.AspNetCore.SDK.CSharp/1.4.0": {
         "type": "package",
         "dependencies": {
           "App.Metrics.AspNetCore": "2.0.0",
           "Microsoft.AspNetCore.Mvc": "2.1.0",
           "Microsoft.Extensions.Http": "2.1.0",
-          "Wavefront.OpenTracing.SDK.CSharp": "1.5.2"
+          "Wavefront.OpenTracing.SDK.CSharp": "2.0.0"
         },
         "compile": {
           "lib/netstandard2.0/Wavefront.AspNetCore.SDK.CSharp.dll": {}
@@ -4610,12 +4610,12 @@
           "lib/netstandard2.0/Wavefront.AspNetCore.SDK.CSharp.dll": {}
         }
       },
-      "Wavefront.OpenTracing.SDK.CSharp/1.5.2": {
+      "Wavefront.OpenTracing.SDK.CSharp/2.0.0": {
         "type": "package",
         "dependencies": {
           "OpenTracing": "0.12.0",
           "System.Collections.Immutable": "1.5.0",
-          "Wavefront.AppMetrics.SDK.CSharp": "2.3.2"
+          "Wavefront.AppMetrics.SDK.CSharp": "2.4.0"
         },
         "compile": {
           "lib/netstandard2.0/Wavefront.OpenTracing.SDK.CSharp.dll": {}
@@ -4624,13 +4624,14 @@
           "lib/netstandard2.0/Wavefront.OpenTracing.SDK.CSharp.dll": {}
         }
       },
-      "Wavefront.SDK.CSharp/1.4.2": {
+      "Wavefront.SDK.CSharp/1.5.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Logging": "1.0.0",
-          "Microsoft.Extensions.Logging.Debug": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "2.0.0",
+          "Microsoft.Extensions.Logging": "2.0.0",
+          "Microsoft.Extensions.Logging.Debug": "2.0.0",
           "System.Collections.Immutable": "1.5.0",
-          "TDigest": "1.0.6"
+          "TDigest": "1.0.8"
         },
         "compile": {
           "lib/netstandard2.0/Wavefront.SDK.CSharp.dll": {}
@@ -12368,64 +12369,64 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
-    "TDigest/1.0.6": {
-      "sha512": "CGDcB3bDZ8rS/917+N1X5znD+dgMDfQ9NhVEZZ7Kh8/nQcp1fdmttzW8h/rsPmZrS6GfwUvCDrJYYFOJ+2XjwQ==",
+    "TDigest/1.0.8": {
+      "sha512": "nVB8hu++7Ab5gVTm+W6/mFpMHeT895jLs93m7nirw3Dr1VZrRG4F+BLKWqaDpE8ZC5ZdGuGi6/DPj253O87DDA==",
       "type": "package",
-      "path": "tdigest/1.0.6",
+      "path": "tdigest/1.0.8",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/TDigest.dll",
-        "lib/TDigest.pdb",
-        "tdigest.1.0.6.nupkg.sha512",
+        "content/LICENSE.txt",
+        "lib/net45/TDigest.dll",
+        "tdigest.1.0.8.nupkg.sha512",
         "tdigest.nuspec"
       ]
     },
-    "Wavefront.AppMetrics.SDK.CSharp/2.3.2": {
-      "sha512": "smELeWtr1nXqYQbGJ+l8VMlQFSoR955GMT7DmN5QXsan0qybrCugrGz+IRyLQ8PaWQGdfCreh8Ba/D7geeqHtQ==",
+    "Wavefront.AppMetrics.SDK.CSharp/2.4.0": {
+      "sha512": "B0EfCb3cSMNBAPNMrwuFmBYk8QufYmg4NWxPAm/+ILQM3npxptfHq++Bxr1KTKraVkiYM6xxiHrCGVgqqJJR5w==",
       "type": "package",
-      "path": "wavefront.appmetrics.sdk.csharp/2.3.2",
+      "path": "wavefront.appmetrics.sdk.csharp/2.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "lib/net452/Wavefront.AppMetrics.SDK.CSharp.dll",
         "lib/netstandard2.0/Wavefront.AppMetrics.SDK.CSharp.dll",
-        "wavefront.appmetrics.sdk.csharp.2.3.2.nupkg.sha512",
+        "wavefront.appmetrics.sdk.csharp.2.4.0.nupkg.sha512",
         "wavefront.appmetrics.sdk.csharp.nuspec"
       ]
     },
-    "Wavefront.AspNetCore.SDK.CSharp/1.2.1": {
-      "sha512": "VgRGeZ+p+0ZdUE6fjdzH2Edm4WMO3/p+AnsLDz1aWj5fDLuJv3zz9l+iHoSrChPkcPqB72r6x/vTLeIMMtm1zQ==",
+    "Wavefront.AspNetCore.SDK.CSharp/1.4.0": {
+      "sha512": "vqnf9YDsoP/mVfkwxQtxPzGVfPbqTb2yrAgdgtM1ohzIQu2NZ467TAuo1Kd8Q9wyUHMSAahjuaWVwOe9Bws5nA==",
       "type": "package",
-      "path": "wavefront.aspnetcore.sdk.csharp/1.2.1",
+      "path": "wavefront.aspnetcore.sdk.csharp/1.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "lib/netstandard2.0/Wavefront.AspNetCore.SDK.CSharp.dll",
-        "wavefront.aspnetcore.sdk.csharp.1.2.1.nupkg.sha512",
+        "wavefront.aspnetcore.sdk.csharp.1.4.0.nupkg.sha512",
         "wavefront.aspnetcore.sdk.csharp.nuspec"
       ]
     },
-    "Wavefront.OpenTracing.SDK.CSharp/1.5.2": {
-      "sha512": "dz7Ka1W+4OV1oVdCZS0tkkHDCMsFxEVv3rsiBTBUrataboppm8/+1uJV0ygQUtT3KSWlqdJuJZpLUXBsZK+Irg==",
+    "Wavefront.OpenTracing.SDK.CSharp/2.0.0": {
+      "sha512": "Vvq0ET1U8WsZhf8h7aLwv9d+UqIekmcAzoYlN5tyGHbmDQp+UMMIaCPr29Q5kjP075vPx2XtaujmieqLCUs5Jg==",
       "type": "package",
-      "path": "wavefront.opentracing.sdk.csharp/1.5.2",
+      "path": "wavefront.opentracing.sdk.csharp/2.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "lib/net452/Wavefront.OpenTracing.SDK.CSharp.dll",
         "lib/netstandard2.0/Wavefront.OpenTracing.SDK.CSharp.dll",
-        "wavefront.opentracing.sdk.csharp.1.5.2.nupkg.sha512",
+        "wavefront.opentracing.sdk.csharp.2.0.0.nupkg.sha512",
         "wavefront.opentracing.sdk.csharp.nuspec"
       ]
     },
-    "Wavefront.SDK.CSharp/1.4.2": {
-      "sha512": "d0lkgINpxrnTPM+pqfK9BPGZerIfitl12adK5QzA6Xy+DXMz5GHSGmFc6BTbTAHnpzipNL29LgmN8/y0XSbvBQ==",
+    "Wavefront.SDK.CSharp/1.5.0": {
+      "sha512": "2czgDAuAOGgXbIy0uF0X7kMj3UlykXcqD86m+aSZaKS119KrDOjHWsYtQQTf5/t/0McKdZcAjB3olOFpcH+dNQ==",
       "type": "package",
-      "path": "wavefront.sdk.csharp/1.4.2",
+      "path": "wavefront.sdk.csharp/1.5.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -12433,7 +12434,7 @@
         "lib/net452/Wavefront.SDK.CSharp.dll",
         "lib/net46/Wavefront.SDK.CSharp.dll",
         "lib/netstandard2.0/Wavefront.SDK.CSharp.dll",
-        "wavefront.sdk.csharp.1.4.2.nupkg.sha512",
+        "wavefront.sdk.csharp.1.5.0.nupkg.sha512",
         "wavefront.sdk.csharp.nuspec"
       ]
     },
@@ -12462,7 +12463,7 @@
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.NETCore.App >= 2.1.0",
       "NetEscapades.Configuration.Yaml >= 1.6.0",
-      "Wavefront.AspNetCore.SDK.CSharp >= 1.2.1"
+      "Wavefront.AspNetCore.SDK.CSharp >= 1.4.0"
     ]
   },
   "packageFolders": {
@@ -12523,7 +12524,7 @@
           },
           "Wavefront.AspNetCore.SDK.CSharp": {
             "target": "Package",
-            "version": "[1.2.1, )"
+            "version": "[1.4.0, )"
           }
         },
         "imports": [

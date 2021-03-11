@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ROju53a6ueFfNPx6+vTIbA6WBDm2yeyLnwBcILnnxYosZQcwAfA6VdouuCTAbY1MApywG+3WKOCbGu6ZFzhayw==",
+  "dgSpecHash": "s0ujG5acKdhPN0beHQBCod0NSkLgHHgX5onRDJAz/IP+h4zEXdqI2fT8UCZiw2QjM6p1KZaF1rIdwBk0JyMHpQ==",
   "success": true,
   "projectFilePath": "/home/scottr/demo-app-1/payments/src/Payments/Payments.csproj",
   "expectedPackageFiles": [
@@ -299,11 +299,11 @@
     "/home/scottr/.nuget/packages/system.xml.xmlserializer/4.3.0/system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "/home/scottr/.nuget/packages/system.xml.xpath/4.3.0/system.xml.xpath.4.3.0.nupkg.sha512",
     "/home/scottr/.nuget/packages/system.xml.xpath.xdocument/4.3.0/system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
-    "/home/scottr/.nuget/packages/tdigest/1.0.6/tdigest.1.0.6.nupkg.sha512",
-    "/home/scottr/.nuget/packages/wavefront.appmetrics.sdk.csharp/2.3.2/wavefront.appmetrics.sdk.csharp.2.3.2.nupkg.sha512",
-    "/home/scottr/.nuget/packages/wavefront.aspnetcore.sdk.csharp/1.2.1/wavefront.aspnetcore.sdk.csharp.1.2.1.nupkg.sha512",
-    "/home/scottr/.nuget/packages/wavefront.opentracing.sdk.csharp/1.5.2/wavefront.opentracing.sdk.csharp.1.5.2.nupkg.sha512",
-    "/home/scottr/.nuget/packages/wavefront.sdk.csharp/1.4.2/wavefront.sdk.csharp.1.4.2.nupkg.sha512",
+    "/home/scottr/.nuget/packages/tdigest/1.0.8/tdigest.1.0.8.nupkg.sha512",
+    "/home/scottr/.nuget/packages/wavefront.appmetrics.sdk.csharp/2.4.0/wavefront.appmetrics.sdk.csharp.2.4.0.nupkg.sha512",
+    "/home/scottr/.nuget/packages/wavefront.aspnetcore.sdk.csharp/1.4.0/wavefront.aspnetcore.sdk.csharp.1.4.0.nupkg.sha512",
+    "/home/scottr/.nuget/packages/wavefront.opentracing.sdk.csharp/2.0.0/wavefront.opentracing.sdk.csharp.2.0.0.nupkg.sha512",
+    "/home/scottr/.nuget/packages/wavefront.sdk.csharp/1.5.0/wavefront.sdk.csharp.1.5.0.nupkg.sha512",
     "/home/scottr/.nuget/packages/yamldotnet/5.1.0/yamldotnet.5.1.0.nupkg.sha512"
   ],
   "logs": []
