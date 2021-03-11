@@ -672,3 +672,5 @@ MigrationBackup/
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/go,java,maven,python,intellij,vs,vscode,dotnetcore
+payments/src/Payments/obj/Debug/netcoreapp2.1/*
+payments/src/Payments/obj/Debug/netcoreapp2.1/Payments.assets.cache
