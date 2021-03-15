@@ -8,7 +8,7 @@ RUN mkdir /wavefront
 WORKDIR /wavefront
 RUN git clone https://github.com/wavefrontHQ/wavefront-django-sdk-python
 WORKDIR wavefront-django-sdk-python
-RUN git checkout hao/django-0.1.0
+# RUN git checkout hao/django-0.1.0
 RUN pip3 install -e .
 WORKDIR /
 

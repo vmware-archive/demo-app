@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -41,35 +40,29 @@ namespace Payments.Controllers
                 Task.Run(async () => await httpClient.GetAsync(url));
             }
 
-            ConsumeCpu((long)Math.Max(RandomGauss(40, 10), 20), 0.4);
+            Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(40, 10), 20)));
 
-            try
+            if (string.IsNullOrWhiteSpace(orderNum))
             {
-                if (string.IsNullOrWhiteSpace(orderNum))
-                {
-                    throw new ArgumentException($"invalid order number: {orderNum}");
-                }
-                else if (string.IsNullOrWhiteSpace(payment.Name))
-                {
-                    throw new ArgumentException($"invalid name: {payment.Name}");
-                }
-                else if (string.IsNullOrWhiteSpace(payment.CreditCardNum) || rand.NextDouble() < 0.01)
-                {
-                    throw new ArgumentException($"invalid credit card number: {payment.CreditCardNum}");
-                }
+                throw new ArgumentException($"invalid order number: {orderNum}");
             }
-            catch (Exception e)
+            else if (string.IsNullOrWhiteSpace(payment.Name))
             {
-                LogException(e, null);
-                throw e;
+                throw new ArgumentException($"invalid name: {payment.Name}");
+            }
+            else if (string.IsNullOrWhiteSpace(payment.CreditCardNum) || rand.NextDouble() < 0.01)
+            {
+                throw new ArgumentException($"invalid credit card number: {payment.CreditCardNum}");
             }
 
             var context = tracer.ActiveSpan.Context;
-            IActionResult result = rand.NextDouble() < 0 ? FastPay(context) : ProcessPayment(context);
-            ConsumeCpu((long)Math.Max(RandomGauss(20, 5), 10), 0.7);
+            IActionResult result = rand.NextDouble() < 0.5 ? FastPay(context) : ProcessPayment(context);
+            Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(20, 5), 10)));
 
-            Task.Run(async () => await UpdateAccountAsync(context));
-            ConsumeCpu((long)Math.Max(RandomGauss(10, 2), 5), 1);
+            var dbTask = SavePaymentAsync(context);
+            var updateTask = UpdateAccountAsync(context);
+            Task.Run(async () => await Task.WhenAll(dbTask, updateTask));
+            Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(10, 2), 5)));
 
             return result;
         }
@@ -82,7 +75,7 @@ namespace Payments.Controllers
             {
                 try
                 {
-                    ConsumeCpu((long)Math.Max(RandomGauss(80, 20), 40), 0.4);
+                    Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(80, 20), 40)));
                     if (rand.NextDouble() < 0.001)
                     {
                         throw new NullReferenceException();
@@ -105,7 +98,7 @@ namespace Payments.Controllers
             {
                 try
                 {
-                    ConsumeCpu((long)Math.Max(RandomGauss(25, 5), 15), 0.7);
+                    Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(25, 5), 15)));
                     if (rand.NextDouble() < 0.001)
                     {
                         throw new OutOfMemoryException();
@@ -115,7 +108,7 @@ namespace Payments.Controllers
                         scope.Span.SetTag(Tags.Error, true);
                         return StatusCode(StatusCodes.Status500InternalServerError, "payment authorization failed");
                     }
-                    ConsumeCpu((long)Math.Max(RandomGauss(15, 3), 10), 1);
+                    Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(15, 3), 10)));
                     return FinishPayment(scope.Span.Context);
                 }
                 catch (Exception e)
@@ -134,49 +127,10 @@ namespace Payments.Controllers
             {
                 try
                 {
-                    int hour = DateTime.UtcNow.Hour;
-                    ConsumeCpu((long)Math.Max(RandomGauss(100, 25), 50), 0.7);
-                    int count = Interlocked.Increment(ref internalCounters["authorize"].Value);
-                    bool timeout;
-                    int timeoutMillis;
-                    // 6-hour cycles with spikes every 20 calls
-                    switch (hour % 12)
+                    Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(100, 25), 50)));
+                    if (Interlocked.Increment(ref internalCounters["authorize"].Value) % 5 == 0)
                     {
-                        case 0:
-                            // 0.5% errors
-                            timeout = rand.NextDouble() < 0.005;
-                            timeoutMillis = rand.Next(275, 325); //300
-                            break;
-                        case 1:
-                            // 1% errors
-                            timeout = rand.NextDouble() < 0.01;
-                            timeoutMillis = rand.Next(325, 375); //350
-                            break;
-                        case 2:
-                            // 5% errors
-                            timeout = rand.NextDouble() < 0.05;
-                            timeoutMillis = rand.Next(460, 540); //500
-                            break;
-                        case 3:
-                            // 12% errors
-                            timeout = rand.NextDouble() < 0.12;
-                            timeoutMillis = rand.Next(650, 750); //700
-                            break;
-                        case 4:
-                            // 7% errors
-                            timeout = rand.NextDouble() < 0.07;
-                            timeoutMillis = rand.Next(550, 650); //600
-                            break;
-                        default:
-                            // 1% errors
-                            timeout = rand.NextDouble() < 0.005;
-                            timeoutMillis = rand.Next(275, 325); //300
-                            break;
-                    }
-
-                    if (timeout)
-                    {
-                        ConsumeCpu(timeoutMillis, 0.5);
+                        Thread.Sleep(TimeSpan.FromMilliseconds(15000));
                         throw new TimeoutException();
                     }
                     return true;
@@ -197,10 +151,11 @@ namespace Payments.Controllers
             {
                 try
                 {
-                    ConsumeCpu((long)Math.Max(RandomGauss(60, 15), 30), 0.5);
+                    Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(60, 15), 30)));
                     if (rand.NextDouble() < 0.001)
                     {
-                        throw new Exception("Payment Denied");
+                        Thread.Sleep(TimeSpan.FromMilliseconds(1000));
+                        throw new TimeoutException();
                     }
                     return Accepted("payment accepted");
                 }
@@ -225,6 +180,33 @@ namespace Payments.Controllers
                     if (rand.NextDouble() < 0.001)
                     {
                         throw new OutOfMemoryException();
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogException(e, null);
+                }
+            }
+        }
+
+        private async Task SavePaymentAsync(ISpanContext context)
+        {
+            using (var scope = tracer.BuildSpan("SavePaymentAsync")
+                    .AddReference(References.FollowsFrom, context)
+                    .WithTag(Tags.SpanKind, Tags.SpanKindClient)
+                    .WithTag(Tags.Component, "java-jdbc")
+                    .WithTag(Tags.DbInstance, "payments-db")
+                    .WithTag(Tags.DbType, "mysql")
+                    .WithTag("peer.address", "payments.wavefront.com:3301")
+                    .WithTag("peer.service", "payments-db[mysql(payments.wavefront.com:3301)]")
+                    .StartActive())
+            {
+                try
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(Math.Max(RandomGauss(100, 25), 50)));
+                    if (rand.NextDouble() < 0.05)
+                    {
+                        throw new TimeoutException();
                     }
                 }
                 catch (Exception e)
@@ -322,35 +304,6 @@ namespace Payments.Controllers
             double randNormal =
                          mean + stdDev * randStdNormal;
             return randNormal;
-        }
-
-        private void ConsumeCpu(long millis, double pct)
-        {
-            Stopwatch watch = new Stopwatch();
-            if (pct >= 1 || double.Equals(pct, 1))
-            {
-                watch.Start();
-                while (watch.ElapsedMilliseconds < millis) { }
-            }
-            else
-            {
-                int chunks = 10;
-                if (chunks * 3 < millis)
-                {
-                    chunks = 1;
-                }
-                int chunkMillis = Convert.ToInt32(millis / chunks);
-                int loadedMillis = Convert.ToInt32(chunkMillis * pct);
-
-                for (int i = 0; i < chunks; i++)
-                {
-                    watch.Start();
-                    while (watch.ElapsedMilliseconds < loadedMillis) { }
-
-                    Thread.Sleep(TimeSpan.FromMilliseconds(Math.Max(chunkMillis - watch.ElapsedMilliseconds, 0)));
-                }
-            }
-
         }
 
         private void LogException(Exception exception, string message)

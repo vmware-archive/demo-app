@@ -1,3 +1,3 @@
 #! /bin/bash
 
-cp ../../notification/target/notification-1.0.0.jar notification.jar
+cp ../../notification/target/notification-*.*.*.jar notification.jar

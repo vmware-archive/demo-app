@@ -1,7 +1,7 @@
-application: beachshirts-polyglot
-cluster: us-west
+application: tacocat
+cluster: bare-metal
 service: warehouse
-shard: primary
+shard: blue
 customTags:
   location: Palo-Alto
   env: production

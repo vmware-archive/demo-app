@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 tracing = settings.OPENTRACING_TRACING
 tracer = tracing.tracer
-executor = ThreadPoolExecutor(max_workers=10)
+executor = ThreadPoolExecutor(max_workers=2)
 
 
 @api_view(http_method_names=["GET"])
@@ -42,9 +42,24 @@ def async_fetch(parent_span):
     with tracer.scope_manager.activate(parent_span, finish_on_close=True):
         with tracer.start_active_span('async_fetch') as scope:
             try:
-                time.sleep(2)
+                time.sleep(0.5)
                 if random.randint(1, 1000) == 1000:
                     raise RuntimeError("Fail to execute async_fetch")
+                invoke_lambda(tracer.active_span)
+                return
+            except RuntimeError:
+                handle_exception(scope.span, sys.exc_info())
+
+def invoke_lambda(parent_span):
+    with tracer.scope_manager.activate(parent_span, finish_on_close=True):
+        with tracer.start_active_span('invoke_lambda',
+                                      tags=[("span.kind", "client"),
+                                            ("component", "java-aws-sdk"),
+                                            ("peer.service", "AWSLambda")]) as scope:
+            try:
+                time.sleep(1.5)
+                if random.randint(1, 1000) == 1000:
+                    raise RuntimeError("Fail to invoke lambda")
                 return
             except RuntimeError:
                 handle_exception(scope.span, sys.exc_info())

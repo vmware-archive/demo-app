@@ -1,0 +1,7 @@
+﻿application: tacocat
+cluster: bare-metal
+service: payments
+shard: primary
+customTags:
+  location: Palo-Alto
+  env: production

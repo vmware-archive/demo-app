@@ -1,6 +1,10 @@
 #! /bin/zsh
 
-NAMESPACE=sandbox
+### 
+## Builds the configmap yaml files from the files in data/
+### 
+
+NAMESPACE=tacocat
 
 cp -f ./data/$1/* ./data
 

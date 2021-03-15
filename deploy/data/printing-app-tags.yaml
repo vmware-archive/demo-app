@@ -1,5 +1,5 @@
-application: sandbox
-cluster: us-west
+application: tacocat
+cluster: bare-metal
 service: printing
 shard: blue
 customTags:

@@ -6,11 +6,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/wavefronthq/wavefront-sdk-go/application"
-	"github.com/wavefronthq/wavefront-sdk-go/senders"
-
 	"github.com/wavefronthq/wavefront-opentracing-sdk-go/reporter"
 	wfTracer "github.com/wavefronthq/wavefront-opentracing-sdk-go/tracer"
+	"github.com/wavefronthq/wavefront-sdk-go/application"
+	"github.com/wavefronthq/wavefront-sdk-go/senders"
 
 	"github.com/opentracing/opentracing-go"
 	otrext "github.com/opentracing/opentracing-go/ext"

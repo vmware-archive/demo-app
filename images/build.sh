@@ -2,15 +2,20 @@
 
 cd $1
 
-if [[ -f prepare.sh ]]; then
-	./prepare.sh
-fi
+if [ -z "${REPOSITORY_PREFIX}" ]
+then 
+    echo "Please set the REPOSITORY_PREFIX"
+else 
+	if [[ -f prepare.sh ]]; then
+		./prepare.sh
+	fi
 
-docker build . -t wfharbor.eng.vmware.com/demo-app/$1
-docker push wfharbor.eng.vmware.com/demo-app/$1
+	docker build . -t $REPOSITORY_PREFIX/$1
+	docker push $REPOSITORY_PREFIX/$1
 
-if [[ -f clean.sh ]]; then
-	./clean.sh
+	if [[ -f clean.sh ]]; then
+		./clean.sh
+	fi
 fi
 
 cd ..

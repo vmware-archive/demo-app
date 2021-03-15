@@ -2,25 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: sandbox
+    app: tacocat
     service: loadgen
   name: loadgen
-  namespace: sandbox
+  namespace: tacocat
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sandbox
+      app: tacocat
       service: loadgen
   template:
     metadata:
       labels:
-        app: sandbox
+        app: tacocat
         service: loadgen
     spec:
       containers:
       - name: loadgen
-        image: wfharbor.eng.vmware.com/demo-app/loadgen:latest
+        image: <add your repository here>/loadgen:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -28,8 +28,12 @@ spec:
         - "/loadgen.jar"
         - "shopping"
         - "50050"
-        - "styling"
         - "50051"
-        - "5"
-        - "5"
+        - "2"
+        - "15"
         - "0"
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
