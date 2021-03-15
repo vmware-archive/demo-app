@@ -26,9 +26,9 @@ cd payments; dotnet build
  - Create docker images and push to registry.
  - You must set `REPOSITORY_PREFIX` for your repository. Example:
  ```console
-export REPOSITORY_PREFIX=public.ecr.aws/z4m0n1r4/to-demo
+export REPOSITORY_PREFIX=192.168.1.8/demo-app
  ```
-- Replace ***`public.ecr.aws/z4m0n1r4/to-demo`*** with your repository!
+- Replace ***`192.168.1.8/demo-app`*** with your repository!
 - Build containers and push to your repository:
  ```console
 cd images; 
@@ -80,8 +80,6 @@ metadata:
   name: wf-token
   namespace: tacocat
   resourceVersion: "231537"
-  selfLink: /api/v1/namespaces/tacocat/secrets/wf-token
-  uid: dd60b398-0f3d-4d8c-8f49-017afbb70299
 type: Opaque
 ```
 ---
