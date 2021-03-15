@@ -1,8 +1,0 @@
-server:
-  port: 50054
-
-notificationHost: localhost
-notificationPort: 50056
-
-applicationTagsYamlFile: "./delivery/applicationTags.yaml"
-wfReportingConfigYamlFile: "./wfReportingConfig.yaml"
