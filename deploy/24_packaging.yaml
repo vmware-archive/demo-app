@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: packaging
-        image: 192.168.1.8/demo-app/packaging:latest
+        image: <add your repository here>/packaging:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: packaging
-          image: 192.168.1.8/demo-app/packaging:latest
+          image: <add your repository here>/packaging:latest
           imagePullPolicy: Always
           command:
             - "java"

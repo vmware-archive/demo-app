@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: warehouse
-        image: 192.168.1.8/demo-app/warehouse:latest
+        image: <add your repository here>/warehouse:latest
         imagePullPolicy: Always
         command:
         - "python3"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: warehouse
-          image: 192.168.1.8/demo-app/warehouse:latest
+          image: <add your repository here>/warehouse:latest
           imagePullPolicy: Always
           command:
             - "python3"

@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: printing
-        image: 192.168.1.8/demo-app/printing:latest
+        image: <add your repository here>/printing:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: printing
-          image: 192.168.1.8/demo-app/printing:latest
+          image: <add your repository here>/printing:latest
           imagePullPolicy: Always
           command:
             - "java"

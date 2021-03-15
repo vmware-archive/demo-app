@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: delivery
-        image: 192.168.1.8/demo-app/delivery:latest
+        image: <add your repository here>/delivery:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: delivery
-          image: 192.168.1.8/demo-app/delivery:latest
+          image: <add your repository here>/delivery:latest
           imagePullPolicy: Always
           command:
             - "java"

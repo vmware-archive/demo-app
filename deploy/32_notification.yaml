@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: notification
-        image: 192.168.1.8/demo-app/notification:latest
+        image: <add your repository here>/notification:latest
         imagePullPolicy: Always 
         command:
         - "java"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: notification
-          image: 192.168.1.8/demo-app/notification:latest
+          image: <add your repository here>/notification:latest
           imagePullPolicy: Always
           command:
             - "java"

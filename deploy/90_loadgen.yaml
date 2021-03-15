@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: loadgen
-        image: 192.168.1.8/demo-app/loadgen:latest
+        image: <add your repository here>/loadgen:latest
         imagePullPolicy: Always
         command:
         - "java"
