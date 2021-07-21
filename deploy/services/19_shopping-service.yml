@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping
+  namespace: tacocat
+spec: 
+  selector:
+    app: tacocat
+    service: shopping
+  type: LoadBalancer
+  ports:
+  - name: application
+    port: 50050
+  - name: admin
+    port: 50150

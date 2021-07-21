@@ -7,7 +7,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: wavefront-proxy
+    app: tacocat
     name: tacocat-wavefront-proxy
   name: tacocat-wavefront-proxy
   namespace: tacocat
@@ -15,11 +15,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wavefront-proxy
+      app: tacocat
   template:
     metadata:
       labels:
-        app: wavefront-proxy
+        app: tacocat
     spec:
       containers:
       - name: tacocat-wavefront-proxy
@@ -50,7 +50,7 @@ kind: Service
 metadata:
   name: tacocat-wavefront-proxy
   labels:
-    app: wavefront-proxy
+    app: tacocat
   namespace: tacocat
 spec:
   ports:
@@ -62,4 +62,4 @@ spec:
     targetPort: 30000
     protocol: TCP
   selector:
-    app: wavefront-proxy
+    app: tacocat

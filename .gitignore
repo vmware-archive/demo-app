@@ -161,14 +161,13 @@ fabric.properties
 hs_err_pid*
 
 ### Maven ###
-**/target/
+target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
 dependency-reduced-pom.xml
-**/dependency-reduced-pom.xml 
 buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
@@ -346,7 +345,7 @@ bld/
 [Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
-**/.vs/
+.vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
@@ -673,6 +672,12 @@ MigrationBackup/
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/go,java,maven,python,intellij,vs,vscode,dotnetcore
-payments/src/Payments/obj/Debug/netcoreapp2.1/*
-payments/src/Payments/obj/Debug/netcoreapp2.1/Payments.assets.cache
-**/.DS_Store
+
+notification/applicationTags.yaml
+packaging/applicationTags.yaml
+payments/src/Payments/applicationTags.yaml
+printing/applicationTags.yaml
+shopping/applicationTags.yaml
+styling/applicationTags.yaml
+warehouse/applicationTags.yaml
+

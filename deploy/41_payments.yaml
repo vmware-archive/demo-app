@@ -8,7 +8,7 @@ metadata:
   name: payments-blue
   namespace: tacocat
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tacocat
@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: payments
-        image: <add your repository here>/payments:latest
+        image: 192.168.1.8/demo-app/payments:latest
         imagePullPolicy: Always
         command:
         - "dotnet"
@@ -58,7 +58,7 @@ metadata:
   name: payments-green
   namespace: tacocat
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tacocat
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: payments
-          image: <add your repository here>/payments:latest
+          image: 192.168.1.8/demo-app/payments:latest
           imagePullPolicy: Always
           command:
             - "dotnet"

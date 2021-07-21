@@ -6,12 +6,12 @@ metadata:
 data:
   delivery-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: delivery
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
   delivery-app.yml: |
     server:
@@ -27,7 +27,7 @@ data:
     {
     	"application": "tacocat",
     	"service":     "inventory",
-    	"cluster":     "kerrupt",
+    	"cluster":     "cluster1",
     	"shard":       "blue",	
     
     	"inventoryHost": "0.0.0.0:60001",
@@ -47,12 +47,12 @@ data:
 
   notification-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: notification
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
   notification-app.yml: |
     server:
@@ -69,12 +69,12 @@ data:
 
   packaging-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: packaging
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
   packaging-app.yaml: |
     grpcPort: 50053
@@ -83,12 +83,12 @@ data:
 
   payments-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: payments
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
 
   payments-app.yaml: |
@@ -99,12 +99,12 @@ data:
 
   printing-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: printing
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
 
   printing-app.yaml: |
@@ -114,12 +114,12 @@ data:
 
   shopping-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: shopping
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
   shopping-app.yaml: |
     server:
@@ -150,7 +150,7 @@ data:
     shard: blue
     customTags:
       location: eks
-      env: production
+      env: dev
     server:
       applicationConnectors:
       - type: http
@@ -158,12 +158,12 @@ data:
 
   styling-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: styling
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
   styling-app.yaml: |
     server:
@@ -189,12 +189,12 @@ data:
 
   warehouse-app-tags.yaml: |
     application: tacocat
-    cluster: kerrupt
+    cluster: cluster1
     service: warehouse
     shard: blue
     customTags:
-      location: Palo-Alto
-      env: production
+      location: americas
+      env: dev
 
 
   wf-config.yaml: |

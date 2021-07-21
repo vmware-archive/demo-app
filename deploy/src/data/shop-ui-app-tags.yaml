@@ -1,10 +1,10 @@
-application: tacocat
+application: $K8S_APPLICATION
 cluster: to-cp-demo-cluster-12
 service: shop-ui
 shard: blue
 customTags:
   location: eks
-  env: production
+  env: $K8S_ENVIRONMENT
 server:
   applicationConnectors:
   - type: http
