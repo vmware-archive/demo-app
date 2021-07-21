@@ -1,21 +1,18 @@
 #! /bin/zsh
 
+source ../deploy/src/values.sh
+
 cd $1
 
-if [ -z "${REPOSITORY_PREFIX}" ]
-then 
-    echo "Please set the REPOSITORY_PREFIX"
-else 
-	if [[ -f prepare.sh ]]; then
-		./prepare.sh
-	fi
-
-	docker build . -t $REPOSITORY_PREFIX/$1
-	docker push $REPOSITORY_PREFIX/$1
-
-	if [[ -f clean.sh ]]; then
-		./clean.sh
-	fi
+if [[ -f prepare.sh ]]; then
+	./prepare.sh
 fi
 
-cd ..
+docker build . -t $K8S_REPOSITORY/$1
+docker push $K8S_REPOSITORY/$1
+
+if [[ -f clean.sh ]]; then
+	./clean.sh
+fi
+
+
