@@ -8,7 +8,7 @@ metadata:
   name: inventory-blue
   namespace: tacocat
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tacocat
@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: inventory
-        image: <add your repository here>/inventory:latest
+        image: 192.168.1.8/demo-app/inventory:latest
         imagePullPolicy: Always
         command:
         - "/inventory"
@@ -56,7 +56,7 @@ metadata:
   name: inventory-green
   namespace: tacocat
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tacocat
@@ -71,7 +71,7 @@ spec:
     spec:
       containers:
         - name: inventory
-          image: <add your repository here>/inventory:latest
+          image: 192.168.1.8/demo-app/inventory:latest
           imagePullPolicy: Always
           command:
             - "/inventory"

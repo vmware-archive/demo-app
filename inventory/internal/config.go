@@ -43,7 +43,7 @@ func InitGlobalConfig() {
 		ProxyDistributionsPort: 40000,
 		ProxyTracingPort:       30000,
 
-		Cluster: "bare-metal",
+		Cluster: "kerrupt",
 		Shard:   "primary",
 
 		Source: "",
