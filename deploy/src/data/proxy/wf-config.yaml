@@ -1,5 +1,5 @@
 reportingMechanism: proxy
-proxyHost: tacocat-wavefront-proxy
+proxyHost: $K8S_NAMESPACE-wavefront-proxy
 proxyMetricsPort: 2878
 proxyDistributionsPort: 2878
 proxyTracingPort: 30000

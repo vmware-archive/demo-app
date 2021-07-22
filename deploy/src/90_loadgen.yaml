@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: $K8S_APPLICATION
+    service: loadgen
+  name: loadgen
+  namespace: $K8S_NAMESPACE
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $K8S_APPLICATION
+      service: loadgen
+  template:
+    metadata:
+      labels:
+        app: $K8S_APPLICATION
+        service: loadgen
+    spec:
+      containers:
+      - name: loadgen
+        image: $K8S_REPOSITORY/loadgen:latest
+        imagePullPolicy: Always
+        command:
+        - "java"
+        - "-jar"
+        - "/loadgen.jar"
+        - "shopping"
+        - "50050"
+        - "50051"
+        - "2"
+        - "15"
+        - "0"
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi

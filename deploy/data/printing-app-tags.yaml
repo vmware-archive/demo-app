@@ -1,7 +1,0 @@
-application: tacocat
-cluster: bare-metal
-service: printing
-shard: blue
-customTags:
-  location: Palo-Alto
-  env: production

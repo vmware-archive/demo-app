@@ -8,7 +8,7 @@ metadata:
   name: delivery-blue
   namespace: tacocat
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tacocat
@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: delivery
-        image: <add your repository here>/delivery:latest
+        image: 192.168.1.8/demo-app/delivery:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -58,7 +58,7 @@ metadata:
   name: delivery-green
   namespace: tacocat
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tacocat
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: delivery
-          image: <add your repository here>/delivery:latest
+          image: 192.168.1.8/demo-app/delivery:latest
           imagePullPolicy: Always
           command:
             - "java"

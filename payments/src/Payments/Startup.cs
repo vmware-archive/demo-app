@@ -23,9 +23,10 @@ namespace Payments
 {
     public class Startup
     {
-        private IHostingEnvironment env;
+//        private IHostingEnvironment env;
+	private	Microsoft.AspNetCore.Hosting.IWebHostEnvironment env;
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
         {
             Configuration = configuration;
             this.env = env;
@@ -36,9 +37,11 @@ namespace Payments
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0); 
 
             ConfigureWavefront(services);
+	    services.AddMvc(MvcOptions => MvcOptions.EnableEndpointRouting = false);
 
             // register internal counters
             services.TryAddSingleton(new ConcurrentDictionary<string, StrongBox<int>>());

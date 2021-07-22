@@ -4,9 +4,31 @@ This is a polyglot demo app for showcasing Tanzu Observability.
 #### TODO
 1. Add UI repo link 
 
-## Build, Package and Deploy
+## Configure, Build, Package and Deploy
 ---
 
+### Configure
+
+- Configure the `deploy/src/values.sh` file with your settings:
+```
+export K8S_NAMESPACE=tacocat
+export K8S_APPLICATION=tacocat
+export K8S_CLUSTER=cluster1
+export K8S_LOCATION=americas
+export K8S_REPOSITORY=192.168.1.8/demo-app
+```
+The above variables will be used by below scripts to fill in the values to setup the \*.yaml files. `K8S_REPOSITORY` is the repository URL for container images which needs to be specified in order for the deployment to properly download the images.
+
+- Generate the the yaml files
+```console
+cd deploy/src
+./cm.sh 
+./create-yaml.sh
+```
+- `cm.sh` creates the 01-app-config-*.yaml files 
+- `create-yaml.sh` uses `envsubst` and `values.sh` to configure all of the *yaml files
+- *Note: `create-yaml.sh` must be run before building the images as it also creates `applicationTag.yaml` files used by the services.
+---
 ### Build
 - Build the Java services - from the root folder run:
 ```console
@@ -24,11 +46,7 @@ cd payments; dotnet build
 
 ### Package
  - Create docker images and push to registry.
- - You must set `REPOSITORY_PREFIX` for your repository. Example:
- ```console
-export REPOSITORY_PREFIX=192.168.1.8/demo-app
- ```
-- Replace ***`192.168.1.8/demo-app`*** with your repository!
+ - `deploy/src/values.sh` is referenced here to provide the repository.
 - Build containers and push to your repository:
  ```console
 cd images; 
@@ -39,29 +57,14 @@ cd images;
 ```console
 cd deploy
 ```
----
-### Step One: Config Maps / Direct Ingestion or Wavefront Proxy
-
-- The config maps are configured with a script with files from the `data` folder.
-
-- Since the purpose of tacocat is to demo the power of Tanzu Observability, it can be configured to send metrics to Tanzu Observability via direct ingestion or by proxy. 
-- Execute one of the following:
-```console
-./cm.sh direct
+- The yaml file are split into the `deploy`, `namespace` and `services` folders. 
+- This facilitates redeploying the apps in the `deploy` folder without changing the k8s service or namespace (easier redeploys).
+- Deploy the namespace first:
 ```
-or
-```console
-./cm.sh proxy
+kubectl apply -f namespace/
 ```
-- `cm.sh` will regen the `01-configmap-*.yaml` files.
-- If you go direct, you'll need to edit the files and add your TO (Wavefront) details.
-```console
-./deploy/data/direct/inventory.conf
-./deploy/data/direct/wf-config.yaml
+- Create the Wavefront proxy secret to hold the API key:
 ```
-- If you use the proxy, you'll need to configure a Kubernetes secret with your TO API token:
-```console
-kubectl apply -f namespace/.
 kubectl create secret generic  wf-token -n tacocat
 kubectl edit secrets wf-token  -n tacocat
 ```
@@ -78,26 +81,20 @@ kind: Secret
 metadata:
   creationTimestamp: "2021-03-09T15:00:09Z"
   name: wf-token
-  namespace: tacocat
+  namespace: $K8S_NAMESPACE
   resourceVersion: "231537"
+  selfLink: /api/v1/namespaces/tacocat/secrets/wf-token
+  uid: dd60b398-0f3d-4d8c-8f49-017afbb70299
 type: Opaque
 ```
----
- ### Step Two: Configure Yaml files with your repository:
-- The yaml file are split into the `deploy`, `namespace` adn `services` folders. 
-- This facilitates redeploying the apps in the `deploy` folder without changing the k8s service or namespace (easier redeploys).
-- You'll need to edit (sed) the *.yaml files to have the location of your registry from the *Package* step like this:
-```console
-sed -i 's|<add your repository here>|192.168.1.8/demo-app|g' *.yaml
+- Now deploy the Wavefront proxy:
 ```
-- Replace "***192.168.1.8/demo-app***" with **your** repository!
----
-### Step Three: Deploy to K8S
-- Initial deployment:
+kubectl apply -f services/10_wavefront.yaml
+```
+- And now deploy the app and create the shopping service:
 ```console 
-kubectl apply -f namespace/.
-kubectl apply -f service/.
 kubectl apply -f . 
+kubectl apply -f service/19_shopping-service.yml
 ```
 - To redeploy (but not delete the namespace or service):
 ```
@@ -105,9 +102,5 @@ kubectl delete -f .
 kubectl apply -f . 
 ```
 ---
-## Need to add link to UI repo
-
----
-
 ## That's it!
 Please let use know how we can improve!

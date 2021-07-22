@@ -8,13 +8,13 @@
 
 FILE=${1:-.}
 NAME=${2:-config}
-NAMESPACE=${3:-default}
+
 
 echo "apiVersion: v1" 
 echo "kind: ConfigMap"
 echo "metadata:" 
 echo "  name: $NAME" 
-echo "  namespace: $NAMESPACE" 
+echo "  namespace: \$K8S_NAMESPACE" 
 echo "data:"
 
 for f in $FILE/*.* ; do
