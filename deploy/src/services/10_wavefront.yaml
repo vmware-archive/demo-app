@@ -8,7 +8,7 @@ kind: Deployment
 metadata:
   labels:
     app: $K8S_APPLICATION
-    name: $K8S_NAMESPACE-wavefront-proxy
+    service: $K8S_NAMESPACE-wavefront-proxy
   name: $K8S_NAMESPACE-wavefront-proxy
   namespace: $K8S_NAMESPACE
 spec:
@@ -16,10 +16,12 @@ spec:
   selector:
     matchLabels:
       app: $K8S_APPLICATION
+      service: $K8S_NAMESPACE-wavefront-proxy
   template:
     metadata:
       labels:
         app: $K8S_APPLICATION
+        service: $K8S_NAMESPACE-wavefront-proxy
     spec:
       containers:
       - name: $K8S_NAMESPACE-wavefront-proxy
@@ -49,9 +51,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: $K8S_NAMESPACE-wavefront-proxy
+  namespace: $K8S_NAMESPACE
   labels:
     app: $K8S_APPLICATION
-  namespace: $K8S_NAMESPACE
+    service: $K8S_NAMESPACE-wavefront-proxy
 spec:
   ports:
   - name: wavefront
@@ -63,3 +66,4 @@ spec:
     protocol: TCP
   selector:
     app: $K8S_APPLICATION
+    service: $K8S_NAMESPACE-wavefront-proxy
