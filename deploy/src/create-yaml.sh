@@ -17,12 +17,20 @@ for f in *.yaml ; do
 	envsubst < $f > ../$f
 done
 
+if [ ! -f ../namespace ]
+then 
+	mkdir ../namespace
+fi
 for f in namespace/* ; do
 	if 
 	echo "creating ../$f"
 	envsubst < $f > ../$f
 done
 
+if [ ! -f ../services ]
+then 
+	mkdir ../services
+fi
 for f in services/* ; do
 	if 
 	echo "creating ../$f)"
