@@ -17,7 +17,7 @@ for f in *.yaml ; do
 	envsubst < $f > ../$f
 done
 
-if [ ! -f ../namespace ]
+if [ ! -d "../namespace/" ]
 then 
 	mkdir ../namespace
 fi
@@ -27,7 +27,7 @@ for f in namespace/* ; do
 	envsubst < $f > ../$f
 done
 
-if [ ! -f ../services ]
+if [ ! -d "../services/" ]
 then 
 	mkdir ../services
 fi
