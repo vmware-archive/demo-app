@@ -37,30 +37,5 @@ for f in services/* ; do
 	envsubst < $f > ../$f
 done
 
-#
-#declare -a services=("notification"
-#                     "packaging" 
-#	             "printing"
-#                     "payments"
-#                     "warehouse"
-#                     "delivery"
-#                     "styling"
-#                     "shopping")
-
-declare -a services=("payments"
-                     "warehouse")
-
-for svc in "${services[@]}"
-do
- echo export SERVICE=$svc
- export SERVICE=$svc
- if [ "$svc" = "payments" ]
- then
-	echo "create ../../$svc/src/Payments/applicationTags.yaml"
-    envsubst < apptags/applicationTags.yaml > ../../$svc/src/Payments/applicationTags.yaml
- else 
-	echo "creating ../../$svc/applicationTags.yaml"
-    envsubst < apptags/applicationTags.yaml > ../../$svc/applicationTags.yaml 
- fi
- 
-done 
+#echo "create ../../payments/src/Payments/applicationTags.yaml"
+#envsubst < apptags/applicationTags.yaml > ../../payments/src/Payments/applicationTags.yaml
