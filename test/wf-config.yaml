@@ -1,7 +1,0 @@
-reportingMechanism: direct
-
-## demo
-server: 
-token: 
-
-reportTraces: true

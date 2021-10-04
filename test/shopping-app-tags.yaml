@@ -1,7 +1,0 @@
-application: $K8S_APPLICATION
-cluster: $K8S_CLUSTER
-service: shopping
-shard: blue
-customTags:
-  location: $K8S_LOCATION
-  env: $K8S_ENVIRONMENT

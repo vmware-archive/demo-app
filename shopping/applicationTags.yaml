@@ -1,7 +1,0 @@
-application: tacocat
-cluster: cluster1
-service: shopping
-shard: primary
-customTags:
-  location: americas
-  env: dev
