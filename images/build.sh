@@ -24,7 +24,7 @@ if [[ -f prepare.sh ]]; then
 	./prepare.sh 
 fi
 
-docker build . -t $K8S_REPOSITORY/$IMAGE --build-arg JAR=$IMAGE
+docker build . -t $K8S_REPOSITORY/$IMAGE --build-arg 
 docker push $K8S_REPOSITORY/$IMAGE
 
 if [[ -f clean.sh ]]; then
