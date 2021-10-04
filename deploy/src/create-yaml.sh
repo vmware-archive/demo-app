@@ -33,18 +33,19 @@ then
 fi
 for f in services/* ; do
 	if 
-	echo "creating ../$f)"
+	echo "creating ../$f"
 	envsubst < $f > ../$f
 done
 
 declare -a services=("notification"
-                     "packaging"
-					 "printing"
-					 "payments"
-					 "warehouse"
-					 "delivery"
-					 "styling"
-					 "shopping")
+                     "packaging" 
+	             "printing"
+                     "payments"
+                     "warehouse"
+                     "delivery"
+                     "styling"
+                     "shopping")
+
 for svc in "${services[@]}"
 do
  echo export SERVICE=$svc
