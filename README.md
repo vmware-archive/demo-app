@@ -85,7 +85,7 @@ kubectl apply -f .
 ```
 ---
 ## That's it!
-Please let use know how we can improve!
+Please let us know how we can improve!
 
 ---
 #### TODO
