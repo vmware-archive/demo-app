@@ -42,6 +42,7 @@ fi
 for f in services/* ; do
 	if 
 	echo "creating ../$f"
+<<<<<<< HEAD
 	envsubst < $f > ../$f
 done
 
@@ -51,17 +52,20 @@ done
 for f in services/* ; do
 	if 
 	echo "creating ../$f)"
+=======
+>>>>>>> bac6e66 (Improved build & deploy - secret now created from file)
 	envsubst < $f > ../$f
 done
 
 declare -a services=("notification"
-                     "packaging"
-					 "printing"
-					 "payments"
-					 "warehouse"
-					 "delivery"
-					 "styling"
-					 "shopping")
+                     "packaging" 
+	             "printing"
+                     "payments"
+                     "warehouse"
+                     "delivery"
+                     "styling"
+                     "shopping")
+
 for svc in "${services[@]}"
 do
  echo export SERVICE=$svc
