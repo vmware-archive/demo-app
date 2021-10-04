@@ -37,14 +37,18 @@ for f in services/* ; do
 	envsubst < $f > ../$f
 done
 
-declare -a services=("notification"
-                     "packaging" 
-	             "printing"
-                     "payments"
-                     "warehouse"
-                     "delivery"
-                     "styling"
-                     "shopping")
+#
+#declare -a services=("notification"
+#                     "packaging" 
+#	             "printing"
+#                     "payments"
+#                     "warehouse"
+#                     "delivery"
+#                     "styling"
+#                     "shopping")
+
+declare -a services=("payments"
+                     "warehouse")
 
 for svc in "${services[@]}"
 do
