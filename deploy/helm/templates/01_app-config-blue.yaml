@@ -10,8 +10,8 @@ data:
     service: delivery
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
   delivery-app.yml: |
     server:
@@ -51,8 +51,8 @@ data:
     service: notification
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
   notification-app.yml: |
     server:
@@ -73,8 +73,8 @@ data:
     service: packaging
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
   packaging-app.yaml: |
     grpcPort: 50053
@@ -87,8 +87,8 @@ data:
     service: payments
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
 
   payments-app.yaml: |
@@ -103,8 +103,8 @@ data:
     service: printing
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
 
   printing-app.yaml: |
@@ -118,8 +118,8 @@ data:
     service: shopping
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
   shopping-app.yaml: |
     server:
@@ -150,7 +150,7 @@ data:
     shard: blue
     customTags:
       location: eks
-      env: dev
+      env: {{ .Values.customtags.environment }}
     server:
       applicationConnectors:
       - type: http
@@ -162,8 +162,8 @@ data:
     service: styling
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
   styling-app.yaml: |
     server:
@@ -193,8 +193,8 @@ data:
     service: warehouse
     shard: blue
     customTags:
-      location: americas
-      env: dev
+      location: {{ .Values.customtags.location }}
+      env: {{ .Values.customtags.environment }}
 
 
   wf-config.yaml: |
