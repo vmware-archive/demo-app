@@ -21,6 +21,10 @@ wavefront:
    base64_token: "OTdhYThlNTAtNzE5Ni00NGI1LWI3Y2MtNjYxMzhjMWU3NTM4"
    url: "https://longboard.wavefront.com/api/"
 
+customtags:
+   location: homelab
+   env: dev
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
