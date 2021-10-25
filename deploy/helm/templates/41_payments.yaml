@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: payments
+    shard: blue
+  name: payments-blue
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.blue  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: payments
+      shard: blue
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: payments
+        shard: blue
+    spec:
+      containers:
+      - name: payments
+        image: {{ .Values.image.repository }}/payments:latest
+        imagePullPolicy: Always
+        command:
+        - "dotnet"
+        - "run"
+        - "-p"
+        - "/payments/src/Payments/"
+        ports:
+        - containerPort: 50063
+          name: application
+          protocol: TCP
+        volumeMounts:
+        - name: conf
+          mountPath: /conf
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 350Mi
+      volumes:
+      - name: conf
+        configMap:
+          name: app-config-blue
+          defaultMode: 0744
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: payments
+    shard: green
+  name: payments-green
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.green  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: payments
+      shard: green
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: payments
+        shard: green
+    spec:
+      containers:
+        - name: payments
+          image: {{ .Values.image.repository }}/payments:latest
+          imagePullPolicy: Always
+          command:
+            - "dotnet"
+            - "run"
+            - "-p"
+            - "/payments/src/Payments/"
+          ports:
+            - containerPort: 50063
+              name: application
+              protocol: TCP
+          volumeMounts:
+            - name: conf
+              mountPath: /conf
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 350Mi
+      volumes:
+        - name: conf
+          configMap:
+            name: app-config-green
+            defaultMode: 0744
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments
+  namespace: {{ .Values.namespace   }}
+spec: 
+  selector:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: payments
+  type: ClusterIP
+  ports:
+  - name: application
+    port: 50063
+
