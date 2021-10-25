@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: packaging
+    shard: blue
+  name: packaging-blue
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.blue  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: packaging
+      shard: blue
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: packaging
+        shard: blue
+    spec:
+      containers:
+      - name: packaging
+        image: {{ .Values.image.repository }}/packaging:latest
+        imagePullPolicy: Always
+        command:
+        - "java"
+        - "-jar"
+        - "/packaging.jar"
+        - "/conf/packaging-app.yaml"
+        ports:
+        - containerPort: 50053
+          name: application
+          protocol: TCP
+        volumeMounts:
+        - name: conf
+          mountPath: /conf
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 350Mi
+      volumes:
+      - name: conf
+        configMap:
+          name: app-config-blue
+          defaultMode: 0744
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: packaging
+    shard: green
+  name: packaging-green
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.green  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: packaging
+      shard: green
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: packaging
+        shard: green
+    spec:
+      containers:
+        - name: packaging
+          image: {{ .Values.image.repository }}/packaging:latest
+          imagePullPolicy: Always
+          command:
+            - "java"
+            - "-jar"
+            - "/packaging.jar"
+            - "/conf/packaging-app.yaml"
+          ports:
+            - containerPort: 50053
+              name: application
+              protocol: TCP
+          volumeMounts:
+            - name: conf
+              mountPath: /conf
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 350Mi
+      volumes:
+        - name: conf
+          configMap:
+            name: app-config-green
+            defaultMode: 0744
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: packaging
+  namespace: {{ .Values.namespace   }}
+spec: 
+  selector:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: packaging
+  type: ClusterIP
+  ports:
+  - name: application
+    port: 50053
+
