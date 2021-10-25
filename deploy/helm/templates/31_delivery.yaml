@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: delivery
+    shard: blue
+  name: delivery-blue
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.blue  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: delivery
+      shard: blue
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: delivery
+        shard: blue
+    spec:
+      containers:
+      - name: delivery
+        image: {{ .Values.image.repository }}/delivery:latest
+        imagePullPolicy: Always
+        command:
+        - "java"
+        - "-jar"
+        - "/delivery.jar"
+        - "--spring.config.location=/conf/delivery-app.yml"
+        ports:
+        - containerPort: 50054
+          name: application
+          protocol: TCP
+        volumeMounts:
+        - name: conf
+          mountPath: /conf
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 350Mi
+      volumes:
+      - name: conf
+        configMap:
+          name: app-config-blue
+          defaultMode: 0744
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: delivery
+    shard: green
+  name: delivery-green
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.green  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: delivery
+      shard: green
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: delivery
+        shard: green
+    spec:
+      containers:
+        - name: delivery
+          image: {{ .Values.image.repository }}/delivery:latest
+          imagePullPolicy: Always
+          command:
+            - "java"
+            - "-jar"
+            - "/delivery.jar"
+            - "--spring.config.location=/conf/delivery-app.yml"
+          ports:
+            - containerPort: 50054
+              name: application
+              protocol: TCP
+          volumeMounts:
+            - name: conf
+              mountPath: /conf
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 350Mi
+      volumes:
+        - name: conf
+          configMap:
+            name: app-config-green
+            defaultMode: 0744
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: delivery
+  namespace: {{ .Values.namespace   }}
+spec: 
+  selector:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: delivery  
+  type: ClusterIP
+  ports:
+  - name: application
+    port: 50054
+
