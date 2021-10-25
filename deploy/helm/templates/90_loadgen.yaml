@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: loadgen
+  name: loadgen
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: loadgen
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: loadgen
+    spec:
+      containers:
+      - name: loadgen
+        image: {{ .Values.image.repository }}/loadgen:latest
+        imagePullPolicy: Always
+        command:
+        - "java"
+        - "-jar"
+        - "/loadgen.jar"
+        - "shopping"
+        - "50050"
+        - "50051"
+        - "2"
+        - "15"
+        - "0"
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi

@@ -12,7 +12,6 @@ echo "    location: " $K8S_LOCATION
 echo "  repository: " $K8S_REPOSITORY
 
 for f in *.yaml ; do
-	if 
 	echo "creating ../$f"
 	envsubst < $f > ../$f
 done
@@ -22,7 +21,6 @@ then
 	mkdir ../namespace
 fi
 for f in namespace/* ; do
-	if 
 	echo "creating ../$f"
 	envsubst < $f > ../$f
 done
