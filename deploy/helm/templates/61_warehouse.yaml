@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: warehouse
+    shard: blue
+  name: warehouse-blue
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.blue  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: warehouse
+      shard: blue
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: warehouse
+        shard: blue
+    spec:
+      containers:
+      - name: warehouse
+        image: {{ .Values.image.repository }}/warehouse:latest
+        imagePullPolicy: Always
+        command:
+        - "python3"
+        - "manage.py"
+        - "runserver"
+        - "0.0.0.0:50060"
+        ports:
+        - containerPort: 50060
+          name: application
+          protocol: TCP
+        volumeMounts:
+        - name: conf
+          mountPath: /conf
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 350Mi
+      volumes:
+      - name: conf
+        configMap:
+          name: app-config-blue
+          defaultMode: 0744
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: warehouse
+    shard: green
+  name: warehouse-green
+  namespace: {{ .Values.namespace   }}
+spec:
+  replicas: {{ .Values.replicaCount.green  }}
+  selector:
+    matchLabels:
+      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      service: warehouse
+      shard: green
+  template:
+    metadata:
+      labels:
+        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        service: warehouse
+        shard: green
+    spec:
+      containers:
+        - name: warehouse
+          image: {{ .Values.image.repository }}/warehouse:latest
+          imagePullPolicy: Always
+          command:
+            - "python3"
+            - "manage.py"
+            - "runserver"
+            - "0.0.0.0:50060"
+          ports:
+            - containerPort: 50060
+              name: application
+              protocol: TCP
+          volumeMounts:
+            - name: conf
+              mountPath: /conf
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 350Mi
+      volumes:
+        - name: conf
+          configMap:
+            name: app-config-green
+            defaultMode: 0744
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: warehouse
+  namespace: {{ .Values.namespace   }}
+spec: 
+  selector:
+    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    service: warehouse
+  type: ClusterIP
+  ports:
+  - name: application
+    port: 50060
+

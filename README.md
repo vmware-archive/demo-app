@@ -1,8 +1,64 @@
 # Tanzu Observability demo-app
 This is a polyglot demo app for showcasing Tanzu Observability.
 
-You can configure locally and then deploy from ECR registry.
-You can also build, package and push to your registry and deploy from there.
+----
+To view in Tanzu Observability by Wavefront you will need:
+* A free Tanzu Observability account: 
+  * Free trial: https://tanzu.vmware.com/observability
+* Base64 encoded API token and the URL for your instance: 
+  * Docs here: https://docs.wavefront.com/wavefront_api.html#generating-an-api-token
+----
+
+* Deploy with helm or kubectl from ```public.ecr.aws/tanzu_observability_demo_app/to-demo```
+* You can also build, package and push to your registry and deploy from there.
+
+----
+
+## Deploy with Helm
+### Clone the repo:
+```console
+git clone https://github.com/wavefrontHQ/demo-app.git
+cd deploy/helm
+```
+Edit  `values.yaml` to match your environment or use the defaults and execute helm:
+```console
+vi values.yaml
+```
+```console
+helm install tacocat-demo .
+```
+Verify the pods are running:
+```console
+k get pods -n  tanzu-observability-demo
+
+~/l/d/d/helm ❯❯❯ k get pods -n  tanzu-observability-demo
+NAME                                                       READY   STATUS    RESTARTS   AGE
+delivery-blue-764995948c-7g6vn                             1/1     Running   0          14m
+delivery-green-867f978c5f-gftdt                            1/1     Running   0          13m
+inventory-blue-b86c59d8d-sv2gg                             1/1     Running   0          13m
+inventory-green-85679dc4c6-lrhd5                           1/1     Running   0          13m
+loadgen-65676c865b-hkffn                                   1/1     Running   0          12m
+notification-blue-5668c6df94-cpvlm                         1/1     Running   0          13m
+notification-green-76895b75d6-tqr84                        1/1     Running   0          14m
+packaging-blue-5775f7c86f-tccsc                            1/1     Running   0          14m
+packaging-green-7cb5644df7-f766l                           1/1     Running   0          14m
+payments-blue-7486b5bd59-8rggp                             1/1     Running   0          14m
+payments-green-5bdf5869bc-447xf                            1/1     Running   0          14m
+printing-blue-9fb48997d-bwsqx                              1/1     Running   0          14m
+printing-green-7f66cd9bfd-npglt                            1/1     Running   0          14m
+shopping-blue-68b89984fd-x52bg                             1/1     Running   0          13m
+shopping-green-666dcc6966-lgmrp                            1/1     Running   0          14m
+styling-blue-64dbc49f5b-2wrg4                              1/1     Running   0          14m
+styling-green-75789ddc76-k77nx                             1/1     Running   0          14m
+tanzu-observability-demo-wavefront-proxy-65c544fdd-6959p   1/1     Running   0          14m
+warehouse-blue-6cb8f5c988-ltpgv                            1/1     Running   0          14m
+warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0          14m
+```
+
+
+
+----
+
 
 ## Configure, Build, Package and Deploy
 ---
