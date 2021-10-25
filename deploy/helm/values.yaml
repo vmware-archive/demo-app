@@ -6,11 +6,10 @@ replicaCount:
   blue: 1
   green: 0
 
-namespace: "tacocat-demo"
+namespace: "tanzu-observability-demo"
 
 image:
-  #repository:  public.ecr.aws/tanzu_observability_demo_app/to-demo
-  repository:  192.168.1.8/demo-app
+  repository:  public.ecr.aws/tanzu_observability_demo_app/to-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
