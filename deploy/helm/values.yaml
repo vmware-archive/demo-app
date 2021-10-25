@@ -17,7 +17,7 @@ image:
   tag: ""
 
 wavefront:
-   base64_token: "OTdhYThlNTAtNzE5Ni00NGI1LWI3Y2MtNjYxMzhjMWU3NTM4"
+   base64_token: "[your base64 encoded token here"
    url: "https://longboard.wavefront.com/api/"
 
 customtags:
