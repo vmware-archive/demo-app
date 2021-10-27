@@ -22,7 +22,7 @@ wavefront:
 
 customtags:
    location: homelab
-   env: dev
+   environment: dev
 
 imagePullSecrets: []
 nameOverride: ""
