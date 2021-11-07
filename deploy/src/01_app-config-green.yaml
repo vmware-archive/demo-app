@@ -13,7 +13,7 @@ data:
       location: $K8S_LOCATION
       env: $K8S_ENVIRONMENT
 
-  delivery-app.yml: |
+  delivery-app.yaml: |
     server:
       port: 50054
     
@@ -54,7 +54,7 @@ data:
       location: $K8S_LOCATION
       env: $K8S_ENVIRONMENT
 
-  notification-app.yml: |
+  notification-app.yaml: |
     server:
       port: 50056
     
