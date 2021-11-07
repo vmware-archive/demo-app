@@ -1,0 +1,15 @@
+#! /bin/bash
+
+if [[ -f ../../deploy/src/values.sh ]]; then 
+     	source ../../deploy/src/values.sh
+else 
+        echo "Unable to source \"../../values.sh\" "
+	exit
+fi
+
+if [ -z ${K8S_REPOSITORY+x} ]; then 
+        echo "nusage: export K8S_REPOSITORY=[your private registry here]"
+        exit
+fi
+
+cf push warehouse-service --docker-image $K8S_REPOSITORY/warehouse:latest --no-manifest --health-check-type process  
