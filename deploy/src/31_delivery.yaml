@@ -29,7 +29,7 @@ spec:
         - "java"
         - "-jar"
         - "/delivery.jar"
-        - "--spring.config.location=/conf/delivery-app.yml"
+        - "--spring.config.location=/conf/delivery-app.yaml"
         ports:
         - containerPort: 50054
           name: application
@@ -79,7 +79,7 @@ spec:
             - "java"
             - "-jar"
             - "/delivery.jar"
-            - "--spring.config.location=/conf/delivery-app.yml"
+            - "--spring.config.location=/conf/delivery-app.yaml"
           ports:
             - containerPort: 50054
               name: application
