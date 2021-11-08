@@ -680,4 +680,7 @@ printing/applicationTags.yaml
 shopping/applicationTags.yaml
 styling/applicationTags.yaml
 warehouse/applicationTags.yaml
-
+#.classpath
+#.settings
+#.project
+#.factorypath
