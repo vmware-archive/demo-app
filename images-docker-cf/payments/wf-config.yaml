@@ -1,7 +1,0 @@
-reportingMechanism: proxy
-proxyHost: ubuntu-463.haas-463.pez.vmware.com
-proxyMetricsPort: 2878
-proxyDistributionsPort: 2878
-proxyTracingPort: 30000
-
-reportTraces: true

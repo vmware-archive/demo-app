@@ -14,8 +14,8 @@ RUN pip3 install -e .
 WORKDIR /
 
 # Copy app and setup requirements
-COPY *.yaml /conf/
 COPY warehouse /warehouse
+COPY *.yaml /conf/
 WORKDIR /warehouse
 
 # setup app requirements
