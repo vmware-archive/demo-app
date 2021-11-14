@@ -27,17 +27,32 @@ fi
 
 # remove trailing slash
 IMAGE=$(echo $1 | sed 's:/*$::')
-echo "\n>>> Creating image \"$IMAGE\" and pushing to \"$K8S_REPOSITORY/$IMAGE\"\n"
+echo "\n>>> Creating image \"$IMAGE\" and pushing to \"${K8S_REPOSITORY}$IMAGE\"\n"
 
 if [[ -f prepare.sh ]]; then
 	./prepare.sh $IMAGE
 else 
-	echo "\n >>> no prepare.sh not found\n"
+	echo ">>> no prepare.sh not found\n"
 	exit;
 fi
 
-docker build . -t $K8S_REPOSITORY/$IMAGE  --build-arg service_name=$IMAGE
-docker push $K8S_REPOSITORY/$IMAGE
+if [ $IMAGE = 'loadgen' ]; then
+        echo "building loadgen"
+        echo $TASDOMAIN
+        if [ -z ${TASDOMAIN+x} ]; then 
+                echo "TASDOMAIN not found"
+                exit
+        fi
+        docker build . -t ${K8S_REPOSITORY}$IMAGE  --build-arg SERVICE_NAME=$IMAGE --build-arg TAS_DOMAIN=$TASDOMAIN
+else
+        docker build . -t ${K8S_REPOSITORY}$IMAGE  --build-arg SERVICE_NAME=$IMAGE 
+fi
+
+if [ -z ${2+x} ]; then 
+	docker push ${K8S_REPOSITORY}$IMAGE
+else
+        echo "\n\nnot pushing"
+fi
 
 if [[ -f clean.sh ]]; then
 	./clean.sh $IMAGE
