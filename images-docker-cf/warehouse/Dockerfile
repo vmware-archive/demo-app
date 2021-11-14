@@ -14,6 +14,7 @@ RUN pip3 install -e .
 WORKDIR /
 
 # Copy app and setup requirements
+EXPOSE 50060
 COPY warehouse /warehouse
 COPY *.yaml /conf/
 WORKDIR /warehouse
@@ -21,3 +22,4 @@ WORKDIR /warehouse
 # setup app requirements
 RUN pip3 install -r requirements.txt
 
+CMD python3 manage.py runserver 0.0.0.0:50060
