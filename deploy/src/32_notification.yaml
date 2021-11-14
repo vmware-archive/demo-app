@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: notification
-        image: $K8S_REPOSITORY/notification:latest
+        image: ${K8S_REPOSITORY}notification:latest
         imagePullPolicy: Always 
         command:
         - "java"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: notification
-          image: $K8S_REPOSITORY/notification:latest
+          image: ${K8S_REPOSITORY}notification:latest
           imagePullPolicy: Always
           command:
             - "java"
