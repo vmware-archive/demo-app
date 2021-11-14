@@ -1,0 +1,7 @@
+application: tacocat-haas-464-tas
+cluster: tas-463
+service: notification
+shard: blue
+customTags:
+  location: haas-463-tas
+  env: dev
