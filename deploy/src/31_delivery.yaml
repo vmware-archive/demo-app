@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: delivery
-        image: $K8S_REPOSITORY/delivery:latest
+        image: ${K8S_REPOSITORY}delivery:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: delivery
-          image: $K8S_REPOSITORY/delivery:latest
+          image: ${K8S_REPOSITORY}delivery:latest
           imagePullPolicy: Always
           command:
             - "java"
