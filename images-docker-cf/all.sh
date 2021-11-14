@@ -5,7 +5,7 @@ for f in *; do
 		echo 
 		echo "Building $f..."
 		echo 
-		./build.sh $f
+		./build.sh $f $1
 		echo 
 		echo "Finished building $f!"
 		echo 
