@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: payments
-        image: $K8S_REPOSITORY/payments:latest
+        image: ${K8S_REPOSITORY}payments:latest
         imagePullPolicy: Always
         command:
         - "dotnet"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: payments
-          image: $K8S_REPOSITORY/payments:latest
+          image: ${K8S_REPOSITORY}payments:latest
           imagePullPolicy: Always
           command:
             - "dotnet"
