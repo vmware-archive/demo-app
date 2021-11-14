@@ -1,0 +1,74 @@
+version: '2'
+
+services:
+  printing:
+    image: ${K8S_REPOSITORY}printing
+    container_name: printing
+    ports:
+     - 50052:50052
+
+  packaging:
+    image: ${K8S_REPOSITORY}packaging
+    container_name: packaging
+    ports: 
+     - 50053:50053
+
+  notification:
+    image: ${K8S_REPOSITORY}notification
+    container_name: notfication
+    ports:
+    - 50056:50056
+
+  warehouse:
+    image: ${K8S_REPOSITORY}warehouse
+    container_name: warehouse
+    ports:
+     - 50060:50060
+
+  payments:
+    image: ${K8S_REPOSITORY}payments
+    container_name: payments
+    ports:
+     - 50063:50063
+
+  delivery:
+    image: ${K8S_REPOSITORY}delivery
+    container_name: delivery
+    mem_limit: 1024M
+    ports:
+     - 50054:50054
+    depends_on:
+     - notification
+
+  inventory:
+    image: ${K8S_REPOSITORY}inventory
+    container_name: inventory
+    ports:
+      - 60001:6001
+    depends_on:
+      - warehouse
+
+  styling:
+    image: ${K8S_REPOSITORY}styling
+    container_name: styling
+    ports:
+      - 50051:50051
+    depends_on:
+      - printing
+      - packaging
+      
+  shopping:
+    image: ${K8S_REPOSITORY}shopping
+    container_name: shopping
+    ports:
+     - 50050:50050
+     - 50150:50150
+    depends_on:
+      - delivery
+      - payments
+      - inventory
+      - styling
+
+  loadgen:
+    image: ${K8S_REPOSITORY}loadgen
+    # container_name: loadgen
