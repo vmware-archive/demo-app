@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: styling
-        image: $K8S_REPOSITORY/styling:latest
+        image: ${K8S_REPOSITORY}styling:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -77,7 +77,7 @@ spec:
     spec:
       containers:
         - name: styling
-          image: $K8S_REPOSITORY/styling:latest
+          image: ${K8S_REPOSITORY}styling:latest
           imagePullPolicy: Always
           command:
             - "java"

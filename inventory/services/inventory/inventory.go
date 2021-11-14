@@ -39,7 +39,7 @@ func (s *InventoryService) available(w http.ResponseWriter, r *http.Request) {
 	defer span.Finish()
 
 	go async(span.Context())
-	span.LogFields(otrlog.String("event", "created async"))
+	// span.LogFields(otrlog.String("event", "created async"))
 
 	RandSimDelay()
 
@@ -68,7 +68,7 @@ func (s *InventoryService) checkout(w http.ResponseWriter, r *http.Request) {
 	if RAND.Float32() < GlobalConfig.SimFailCheckout {
 		otrext.Error.Set(span, true)
 		span.LogFields(
-			otrlog.String("error.kind", "failure"),
+			otrlog.String("error.kind", "gen-failure"),
 			otrlog.String("message", "service unavailable"),
 		)
 		WriteError(w, "checkout failure", http.StatusServiceUnavailable)
@@ -78,6 +78,7 @@ func (s *InventoryService) checkout(w http.ResponseWriter, r *http.Request) {
 	resp, err := callWarehouse(span.Context())
 	if err != nil {
 		otrext.Error.Set(span, true)
+		span.LogFields(otrlog.String("message", err.Error()))
 		WriteError(w, err.Error(), http.StatusPreconditionFailed)
 		return
 	}
