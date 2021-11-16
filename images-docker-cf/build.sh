@@ -48,10 +48,11 @@ else
         docker build . -t ${K8S_REPOSITORY}$IMAGE  --build-arg SERVICE_NAME=$IMAGE 
 fi
 
-if [ -z ${2+x} ]; then 
-	docker push ${K8S_REPOSITORY}$IMAGE
+if [ -z ${K8S_REPOSITORY} ]; then 
+        echo -e "\nnot pushing\n"
 else
-        echo "\n\nnot pushing"
+        echo -e "\npushing to ${K8S_REPOSITORY}$IMAGE \n"
+	docker push ${K8S_REPOSITORY}$IMAGE
 fi
 
 if [[ -f clean.sh ]]; then
