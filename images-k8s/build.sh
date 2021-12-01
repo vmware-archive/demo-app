@@ -21,7 +21,7 @@ cd $1
 
 
 IMAGE=$(echo $1 | sed 's:/*$::')
-echo "\n>>> Creating image \"$IMAGE\" and pushing to \"$K8S_REPOSITORY/$IMAGE\"\n"
+echo "\n>>> Creating image \"$IMAGE\" and pushing to \"${K8S_REPOSITORY}$IMAGE\"\n"
 
 if [[ -f prepare.sh ]]; then
 	./prepare.sh 
@@ -29,8 +29,8 @@ else
 	echo "\n >>> no prepare.sh not found\n"
 fi
 
-docker build . -t $K8S_REPOSITORY/$IMAGE 
-docker push $K8S_REPOSITORY/$IMAGE
+docker build . -t $K8S_REPOSITORY$IMAGE 
+docker push $K8S_REPOSITORY$IMAGE
 
 if [[ -f clean.sh ]]; then
 	./clean.sh 

@@ -8,22 +8,30 @@ To view in Tanzu Observability by Wavefront you will need:
 * Base64 encoded API token and the URL for your instance: 
   * Docs here: https://docs.wavefront.com/wavefront_api.html#generating-an-api-token
 ----
+## Run
+
+### Kubernetes
 
 * Deploy with helm or kubectl from ```public.ecr.aws/tanzu_observability_demo_app/to-demo```
 * You can also build, package and push to your registry and deploy from there.
 
-----
-
-## Deploy with Helm
-### Clone the repo:
+#### Deploy with Helm
+##### Clone the repo:
 ```console
 git clone https://github.com/wavefrontHQ/demo-app.git
-cd deploy/helm
+cd demo-app/deploy/helm
 ```
 Edit  `values.yaml` to match your environment or use the defaults and execute helm:
 ```console
 vi values.yaml
 ```
+Minimally update
+* wavefront:
+* * base64_token: 
+* * url: 
+
+Install with helm:
+
 ```console
 helm install tacocat-demo .
 ```
@@ -54,16 +62,42 @@ tanzu-observability-demo-wavefront-proxy-65c544fdd-6959p   1/1     Running   0  
 warehouse-blue-6cb8f5c988-ltpgv                            1/1     Running   0          14m
 warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0          14m
 ```
-
-
-
 ----
+### Docker with docker-compose (Local)
+>Note: The containers in the default registry are optimized for Kubernetes (e.g. uses config-maps to map volumes). Docker (and TAS because )
+To run in Docker and TAS use this repo `public.ecr.aws/z4m0n1r4/to-cf-demo/` or build the containers.
 
+##### Clone the repo:
+```console
+git clone https://github.com/wavefrontHQ/demo-app.git
+cd demo-app/deploy/docker-compose
+```
+Edit and source the `values.sh` file and bring app up: 
+```console
+vi ../src/values.sh
+```
+Update:
+* `WAVEFRONT_BASE64_TOKEN=`
+* `WAVEFRONT_URL=wavfront`
+* Update `K8S_REPOSItory=public.ecr.aws/z4m0n1r4/to-cf-demo/`
+```console
+source ../src/values.sh
+docker-compose up 
+```
+---
+### Tanzu Application Service (TAS/PCF/CF)
+>Note: Both 
+##### Clone the repo:
+```console
+git clone https://github.com/wavefrontHQ/demo-app.git
+cd demo-app/deploy/docker-compose
+```
+---
 
 ## Configure, Build, Package and Deploy
 ---
 
-### Configure
+#### Configure
 
 - Configure the `deploy/src/values.sh` file with your settings:
 ```
