@@ -1,7 +1,7 @@
 server:
   port: 50054
 
-notificationHost: notification
+notificationHost: notification$TASDOMAIN
 notificationPort: 50056
 
 applicationTagsYamlFile: "/conf/delivery-app-tags.yaml"

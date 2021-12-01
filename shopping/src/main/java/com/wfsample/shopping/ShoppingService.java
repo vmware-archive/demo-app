@@ -167,9 +167,11 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
       if (deliveryResponse.getStatus() >= 400) {
         Counter failed = registry.counter("shopping.delivery.failed.quantity");
         failed.inc((long) quantity);
+        System.out.println("------ POINT 40.1 ------- ");
       } else {
         Counter success = registry.counter("shopping.delivery.success.quantity");
         success.inc((long) quantity);
+        System.out.println("------ POINT 40.2 ------- ");
       }
       System.out.println("------ POINT 50 ------- ");
 

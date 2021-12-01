@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: inventory
-        image: $K8S_REPOSITORY/inventory:latest
+        image: ${K8S_REPOSITORY}inventory:latest
         imagePullPolicy: Always
         command:
         - "/inventory"
@@ -71,7 +71,7 @@ spec:
     spec:
       containers:
         - name: inventory
-          image: $K8S_REPOSITORY/inventory:latest
+          image: ${K8S_REPOSITORY}inventory:latest
           imagePullPolicy: Always
           command:
             - "/inventory"

@@ -138,6 +138,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
 
     @Override
     public PackedShirtsDTO makeShirts(String id, int quantity) {
+      System.out.println("------ POINT 10 ------- ");
       // create the record in database.
       Span jdbcSpan = tracer.buildSpan("createRecord").
               withTag(Tags.SPAN_KIND.getKey(), Tags.SPAN_KIND_CLIENT).
@@ -149,20 +150,25 @@ public class StylingService extends Application<DropwizardServiceConfig> {
         try {
           Thread.sleep(20);
           if (counter.incrementAndGet() % 110 == 0) {
+            System.out.println("------ POINT 20 ------- ");
             throw new RuntimeException();
           }
         } catch (Exception e) {
           Tags.ERROR.set(jdbcSpan, true);
-          throw new RuntimeException(e);
+             System.out.println("------ POINT 30 ------- ");
+            throw new RuntimeException(e);
         }
       } finally {
+        System.out.println("------ POINT 40 ------- ");
         jdbcSpan.finish();
       }
       try {
         Response checkoutResponse = inventoryApi.checkout(id);
         if (checkoutResponse.getStatus() >= 400) {
+          System.out.println("------ POINT 50 ------- ");
           throw new RuntimeException("unable to checkout resources from inventory");
         }
+        System.out.println("------ POINT 60 ------- ");
         Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
             setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
             setQuantity(quantity).build());
@@ -179,8 +185,10 @@ public class StylingService extends Application<DropwizardServiceConfig> {
         for (int i = 0; i < quantity; i++) {
           packedShirts.add(new ShirtDTO(new ShirtStyleDTO(id, id + "Image")));
         }
+        System.out.println("------ POINT 70 ------- ");
         return new PackedShirtsDTO(packedShirts);
       } catch (Exception e) {
+        System.out.println("------ POINT 80 ------- ");
         throw new RuntimeException(e);
       }
     }

@@ -36,7 +36,7 @@ SECRET_KEY = 'h$upq=v3p0x8q8-mn_551ei5nxd#7(6=pzzqzzc9adezjwbbu7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "warehouse"]
+ALLOWED_HOSTS = ["localhost", "warehouse", "warehouse-service.apps.internal"]
 
 # Application definition
 

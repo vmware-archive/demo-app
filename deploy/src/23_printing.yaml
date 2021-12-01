@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: printing
-        image: $K8S_REPOSITORY/printing:latest
+        image: ${K8S_REPOSITORY}printing:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: printing
-          image: $K8S_REPOSITORY/printing:latest
+          image: ${K8S_REPOSITORY}printing:latest
           imagePullPolicy: Always
           command:
             - "java"
