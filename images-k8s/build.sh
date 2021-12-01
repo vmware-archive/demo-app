@@ -2,12 +2,9 @@
 
 if [[ -f ../deploy/src/values.sh ]]; then 
      	source ../deploy/src/values.sh
-<<<<<<< HEAD
 else 
         echo "\n\nUNABLE TO SOURCE values.sh\n\n"
 	exit
-=======
->>>>>>> bac6e66 (Improved build & deploy - secret now created from file)
 fi
 
 if [ -z ${K8S_REPOSITORY+x} ]; then 
@@ -24,22 +21,17 @@ cd $1
 
 
 IMAGE=$(echo $1 | sed 's:/*$::')
-echo "\n>>> Creating image \"$IMAGE\" and pushing to \"$K8S_REPOSITORY/$IMAGE\"\n"
+echo "\n>>> Creating image \"$IMAGE\" and pushing to \"${K8S_REPOSITORY}$IMAGE\"\n"
 
 if [[ -f prepare.sh ]]; then
 	./prepare.sh 
-<<<<<<< HEAD
 else 
 	echo "\n >>> no prepare.sh not found\n"
 fi
 
-docker build . -t $K8S_REPOSITORY/$IMAGE 
+docker build . -t ${K8S_REPOSITORY}/$IMAGE 
+docker push ${K8S_REPOSITORY}/$IMAGE
 =======
-fi
-
-docker build . -t $K8S_REPOSITORY/$IMAGE --build-arg JAR=$IMAGE
->>>>>>> bac6e66 (Improved build & deploy - secret now created from file)
-docker push $K8S_REPOSITORY/$IMAGE
 
 if [[ -f clean.sh ]]; then
 	./clean.sh 

@@ -1,6 +1,10 @@
 version: '2'
 
 services:
+  wavefront:
+    image: projects.registry.vmware.com/tanzu_observability/proxy:latest
+    container_name: wavefront-proxy
+
   printing:
     image: ${K8S_REPOSITORY}printing
     container_name: printing
