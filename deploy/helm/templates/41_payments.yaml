@@ -25,9 +25,13 @@ spec:
       - name: payments
         image: {{ .Values.image.repository }}/payments:latest
         imagePullPolicy: Always
+        env:
+        - name: DOTNET_CLI_HOME 
+          value: "/tmp/DOTNET_CLI_HOME"
         command:
         - "dotnet"
         - "run"
+        - "--no-build"
         - "-p"
         - "/payments/src/Payments/"
         ports:
@@ -75,9 +79,13 @@ spec:
         - name: payments
           image: {{ .Values.image.repository }}/payments:latest
           imagePullPolicy: Always
+          env:
+          - name: DOTNET_CLI_HOME 
+            value: "/tmp/DOTNET_CLI_HOME"
           command:
             - "dotnet"
             - "run"
+            - "--no-build"
             - "-p"
             - "/payments/src/Payments/"
           ports:
