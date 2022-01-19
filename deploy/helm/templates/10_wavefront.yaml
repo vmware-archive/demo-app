@@ -7,42 +7,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD:deploy/src/services/10_wavefront.yaml
-    app: $K8S_APPLICATION
-    service: $K8S_NAMESPACE-wavefront-proxy
-  name: $K8S_NAMESPACE-wavefront-proxy
-  namespace: $K8S_NAMESPACE
-=======
->>>>>>> wavefrontHQ-master
     app: {{ include "tanzu-observability-demo.fullname" .  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
   name: {{ .Values.namespace   }}-wavefront-proxy
   namespace: {{ .Values.namespace   }}
-<<<<<<< HEAD
-=======
->>>>>>> wavefrontHQ-master:deploy/helm/templates/10_wavefront.yaml
->>>>>>> wavefrontHQ-master
 spec:
   replicas: 1
   selector:
     matchLabels:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD:deploy/src/services/10_wavefront.yaml
-      app: $K8S_APPLICATION
-      service: $K8S_NAMESPACE-wavefront-proxy
-  template:
-    metadata:
-      labels:
-        app: $K8S_APPLICATION
-        service: $K8S_NAMESPACE-wavefront-proxy
-    spec:
-      containers:
-      - name: $K8S_NAMESPACE-wavefront-proxy
-=======
->>>>>>> wavefrontHQ-master
       app: {{ include "tanzu-observability-demo.fullname" .  }}
       service: {{ .Values.namespace   }}-wavefront-proxy
   template:
@@ -53,19 +25,11 @@ spec:
     spec:
       containers:
       - name: {{ .Values.namespace   }}-wavefront-proxy
-<<<<<<< HEAD
-=======
->>>>>>> wavefrontHQ-master:deploy/helm/templates/10_wavefront.yaml
->>>>>>> wavefrontHQ-master
         image: projects.registry.vmware.com/tanzu_observability/proxy:latest
         imagePullPolicy: IfNotPresent
         env:
         - name: WAVEFRONT_URL
-<<<<<<< HEAD
           value: https://longboard.wavefront.com/api/
-=======
-          value: {{ .Values.wavefront.url }}
->>>>>>> wavefrontHQ-master
         - name: WAVEFRONT_TOKEN
           valueFrom:
             secretKeyRef:
@@ -86,25 +50,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD:deploy/src/services/10_wavefront.yaml
-  name: $K8S_NAMESPACE-wavefront-proxy
-  namespace: $K8S_NAMESPACE
-  labels:
-    app: $K8S_APPLICATION
-    service: $K8S_NAMESPACE-wavefront-proxy
-=======
->>>>>>> wavefrontHQ-master
   name: {{ .Values.namespace   }}-wavefront-proxy
   namespace: {{ .Values.namespace   }}
   labels:
     app: {{ include "tanzu-observability-demo.fullname" .  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
-<<<<<<< HEAD
-=======
->>>>>>> wavefrontHQ-master:deploy/helm/templates/10_wavefront.yaml
->>>>>>> wavefrontHQ-master
 spec:
   ports:
   - name: wavefront
@@ -115,15 +65,5 @@ spec:
     targetPort: 30000
     protocol: TCP
   selector:
-<<<<<<< HEAD
     app: {{ include "tanzu-observability-demo.fullname" .  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
-=======
-<<<<<<< HEAD:deploy/src/services/10_wavefront.yaml
-    app: $K8S_APPLICATION
-    service: $K8S_NAMESPACE-wavefront-proxy
-=======
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
-    service: {{ .Values.namespace   }}-wavefront-proxy
->>>>>>> wavefrontHQ-master:deploy/helm/templates/10_wavefront.yaml
->>>>>>> wavefrontHQ-master
