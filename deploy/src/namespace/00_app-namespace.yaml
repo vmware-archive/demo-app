@@ -2,4 +2,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: $K8S_NAMESPACE
+<<<<<<< HEAD:deploy/src/namespace/00_app-namespace.yaml
 
+=======
+>>>>>>> wavefrontHQ-master:deploy/namespace/00_app-namespace.yaml
