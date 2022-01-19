@@ -62,36 +62,6 @@ tanzu-observability-demo-wavefront-proxy-65c544fdd-6959p   1/1     Running   0  
 warehouse-blue-6cb8f5c988-ltpgv                            1/1     Running   0          14m
 warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0          14m
 ```
-----
-### Docker with docker-compose (Local)
->Note: The containers in the default registry are optimized for Kubernetes (e.g. uses config-maps to map volumes). Docker (and TAS because )
-To run in Docker and TAS use this repo `public.ecr.aws/z4m0n1r4/to-cf-demo/` or build the containers.
-
-##### Clone the repo:
-```console
-git clone https://github.com/wavefrontHQ/demo-app.git
-cd demo-app/deploy/docker-compose
-```
-Edit and source the `values.sh` file and bring app up: 
-```console
-vi ../src/values.sh
-```
-Update:
-* `WAVEFRONT_BASE64_TOKEN=`
-* `WAVEFRONT_URL=wavfront`
-* Update `K8S_REPOSItory=public.ecr.aws/z4m0n1r4/to-cf-demo/`
-```console
-source ../src/values.sh
-docker-compose up 
-```
----
-### Tanzu Application Service (TAS/PCF/CF)
->Note: Both 
-##### Clone the repo:
-```console
-git clone https://github.com/wavefrontHQ/demo-app.git
-cd demo-app/deploy/docker-compose
-```
 ---
 
 ## Configure, Build, Package and Deploy
@@ -105,7 +75,7 @@ export K8S_NAMESPACE=tacocat
 export K8S_APPLICATION=tacocat
 export K8S_CLUSTER=cluster1
 export K8S_LOCATION=americas
-export K8S_REPOSITORY=public.ecr.aws/r8e5f6o2/to-demo
+export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
 export WAVEFRONT_BASE64_TOKEN=<YOUR BASE64 ENCODED TOKEN HERE>
 ```
 The above variables will be used by below scripts to fill in the values to setup the \*.yaml files. `K8S_REPOSITORY` is the repository URL for container images which needs to be specified in order for the deployment to properly download the images.
@@ -167,6 +137,7 @@ kubectl apply -f services/
 - Deploy the app:
 ```console 
 kubectl apply -f . 
+kubectl apply -f service/19_shopping-service.yml
 ```
 - To redeploy (but not delete the namespace or service):
 ```
