@@ -1,5 +1,5 @@
 reportingMechanism: proxy
-proxyHost: $K8S_NAMESPACE-wavefront-proxy
+proxyHost: $WF_PROXY_HOST
 proxyMetricsPort: 2878
 proxyDistributionsPort: 2878
 proxyTracingPort: 30000
