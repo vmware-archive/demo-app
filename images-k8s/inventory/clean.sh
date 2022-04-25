@@ -1,3 +1,3 @@
 #! /bin/bash
 
-rm inventory
+rm -rf inventory
