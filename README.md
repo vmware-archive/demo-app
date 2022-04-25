@@ -25,11 +25,13 @@ Edit  `values.yaml` to match your environment or use the defaults and execute he
 ```console
 vi values.yaml
 ```
-Minimally update
-* wavefront:
-* * base64_token: 
-* * url: 
-
+Minimally update:
+```console
+wavefront:
+ base64_token: 
+ url: 
+ ```
+ 
 Install with helm:
 
 ```console
