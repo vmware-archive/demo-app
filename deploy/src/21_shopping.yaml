@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: shopping
-        image: $K8S_REPOSITORY/shopping:latest
+        image: ${K8S_REPOSITORY}shopping:latest
         imagePullPolicy: Always
         command:
         - "java"
@@ -77,7 +77,7 @@ spec:
     spec:
       containers:
         - name: shopping
-          image: $K8S_REPOSITORY/shopping:latest
+          image: ${K8S_REPOSITORY}shopping:latest
           imagePullPolicy: Always
           command:
             - "java"

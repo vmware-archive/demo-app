@@ -11,10 +11,10 @@ paymentsPort: 50063
 stylingPort: 50051
 deliveryPort: 50054
 
-inventoryHost: "inventory"
-paymentsHost: "payments"
-stylingHost: "styling"
-deliveryHost: "delivery"
+inventoryHost: "inventory$TASDOMAIN"
+paymentsHost: "payments$TASDOMAIN"
+stylingHost: "styling$TASDOMAIN"
+deliveryHost: "delivery$TASDOMAIN"
 
 applicationTagsYamlFile: "/conf/shopping-app-tags.yaml"
 wfReportingConfigYamlFile: "/conf/wf-config.yaml"

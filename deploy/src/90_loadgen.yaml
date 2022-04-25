@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: loadgen
-        image: $K8S_REPOSITORY/loadgen:latest
+        image: ${K8S_REPOSITORY}loadgen:latest
         imagePullPolicy: Always
         command:
         - "java"
