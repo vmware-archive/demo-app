@@ -2,12 +2,12 @@
 export K8S_NAMESPACE=tanzu-observability-demo
 export K8S_APPLICATION=tanzu-observability-demo
 export K8S_CLUSTER=tanzu-observability-demo
-export K8S_LOCATION=xyz
+export K8S_LOCATION=homelab
 export K8S_ENVIRONMENT=dev
-export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
+export K8S_REPOSITORY=public.ecr.aws/z4m0n1r4/to-demo-test/
 
 ### Update with your Tanzu Observability by Wavefront info
-export WAVEFRONT_BASE64_TOKEN=[YOUR BASE 64 ENCODED WAVEFRONT TOKEN HERE]
+export WAVEFRONT_BASE64_TOKEN=MmE5YzNkOTEtZjgxZC00NTJkLTk5NTktYWFhZTJkOTM4NTQy
 export WAVEFRONT_URL=http://longboard.wavefront.com/api
 
 ### Define for Tanzu Application Service Deploy
