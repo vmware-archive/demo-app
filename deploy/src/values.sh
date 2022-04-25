@@ -7,8 +7,8 @@ export K8S_ENVIRONMENT=dev
 export K8S_REPOSITORY=public.ecr.aws/z4m0n1r4/to-demo-test/
 
 ### Update with your Tanzu Observability by Wavefront info
-export WAVEFRONT_BASE64_TOKEN=MmE5YzNkOTEtZjgxZC00NTJkLTk5NTktYWFhZTJkOTM4NTQy
-export WAVEFRONT_URL=http://longboard.wavefront.com/api
+export WAVEFRONT_BASE64_TOKEN=[BASE 64 ENCODED API TOKEN]
+export WAVEFRONT_URL=http://[YOUR CLUSTER].wavefront.com/api
 
 ### Define for Tanzu Application Service Deploy
 ### otherwise leave empty
