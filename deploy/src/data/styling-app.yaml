@@ -11,10 +11,10 @@ printingPort: 50052
 packagingPort: 50053
 shoppingPort: 50050
 
-inventoryHost: "inventory"
-printingHost: "printing"
-packagingHost: "packaging"
-shoppingHost: "shopping"
+inventoryHost: "inventory$TASDOMAIN"
+printingHost: "printing$TASDOMAIN"
+packagingHost: "packaging$TASDOMAIN"
+shoppingHost: "shopping$TASDOMAIN"
 
 applicationTagsYamlFile: "/conf/styling-app-tags.yaml"
 wfReportingConfigYamlFile: "/conf/wf-config.yaml"

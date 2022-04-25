@@ -13,3 +13,4 @@ cp -f ./data/$PROXYOR/* ./data
 
 sed 's/blue/green/g' 01_app-config-blue.yaml > 01_app-config-green.yaml
 
+./create-yaml.sh
