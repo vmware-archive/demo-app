@@ -31,3 +31,5 @@ if [ -d "../services/" ]; then
 	rm -rf ../services/;
 fi
 
+rm  01_app-config-blue.yaml
+rm  01_app-config-green.yaml

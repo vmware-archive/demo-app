@@ -23,11 +23,15 @@ spec:
     spec:
       containers:
       - name: payments
-        image: $K8S_REPOSITORY/payments:latest
+        image: ${K8S_REPOSITORY}payments:latest
         imagePullPolicy: Always
+        env:
+        - name: DOTNET_CLI_HOME 
+          value: "/tmp/DOTNET_CLI_HOME"
         command:
         - "dotnet"
         - "run"
+        - "--no-build"
         - "-p"
         - "/payments/src/Payments/"
         ports:
@@ -73,11 +77,15 @@ spec:
     spec:
       containers:
         - name: payments
-          image: $K8S_REPOSITORY/payments:latest
+          image: ${K8S_REPOSITORY}payments:latest
           imagePullPolicy: Always
+          env:
+          - name: DOTNET_CLI_HOME 
+            value: "/tmp/DOTNET_CLI_HOME"
           command:
             - "dotnet"
             - "run"
+            - "--no-build"
             - "-p"
             - "/payments/src/Payments/"
           ports:

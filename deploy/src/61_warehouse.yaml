@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: warehouse
-        image: $K8S_REPOSITORY/warehouse:latest
+        image: ${K8S_REPOSITORY}warehouse:latest
         imagePullPolicy: Always
         command:
         - "python3"
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: warehouse
-          image: $K8S_REPOSITORY/warehouse:latest
+          image: ${K8S_REPOSITORY}warehouse:latest
           imagePullPolicy: Always
           command:
             - "python3"

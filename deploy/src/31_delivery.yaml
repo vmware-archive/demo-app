@@ -23,13 +23,13 @@ spec:
     spec:
       containers:
       - name: delivery
-        image: $K8S_REPOSITORY/delivery:latest
+        image: ${K8S_REPOSITORY}delivery:latest
         imagePullPolicy: Always
         command:
         - "java"
         - "-jar"
         - "/delivery.jar"
-        - "--spring.config.location=/conf/delivery-app.yml"
+        - "--spring.config.location=/conf/delivery-app.yaml"
         ports:
         - containerPort: 50054
           name: application
@@ -73,13 +73,13 @@ spec:
     spec:
       containers:
         - name: delivery
-          image: $K8S_REPOSITORY/delivery:latest
+          image: ${K8S_REPOSITORY}delivery:latest
           imagePullPolicy: Always
           command:
             - "java"
             - "-jar"
             - "/delivery.jar"
-            - "--spring.config.location=/conf/delivery-app.yml"
+            - "--spring.config.location=/conf/delivery-app.yaml"
           ports:
             - containerPort: 50054
               name: application
