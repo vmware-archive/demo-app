@@ -4,7 +4,7 @@ export K8S_APPLICATION=tanzu-observability-demo
 export K8S_CLUSTER=tanzu-observability-demo
 export K8S_LOCATION=homelab
 export K8S_ENVIRONMENT=dev
-export K8S_REPOSITORY=public.ecr.aws/z4m0n1r4/to-demo-test/
+export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo
 
 ### Update with your Tanzu Observability by Wavefront info
 export WAVEFRONT_BASE64_TOKEN=[BASE 64 ENCODED API TOKEN]
