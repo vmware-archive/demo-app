@@ -1,0 +1,30 @@
+# Default values for Tanzu Observability Demo App
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 
+  blue: 1
+  green: 1
+
+namespace: "tanzu-observability-demo"
+
+cluster: homelab-1
+
+image:
+  repository:  public.ecr.aws/tanzu_observability_demo_app/to-demo
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+wavefront:
+   base64_token: "[your base64 encoded token here"
+   url: "https://[your cluster].wavefront.com/api/"
+
+customtags:
+   location: homelab
+   environment: dev
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
