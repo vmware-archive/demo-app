@@ -65,6 +65,9 @@ warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0  
 ---
 
 ## Configure, Build, Package and Deploy
+
+For those that prefer to build and host their own containers
+
 ---
 
 #### Configure
@@ -79,17 +82,15 @@ export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
 export WAVEFRONT_BASE64_TOKEN=<YOUR BASE64 ENCODED TOKEN HERE>
 ```
 The above variables will be used by below scripts to fill in the values to setup the \*.yaml files. `K8S_REPOSITORY` is the repository URL for container images which needs to be specified in order for the deployment to properly download the images.
-You can use the provided K8S_REPOSITORY to deploy and avoid the build and package stages.
+You can use the provided K8S_REPOSITORY to deploy and avoid the build and package steps.
 
 - Generate the the yaml files
 ```console
 cd deploy/src
 ./cm.sh 
-./create-yaml.sh
 ```
-- `cm.sh` creates the 01-app-config-*.yaml files 
-- `create-yaml.sh` uses `envsubst` and `values.sh` to configure all of the *yaml files
-- *Note: `create-yaml.sh` must be run before building the images as it also creates `applicationTag.yaml` files used by the services.
+- `cm.sh` creates the 01-app-config-*.yaml files and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the *yaml files
+- *The above step must be run before building the images as it also creates `applicationTag.yaml` files used by the services.*
 
 ---
 
@@ -99,7 +100,7 @@ Skip to Deploy if you do not want to build, package and push to your registry/re
 ### Build
 - Build the Java services - from the root folder run:
 ```console
-mvn package
+mvn clean package
 ```
 - Build the .Net service:
 ```console
@@ -107,16 +108,17 @@ cd payments; dotnet build
 ```
 - Build the Golang service: 
  ```console
- cd inventory; make
+ cd ../inventory; make
  ```
  ---
 
-### Package
+### Package 
+*Note: This step will attempt to push to the registry referenced above!*
  - Create docker images and push to registry.
- - `deploy/src/values.sh` is referenced here to provide the repository.
-- Build containers and push to your repository:
+ - `deploy/src/values.sh` is referenced here to provide the registry and app tags.
+- Build containers and push to your registry:
  ```console
-cd images; 
+cd ../images-k8s 
 ./all.sh
 ```
 ---
@@ -135,9 +137,8 @@ kubectl apply -f namespace/
 kubectl apply -f services/
 ```
 - Deploy the app:
-```console 
+``` 
 kubectl apply -f . 
-kubectl apply -f service/19_shopping-service.yml
 ```
 - To redeploy (but not delete the namespace or service):
 ```
@@ -150,5 +151,6 @@ Please let us know how we can improve!
 
 ---
 #### TODO
-1. Add UI repo link 
+1. Add build containers
+2. Add UI repo link 
 
