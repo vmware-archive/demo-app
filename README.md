@@ -102,14 +102,7 @@ Skip to Deploy if you do not want to build, package and push to your registry/re
 ```console
 mvn clean package
 ```
-- Build the .Net service:
-```console
-cd payments; dotnet build
-```
-- Build the Golang service: 
- ```console
- cd ../inventory; make
- ```
+- The .Net service (Payments) and the Golang service (inventory) are built when creating the docker container in the Package step.
  ---
 
 ### Package 
