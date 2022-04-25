@@ -29,14 +29,8 @@ else
 	echo "\n >>> no prepare.sh not found\n"
 fi
 
-<<<<<<< HEAD
-docker build . -t $K8S_REPOSITORY$IMAGE 
-docker push $K8S_REPOSITORY$IMAGE
-=======
-docker build . -t ${K8S_REPOSITORY}/$IMAGE 
-docker push ${K8S_REPOSITORY}/$IMAGE
-=======
->>>>>>> wavefrontHQ-master
+docker build . -t ${K8S_REPOSITORY}$IMAGE 
+docker push ${K8S_REPOSITORY}$IMAGE
 
 if [[ -f clean.sh ]]; then
 	./clean.sh 
