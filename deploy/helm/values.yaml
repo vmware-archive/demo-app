@@ -17,8 +17,8 @@ image:
   tag: ""
 
 wavefront:
-   base64_token: "[your base64 encoded token here"
-   url: "https://[your cluster].wavefront.com/api/"
+   token: "your API token"
+   url: "https://your_cluster.wavefront.com/api/"
 
 customtags:
    location: homelab
