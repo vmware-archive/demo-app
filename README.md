@@ -5,7 +5,7 @@ This is a polyglot demo app for showcasing Tanzu Observability.
 To view in Tanzu Observability by Wavefront you will need:
 * A free Tanzu Observability account: 
   * Free trial: https://tanzu.vmware.com/observability
-* Base64 encoded API token and the URL for your instance: 
+* API token and the URL for your instance: 
   * Docs here: https://docs.wavefront.com/wavefront_api.html#generating-an-api-token
 ----
 ## Run
@@ -28,7 +28,7 @@ vi values.yaml
 Minimally update:
 ```console
 wavefront:
- base64_token: 
+ token: 
  url: 
  ```
  
