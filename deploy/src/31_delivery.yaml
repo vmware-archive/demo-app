@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: delivery
     shard: blue
   name: delivery-blue
@@ -11,13 +11,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $K8S_APPLICATION
+      application: $K8S_APPLICATION
       service: delivery
       shard: blue
   template:
     metadata:
       labels:
-        app: $K8S_APPLICATION
+        application: $K8S_APPLICATION
         service: delivery
         shard: blue
     spec:
@@ -52,7 +52,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: delivery
     shard: green
   name: delivery-green
@@ -61,13 +61,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $K8S_APPLICATION
+      application: $K8S_APPLICATION
       service: delivery
       shard: green
   template:
     metadata:
       labels:
-        app: $K8S_APPLICATION
+        application: $K8S_APPLICATION
         service: delivery
         shard: green
     spec:
@@ -105,7 +105,7 @@ metadata:
   namespace: $K8S_NAMESPACE
 spec: 
   selector:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: delivery  
   type: ClusterIP
   ports:

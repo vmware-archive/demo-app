@@ -7,7 +7,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
   name: {{ .Values.namespace   }}-wavefront-proxy
   namespace: {{ .Values.namespace   }}
@@ -15,12 +15,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: {{ .Values.namespace   }}-wavefront-proxy
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: {{ .Values.namespace   }}-wavefront-proxy
     spec:
       containers:
@@ -37,7 +37,7 @@ spec:
               key: token
         # Uncomment the below lines to consume Zipkin/Istio traces
         - name: WAVEFRONT_PROXY_ARGS
-          value: --traceListenerPorts 30000
+          value: --customTracingListenerPorts 30000  --customMessageTags log
         ports:
         - containerPort: 2878
           protocol: TCP
@@ -53,7 +53,7 @@ metadata:
   name: {{ .Values.namespace   }}-wavefront-proxy
   namespace: {{ .Values.namespace   }}
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
 spec:
   ports:
@@ -65,5 +65,5 @@ spec:
     targetPort: 30000
     protocol: TCP
   selector:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
