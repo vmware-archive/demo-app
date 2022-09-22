@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: delivery
     shard: blue
   name: delivery-blue
@@ -11,20 +11,20 @@ spec:
   replicas: {{ .Values.replicaCount.blue  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: delivery
       shard: blue
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: delivery
         shard: blue
     spec:
       containers:
       - name: delivery
         image: {{ .Values.image.repository }}/delivery:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         command:
         - "java"
         - "-jar"
@@ -52,7 +52,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: delivery
     shard: green
   name: delivery-green
@@ -61,20 +61,20 @@ spec:
   replicas: {{ .Values.replicaCount.green  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: delivery
       shard: green
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: delivery
         shard: green
     spec:
       containers:
         - name: delivery
           image: {{ .Values.image.repository }}/delivery:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           command:
             - "java"
             - "-jar"
@@ -105,7 +105,7 @@ metadata:
   namespace: {{ .Values.namespace   }}
 spec: 
   selector:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: delivery  
   type: ClusterIP
   ports:
