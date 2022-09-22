@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: loadgen
   name: loadgen
   namespace: $K8S_NAMESPACE
@@ -10,12 +10,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $K8S_APPLICATION
+      application: $K8S_APPLICATION
       service: loadgen
   template:
     metadata:
       labels:
-        app: $K8S_APPLICATION
+        application: $K8S_APPLICATION
         service: loadgen
     spec:
       containers:

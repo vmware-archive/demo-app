@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.namespace   }}
 spec: 
   selector:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: shopping
   type: LoadBalancer
   ports:

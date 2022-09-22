@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: inventory
     shard: blue
   name: inventory-blue
@@ -11,13 +11,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $K8S_APPLICATION
+      application: $K8S_APPLICATION
       service: inventory
       shard: blue
   template:
     metadata:
       labels:
-        app: $K8S_APPLICATION
+        application: $K8S_APPLICATION
         service: inventory
         shard: blue
     spec:
@@ -50,7 +50,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: inventory
     shard: green
   name: inventory-green
@@ -59,13 +59,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $K8S_APPLICATION
+      application: $K8S_APPLICATION
       service: inventory
       shard: green
   template:
     metadata:
       labels:
-        app: $K8S_APPLICATION
+        application: $K8S_APPLICATION
         service: inventory
         shard: green
     spec:
@@ -101,7 +101,7 @@ metadata:
   namespace: $K8S_NAMESPACE
 spec: 
   selector:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: inventory  
   type: ClusterIP
   ports:

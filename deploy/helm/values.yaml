@@ -8,7 +8,7 @@ replicaCount:
 
 namespace: "tanzu-observability-demo"
 
-cluster: homelab-1
+cluster: k8s-cluster
 
 image:
   repository:  public.ecr.aws/tanzu_observability_demo_app/to-demo
@@ -20,9 +20,12 @@ wavefront:
    token: "your API token"
    url: "https://your_cluster.wavefront.com/api/"
 
+logs:
+  enabled: false
+
 customtags:
-   location: homelab
-   environment: dev
+   location: k8s-cluster
+   environment: non-prod
 
 imagePullSecrets: []
 nameOverride: ""
