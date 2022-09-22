@@ -152,5 +152,3 @@ kubectl apply -f .
 ---
 ## That's it!
 Please let us know how we can improve!
-
----
