@@ -1,0 +1,99 @@
+{{ define "config"}}
+{
+<label @FLUENT_LOG>
+  <match fluent.**>
+    @type null
+  </match>
+</label>   
+
+<source>
+  # tail all the other containers
+  @id in_tail_container_logs
+  @type tail
+  include_source_host true
+  source_host_key event_source
+  # tail all containers
+  path /var/log/containers/*
+  # except for these
+  exclude_path ["/var/log/containers/fluentd*", 
+               "/var/log/containers/*wavefront-proxy*",
+               "/var/log/containers/*wavefront-collector*"]
+  pos_file /var/log/fluentd-containers.log.pos
+  tag raw.kubernetes.*
+  read_from_head true
+  <parse>
+    @type multi_format
+    <pattern>
+      format json
+      time_key time
+      time_type string
+      time_format "%Y-%m-%dT%H:%M:%S.%NZ"
+      keep_time_key false
+    </pattern>
+    <pattern>
+      # for logs that are similiar to CLF
+      format /^.*(?<log>(POST|GET) \/[A-z/]* [^ ]* [^ ]* [^ ]*)/
+      keep_time_key false
+    </pattern>
+    <pattern>
+      # standard k8s log style
+      format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
+      keep_time_key false
+    </pattern>
+   </parse>
+</source>
+
+<filter **>
+  # Enrich logs with kubernetes metadata
+  @type kubernetes_metadata
+  @id filter_kube_metadata
+  skip_labels false
+  skip_container_metadata false
+  skip_namespace_metadata true
+  skip_master_url false
+</filter>
+
+<filter **>
+  @type record_transformer
+  enable_ruby
+  <record>
+    application "${record.dig('kubernetes', 'labels', 'application')? record.dig('kubernetes', 'labels', 'application') : 'none'}"
+    service "${record.dig('kubernetes', 'labels', 'service')? record.dig('kubernetes', 'labels', 'service') : 'none'}"
+    shard "${record.dig('kubernetes', 'labels', 'shard')? record.dig('kubernetes', 'labels', 'shard') : 'none'}"
+    version "${record.dig('kubernetes', 'labels', 'version')? record.dig('kubernetes', 'labels', 'version') : 'none'}"
+    container "${record.dig('kubernetes', 'container_name')? record.dig('kubernetes', 'container_name') : 'none'}"
+    namespace "${record.dig('kubernetes', 'namespace_name')? record.dig('kubernetes', 'namespace_name') : 'none'}"
+    pod_name "${record.dig('kubernetes', 'pod_name')? record.dig('kubernetes', 'pod_name') : 'none'}"
+  </record>
+  remove_keys kubernetes, docker
+</filter>
+
+<match **>
+  @type copy
+  # uncomment to see all logs in fluentd container 
+  # <store>
+  #   @type stdout
+  # </store>
+  <store>
+    @type http
+    endpoint http://{{.Values.namespace}}-wavefront-proxy.{{.Values.namespace}}.svc.cluster.local:2878/logs/json_array?f=logs_json_arr
+    open_timeout 2
+    json_array true
+    <buffer>
+      flush_interval 1s
+    </buffer>
+  </store> 
+</match>
+
+}
+{{ end }}
+
+{{- if $.Values.logs.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Release.Name}}-fluentdconfigmap
+  namespace: kube-system
+data:
+  fluent.conf: {{ (include "config" .) | trim | quote }}
+{{- end }}
