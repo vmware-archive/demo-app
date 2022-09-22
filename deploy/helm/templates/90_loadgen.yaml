@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: loadgen
   name: loadgen
   namespace: {{ .Values.namespace   }}
@@ -10,18 +10,18 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: loadgen
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: loadgen
     spec:
       containers:
       - name: loadgen
         image: {{ .Values.image.repository }}/loadgen:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         command:
         - "java"
         - "-jar"

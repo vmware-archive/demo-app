@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: inventory
     shard: blue
   name: inventory-blue
@@ -11,20 +11,20 @@ spec:
   replicas: {{ .Values.replicaCount.blue  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: inventory
       shard: blue
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: inventory
         shard: blue
     spec:
       containers:
       - name: inventory
         image: {{ .Values.image.repository }}/inventory:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         command:
         - "/inventory"
         - "/conf/inventory.conf"
@@ -50,7 +50,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: inventory
     shard: green
   name: inventory-green
@@ -59,20 +59,20 @@ spec:
   replicas: {{ .Values.replicaCount.green  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: inventory
       shard: green
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: inventory
         shard: green
     spec:
       containers:
         - name: inventory
           image: {{ .Values.image.repository }}/inventory:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           command:
             - "/inventory"
             - "/conf/inventory.conf"
@@ -101,7 +101,7 @@ metadata:
   namespace: {{ .Values.namespace   }}
 spec: 
   selector:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: inventory  
   type: ClusterIP
   ports:

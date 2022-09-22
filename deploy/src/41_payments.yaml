@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: payments
     shard: blue
   name: payments-blue
@@ -11,13 +11,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $K8S_APPLICATION
+      application: $K8S_APPLICATION
       service: payments
       shard: blue
   template:
     metadata:
       labels:
-        app: $K8S_APPLICATION
+        application: $K8S_APPLICATION
         service: payments
         shard: blue
     spec:
@@ -56,7 +56,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: payments
     shard: green
   name: payments-green
@@ -65,13 +65,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: $K8S_APPLICATION
+      application: $K8S_APPLICATION
       service: payments
       shard: green
   template:
     metadata:
       labels:
-        app: $K8S_APPLICATION
+        application: $K8S_APPLICATION
         service: payments
         shard: green
     spec:
@@ -113,7 +113,7 @@ metadata:
   namespace: $K8S_NAMESPACE
 spec: 
   selector:
-    app: $K8S_APPLICATION
+    application: $K8S_APPLICATION
     service: payments
   type: ClusterIP
   ports:
