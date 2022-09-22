@@ -10,12 +10,10 @@ To view in Tanzu Observability by Wavefront you will need:
 ----
 ## Run
 
-### Kubernetes
-
 * Deploy with helm or kubectl from ```public.ecr.aws/tanzu_observability_demo_app/to-demo```
 * You can also build, package and push to your registry and deploy from there.
 
-#### Deploy with Helm
+#### Helm
 ##### Clone the repo:
 ```console
 git clone https://github.com/wavefrontHQ/demo-app.git
@@ -31,8 +29,15 @@ wavefront:
  token: 
  url: 
  ```
- 
-Install with helm:
+
+### Logs:
+To send logs to Tanzu Observability with `fluentd`, update `values.yaml` and set logs to `true`:
+```console
+logs:
+  enabled: true
+```
+
+Now we're ready to install with Helm:
 
 ```console
 helm install tacocat-demo .
@@ -71,7 +76,11 @@ warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0  
 For those that prefer to build and host their own containers
 
 ---
-
+##### Clone the repo:
+```console
+git clone https://github.com/wavefrontHQ/demo-app.git
+cd demo-app
+```
 #### Configure
 
 - Configure the `deploy/src/values.sh` file with your settings:
@@ -145,7 +154,3 @@ kubectl apply -f .
 Please let us know how we can improve!
 
 ---
-#### TODO
-1. Add build containers
-2. Add UI repo link 
-

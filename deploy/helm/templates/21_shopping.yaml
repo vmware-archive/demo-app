@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: shopping
     shard: blue
   name: shopping-blue
@@ -11,20 +11,20 @@ spec:
   replicas: {{ .Values.replicaCount.blue  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: shopping
       shard: blue
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: shopping
         shard: blue
     spec:
       containers:
       - name: shopping
         image: {{ .Values.image.repository }}/shopping:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         command:
         - "java"
         - "-jar"
@@ -56,7 +56,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: shopping
     shard: green
   name: shopping-green
@@ -65,20 +65,20 @@ spec:
   replicas: {{ .Values.replicaCount.green  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: shopping
       shard: green
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: shopping
         shard: green
     spec:
       containers:
         - name: shopping
           image: {{ .Values.image.repository }}/shopping:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           command:
             - "java"
             - "-jar"

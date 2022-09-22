@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: payments
     shard: blue
   name: payments-blue
@@ -11,20 +11,20 @@ spec:
   replicas: {{ .Values.replicaCount.blue  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: payments
       shard: blue
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: payments
         shard: blue
     spec:
       containers:
       - name: payments
         image: {{ .Values.image.repository }}/payments:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: DOTNET_CLI_HOME 
           value: "/tmp/DOTNET_CLI_HOME"
@@ -56,7 +56,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: payments
     shard: green
   name: payments-green
@@ -65,20 +65,20 @@ spec:
   replicas: {{ .Values.replicaCount.green  }}
   selector:
     matchLabels:
-      app: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ include "tanzu-observability-demo.fullname" .  }}
       service: payments
       shard: green
   template:
     metadata:
       labels:
-        app: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ include "tanzu-observability-demo.fullname" .  }}
         service: payments
         shard: green
     spec:
       containers:
         - name: payments
           image: {{ .Values.image.repository }}/payments:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
           - name: DOTNET_CLI_HOME 
             value: "/tmp/DOTNET_CLI_HOME"
@@ -113,7 +113,7 @@ metadata:
   namespace: {{ .Values.namespace   }}
 spec: 
   selector:
-    app: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ include "tanzu-observability-demo.fullname" .  }}
     service: payments
   type: ClusterIP
   ports:
