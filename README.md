@@ -8,41 +8,42 @@ To view in Tanzu Observability by Wavefront you will need:
 * API token and the URL for your instance: 
   * Docs here: https://docs.wavefront.com/wavefront_api.html#generating-an-api-token
 ----
-## Run
+## Deploy with Helm
 
-* Deploy with helm or kubectl from ```public.ecr.aws/tanzu_observability_demo_app/to-demo```
+* Deploy with helm or kubectl with containers from ```public.ecr.aws/tanzu_observability_demo_app/to-demo```
 * You can also build, package and push to your registry and deploy from there.
 
-#### Helm
-##### Clone the repo:
+Helm Steps:
+
+1. Clone the repo:
 ```console
 git clone https://github.com/wavefrontHQ/demo-app.git
 cd demo-app/deploy/helm
 ```
-Edit  `values.yaml` to match your environment or use the defaults and execute helm:
+2. Edit  `values.yaml` to match your environment or use the defaults and execute helm:
 ```console
 vi values.yaml
 ```
-Minimally update:
+3. Minimally update:
 ```console
 wavefront:
  token: 
  url: 
  ```
 
-### Logs:
-To send logs to Tanzu Observability with `fluentd`, update `values.yaml` and set logs to `true`:
+### Logs (optional):
+4. To send logs to Tanzu Observability with `fluentd`, update `values.yaml` and set logs to `true`:
 ```console
 logs:
   enabled: true
 ```
 
-Now we're ready to install with Helm:
+5. Install with Helm:
 
 ```console
 helm install tacocat-demo .
 ```
-Verify the pods are running:
+6. Verify the pods are running:
 ```console
 k get pods -n  tanzu-observability-demo
 
@@ -71,19 +72,20 @@ warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0  
 ```
 ---
 
-## Configure, Build, Package and Deploy
+## Build Locally for docker and/or your own repository
 
-For those that prefer to build and host their own containers
+### Prequisites
+* Bash or zsh 
+* envsubst
 
----
-##### Clone the repo:
+### Configure 
+
+1. Clone the repo:
 ```console
 git clone https://github.com/wavefrontHQ/demo-app.git
 cd demo-app
 ```
-#### Configure
-
-- Configure the `deploy/src/values.sh` file with your settings:
+2. Configure  `deploy/src/values.sh`  with your settings:
 ```
 export K8S_NAMESPACE=tacocat
 export K8S_APPLICATION=tacocat
@@ -91,25 +93,30 @@ export K8S_CLUSTER=cluster1
 export K8S_LOCATION=americas
 export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
 export WAVEFRONT_BASE64_TOKEN=<YOUR BASE64 ENCODED TOKEN HERE>
+export WF_PROXY_HOST=${K8S_NAMESPACE}-wavefront-proxy  
 ```
-The above variables will be used by below scripts to fill in the values to setup the \*.yaml files. `K8S_REPOSITORY` is the repository URL for container images which needs to be specified in order for the deployment to properly download the images.
-You can use the provided K8S_REPOSITORY to deploy and avoid the build and package steps.
+> * The variables in `values.sh` are used to configure values for the `yaml` files. 
+> * `K8S_REPOSITORY` is the repository URL for container images which needs to be specified in order for the deployment to properly download the images.
+> * You can use the provided K8S_REPOSITORY to deploy and avoid the build and package steps.
 
-- Generate the the yaml files
+3. If running locally with `docker-compose`, `K8S_REPOSITORY` should not be set:
+```
+#export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
+export WF_PROXY_HOST=wavefront-proxy
+```
+
+4. Generate the the yaml files
 ```console
 cd deploy/src
 ./cm.sh 
 ```
-- `cm.sh` creates the 01-app-config-*.yaml files and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the *yaml files
-- *The above step must be run before building the images as it also creates `applicationTag.yaml` files used by the services.*
+> - `cm.sh` creates the 01-app-config-*.yaml files and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the *yaml files
+> - * The above step must be run before building the images as it also creates `applicationTag.yaml` files used by the services.*
 
 ---
 
-Skip to Deploy if you do not want to build, package and push to your registry/repository.
-
----
 ### Build
-- Build the Java services - from the root folder run:
+1. Build the Java services - from the root folder run:
 ```console
 mvn clean package
 ```
@@ -117,19 +124,59 @@ mvn clean package
  ---
 
 ### Package 
-*Note: This step will attempt to push to the registry referenced above!*
- - Create docker images and push to registry.
- - `deploy/src/values.sh` is referenced here to provide the registry and app tags.
-- Build containers and push to your registry:
+> *Note: This step will push to the registry defined in* `K8S_REPOSITORY` <br>
+>
+> To run locally with `docker-compose`, `K8S_REPOSITORY` should be undefined or empty.
+ 
+ 1. Create docker images and push to registry (if `K8S_REPOSITORY` is set).
  ```console
 cd ../images-k8s 
 ./all.sh
 ```
 ---
-### Deploy
+
+### Deploy with `docker-compose`
+1. Configure
 ```console
-cd deploy
+cd deploy/docker-compose
 ```
+2. Edit `docker-compose.yaml` and update the WAVEFRONT PROXY settings:
+```
+wavefront-proxy:
+    image: projects.registry.vmware.com/tanzu_observability/proxy:latest
+    container_name: wavefront-proxy
+    environment: 
+      - WAVEFRONT_URL=https://[YOUR TENANT].wavefront.com/api
+      - WAVEFRONT_TOKEN=[YOUR API KEY]
+```
+3. Deploy using local containers
+```
+docker-compose up -d
+```
+3. OR deploy using hosted containers:
+```
+export export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/; docker-compose  up -d
+```
+4. Verify containers are running:
+```
+~/l/d/d/docker-compose ❯❯❯ docker-compose ps
+                                                                                                          ✘ 130 
+          Name                        Command               State                         Ports                       
+----------------------------------------------------------------------------------------------------------------------
+delivery                   java -jar /delivery.jar -- ...   Up                                                        
+docker-compose_loadgen_1   java -jar /loadgen.jar sho ...   Up                                                        
+inventory                  /inventory /conf/inventory ...   Up                                                        
+notfication                java -jar /notification.ja ...   Up                                                        
+packaging                  java -jar /packaging.jar / ...   Up                                                        
+payments                   dotnet run --no-build -p / ...   Up                                                        
+printing                   java -jar /printing.jar /c ...   Up                                                        
+shopping                   java -jar /shopping.jar se ...   Up      0.0.0.0:50050->50050/tcp, 0.0.0.0:50150->50150/tcp
+styling                    java -jar /styling.jar ser ...   Up                                                        
+warehouse                  python3 manage.py runserve ...   Up                                                        
+wavefront-proxy            /bin/bash /opt/wavefront/w ...   Up      2878/tcp, 3878/tcp, 4242/tcp  ```
+```
+
+### Deploy with `kubectl`
 - The yaml file are split into the `deploy`, `namespace` and `services` folders. 
 - This facilitates redeploying the apps in the `deploy` folder without changing the k8s service or namespace (easier redeploys).
 - Deploy the namespace first:
