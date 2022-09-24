@@ -49,6 +49,7 @@ done
 if [data/inventory.conf]; then
 	echo "creating ../data/inventory.conf"
 	envsubst < data/inventory.conf > ../data/inventory.conf
+fi
 
 
 #echo "create ../../payments/src/Payments/applicationTags.yaml"
