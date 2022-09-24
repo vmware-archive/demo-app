@@ -35,5 +35,15 @@ for f in services/* ; do
 	envsubst < $f > ../$f
 done
 
+if [ ! -d "../data/" ]
+then 
+	mkdir ../data
+fi
+for f in data/* ; do
+	if 
+	echo "creating ../$f"
+	envsubst < $f > ../$f
+done
+
 #echo "create ../../payments/src/Payments/applicationTags.yaml"
 #envsubst < apptags/applicationTags.yaml > ../../payments/src/Payments/applicationTags.yaml
