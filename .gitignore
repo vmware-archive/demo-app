@@ -684,3 +684,5 @@ warehouse/applicationTags.yaml
 #.settings
 #.project
 #.factorypath
+ 
+.DS_Store
