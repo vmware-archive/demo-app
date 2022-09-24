@@ -46,5 +46,10 @@ for f in data/*.yaml ; do
 	fi
 done
 
+if [data/inventory.conf]; then
+	echo "creating ../data/inventory.conf"
+	envsubst < data/inventory.conf > ../data/inventory.conf
+
+
 #echo "create ../../payments/src/Payments/applicationTags.yaml"
 #envsubst < apptags/applicationTags.yaml > ../../payments/src/Payments/applicationTags.yaml
