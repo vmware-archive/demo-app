@@ -123,7 +123,7 @@ mvn clean package
 - The .Net service (Payments) and the Golang service (inventory) are built when creating the docker container in the Package step.
  ---
 
-### Package 
+## Package 
 > *Note: This step will push to the registry defined in* `K8S_REPOSITORY` <br>
 >
 > To run locally with `docker-compose`, `K8S_REPOSITORY` should be undefined or empty.
@@ -135,7 +135,7 @@ cd ../images-k8s
 ```
 ---
 
-### Deploy with `docker-compose`
+## Deploy with `docker-compose`
 1. Configure
 ```console
 cd deploy/docker-compose
@@ -176,7 +176,7 @@ warehouse                  python3 manage.py runserve ...   Up
 wavefront-proxy            /bin/bash /opt/wavefront/w ...   Up      2878/tcp, 3878/tcp, 4242/tcp  ```
 ```
 
-### Deploy with `kubectl`
+## Deploy with `kubectl`
 - The yaml file are split into the `deploy`, `namespace` and `services` folders. 
 - This facilitates redeploying the apps in the `deploy` folder without changing the k8s service or namespace (easier redeploys).
 - Deploy the namespace first:
