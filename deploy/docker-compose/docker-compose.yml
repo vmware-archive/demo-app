@@ -54,7 +54,6 @@ services:
     container_name: warehouse
     volumes:
       - ./../data/wf-config.yaml:/conf/wf-config.yaml
-      - ./../data/warehouse-app.yaml:/conf/warehouse-app.yaml
       - ./../data/warehouse-app-tags.yaml:/conf/warehouse-app-tags.yaml
     command:
       - "python3"
@@ -105,7 +104,7 @@ services:
       - warehouse
 
   styling:
-    image: public.ecr.aws/tanzu_observability_demo_app/to-demo/styling
+    image: ${K8S_REPOSITORY}styling
     container_name: styling
     volumes:
       - ./../data/wf-config.yaml:/conf/wf-config.yaml
@@ -122,7 +121,7 @@ services:
       - packaging
       
   shopping:
-    image: public.ecr.aws/tanzu_observability_demo_app/to-demo/shopping
+    image: ${K8S_REPOSITORY}shopping
     container_name: shopping
     volumes:
       - ./../data/wf-config.yaml:/conf/wf-config.yaml
