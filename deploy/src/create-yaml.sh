@@ -10,6 +10,7 @@ echo " application: " $K8S_APPLICATION
 echo "     cluster: " $K8S_CLUSTER
 echo "    location: " $K8S_LOCATION
 echo "  repository: " $K8S_REPOSITORY
+echo "   wavefront: " $WF_PROXY_HOST
 
 for f in *.yaml ; do
 	echo "creating ../$f"
