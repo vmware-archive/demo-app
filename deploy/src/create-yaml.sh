@@ -39,10 +39,11 @@ if [ ! -d "../data/" ]
 then 
 	mkdir ../data
 fi
-for f in data/* ; do
-	if 
-	echo "creating ../$f"
-	envsubst < $f > ../$f
+for f in data/*.yaml ; do
+	if [ -f $f ]; then
+		echo "creating ../$f"
+		envsubst < $f > ../$f
+	fi
 done
 
 #echo "create ../../payments/src/Payments/applicationTags.yaml"
