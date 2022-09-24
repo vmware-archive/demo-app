@@ -1,69 +1,139 @@
 version: '2'
 
 services:
-  wavefront:
+  wavefront-proxy:
     image: projects.registry.vmware.com/tanzu_observability/proxy:latest
     container_name: wavefront-proxy
+    environment: 
+      - WAVEFRONT_URL=https://longboard.wavefront.com/api
+      - WAVEFRONT_TOKEN=dc9fed86-6875-4cad-8cb2-c4ddd60360c4
+      - WAVEFRONT_PROXY_ARGS= --customTracingListenerPorts 30000  --customMessageTags log
 
   printing:
     image: ${K8S_REPOSITORY}printing
     container_name: printing
-    ports:
-     - 50052:50052
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/printing-app.yaml:/conf/printing-app.yaml
+      - ./../data/printing-app-tags.yaml:/conf/printing-app-tags.yaml
+    command:
+      - "java"
+      - "-jar"
+      - "/printing.jar"
+      - "/conf/printing-app.yaml"
+
 
   packaging:
     image: ${K8S_REPOSITORY}packaging
     container_name: packaging
-    ports: 
-     - 50053:50053
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/packaging-app.yaml:/conf/packaging-app.yaml
+      - ./../data/packaging-app-tags.yaml:/conf/packaging-app-tags.yaml
+    command:
+      - "java"
+      - "-jar"
+      - "/packaging.jar"
+      - "/conf/packaging-app.yaml"
 
   notification:
     image: ${K8S_REPOSITORY}notification
     container_name: notfication
-    ports:
-    - 50056:50056
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/notification-app.yaml:/conf/notification-app.yaml
+      - ./../data/notification-app-tags.yaml:/conf/notification-app-tags.yaml
+    command:
+      - "java"
+      - "-jar"
+      - "/notification.jar"
+      - "--spring.config.location=/conf/notification-app.yaml"
 
   warehouse:
     image: ${K8S_REPOSITORY}warehouse
     container_name: warehouse
-    ports:
-     - 50060:50060
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/warehouse-app.yaml:/conf/warehouse-app.yaml
+      - ./../data/warehouse-app-tags.yaml:/conf/warehouse-app-tags.yaml
+    command:
+      - "python3"
+      - "manage.py"
+      - "runserver"
+      - "0.0.0.0:50060"
+
 
   payments:
     image: ${K8S_REPOSITORY}payments
     container_name: payments
-    ports:
-     - 50063:50063
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/payments-app.yaml:/conf/payments-app.yaml
+      - ./../data/payments-app-tags.yaml:/conf/payments-app-tags.yaml
+    command:
+      - "dotnet"
+      - "run"
+      - "--no-build"
+      - "-p"
+      - "/payments/src/Payments/"
+
 
   delivery:
     image: ${K8S_REPOSITORY}delivery
     container_name: delivery
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/delivery-app.yaml:/conf/delivery-app.yaml
+      - ./../data/delivery-app-tags.yaml:/conf/delivery-app-tags.yaml
+    command:
+      - "java"
+      - "-jar"
+      - "/delivery.jar"
+      - "--spring.config.location=/conf/delivery-app.yaml"
     mem_limit: 1024M
-    ports:
-     - 50054:50054
     depends_on:
      - notification
 
   inventory:
     image: ${K8S_REPOSITORY}inventory
     container_name: inventory
-    ports:
-      - 60001:6001
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/inventory.conf:/conf/inventory.conf
+    command: /inventory /conf/inventory.conf
     depends_on:
       - warehouse
 
   styling:
-    image: ${K8S_REPOSITORY}styling
+    image: public.ecr.aws/tanzu_observability_demo_app/to-demo/styling
     container_name: styling
-    ports:
-      - 50051:50051
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/styling-app.yaml:/conf/styling-app.yaml
+      - ./../data/styling-app-tags.yaml:/conf/styling-app-tags.yaml
+    command:
+      - "java"
+      - "-jar"
+      - "/styling.jar"
+      - "server"
+      - "/conf/styling-app.yaml"
     depends_on:
       - printing
       - packaging
       
   shopping:
-    image: ${K8S_REPOSITORY}shopping
+    image: public.ecr.aws/tanzu_observability_demo_app/to-demo/shopping
     container_name: shopping
+    volumes:
+      - ./../data/wf-config.yaml:/conf/wf-config.yaml
+      - ./../data/shopping-app.yaml:/conf/shopping-app.yaml
+      - ./../data/shopping-app-tags.yaml:/conf/shopping-app-tags.yaml
+    command:
+     - "java"
+     - "-jar"
+     - "/shopping.jar"
+     - "server"
+     - "/conf/shopping-app.yaml"
     ports:
      - 50050:50050
      - 50150:50150
@@ -72,7 +142,17 @@ services:
       - payments
       - inventory
       - styling
+      - wavefront-proxy
 
   loadgen:
     image: ${K8S_REPOSITORY}loadgen
-    # container_name: loadgen
+    command:
+      - "java"
+      - "-jar"
+      - "/loadgen.jar"
+      - "shopping"
+      - "50050"
+      - "50051"
+      - "2"
+      - "15"
+      - "0"

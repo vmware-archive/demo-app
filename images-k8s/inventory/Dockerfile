@@ -1,4 +1,4 @@
-FROM golang:1.17 AS build
+FROM buster AS build
 WORKDIR /src
 ADD inventory /src
 
