@@ -46,7 +46,7 @@ for f in data/*.yaml ; do
 	fi
 done
 
-if [data/inventory.conf]; then
+if [ -f data/inventory.conf ]; then
 	echo "creating ../data/inventory.conf"
 	envsubst < data/inventory.conf > ../data/inventory.conf
 fi
