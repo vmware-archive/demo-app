@@ -1,19 +1,28 @@
-# Tanzu Observability demo-app
-This is a polyglot demo app for showcasing Tanzu Observability.
+# Tanzu Observability Demo Application
 
-----
-To view in Tanzu Observability by Wavefront you will need:
+This project is a polyglot demo application that has several service to show you how to send your data and view the data on Tanzu Observability.
+
+## Prerequisites
+
+To view data in Tanzu Observability by Wavefront you need:
 * A free Tanzu Observability account: 
   * Free trial: https://tanzu.vmware.com/observability
-* API token and the URL for your instance: 
-  * Docs here: https://docs.wavefront.com/wavefront_api.html#generating-an-api-token
-----
-## Deploy with Helm
+* Get the API token and the URL of your instance. For more information, see [Managing API Tokens](https://docs.wavefront.com/wavefront_api.html#generating-an-api-token)
 
-* Deploy with helm or kubectl with containers from ```public.ecr.aws/tanzu_observability_demo_app/to-demo```
+## Send Data
+
+You can:
+
+* Deploy with helm or kubectl using the preconfigured containers on ```public.ecr.aws/tanzu_observability_demo_app/to-demo```
 * You can also build, package and push to your registry and deploy from there.
 
-Helm Steps:
+### Deploy with Helm
+
+#### Prerequisite
+
+You need an environment that is configured to run Kubernetes. See [Install Tools on the Kubernetes Documentation](https://kubernetes.io/docs/tasks/tools/) for details.
+
+## Configure and Run The Application
 
 1. Clone the repo:
 ```console
@@ -24,15 +33,14 @@ cd demo-app/deploy/helm
 ```console
 vi values.yaml
 ```
-3. Minimally update:
+3. Enter the API Token and URL of your instance:
 ```console
 wavefront:
  token: 
  url: 
  ```
 
-### Logs (optional):
-4. To send logs to Tanzu Observability with `fluentd`, update `values.yaml` and set logs to `true`:
+4. Optionally, to send logs to Tanzu Observability with `fluentd`, update `values.yaml` and set logs to `true`:
 ```console
 logs:
   enabled: true
@@ -72,13 +80,13 @@ warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0  
 ```
 ---
 
-## Build Locally for docker and/or your own repository
+### Build Locally for Docker or Your Own Repository
 
-### Prequisites
+#### Prerequisites
 * Bash or zsh 
 * envsubst
 
-### Configure 
+#### Configure the Application
 
 1. Clone the repo:
 ```console
@@ -105,25 +113,25 @@ export WF_PROXY_HOST=${K8S_NAMESPACE}-wavefront-proxy
 export WF_PROXY_HOST=wavefront-proxy
 ```
 
-4. Generate the the yaml files
+4. Generate the the YAML files.
 ```console
 cd deploy/src
 ./cm.sh 
 ```
-> - `cm.sh` creates the 01-app-config-*.yaml files and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the *yaml files
-> - * The above step must be run before building the images as it also creates `applicationTag.yaml` files used by the services.*
+> - `cm.sh` creates the 01-app-config-*.yaml fileS and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the *yaml files.
+> - * You must run the step to generate the YAML files before building the images as it also creates `applicationTag.yaml` files used by the services.*.
 
 ---
 
-### Build
-1. Build the Java services - from the root folder run:
+#### Build
+1. Build the Java services - from the root folder:
 ```console
 mvn clean package
 ```
 - The .Net service (Payments) and the Golang service (inventory) are built when creating the docker container in the Package step.
  ---
 
-## Package 
+### Package 
 > *Note: This step will push to the registry defined in* `K8S_REPOSITORY` <br>
 >
 > To run locally with `docker-compose`, `K8S_REPOSITORY` should be undefined or empty.
@@ -135,7 +143,7 @@ cd ../images-k8s
 ```
 ---
 
-## Deploy with `docker-compose`
+### Deploy with `docker-compose`
 1. Configure
 ```console
 cd deploy/docker-compose
@@ -149,15 +157,16 @@ wavefront-proxy:
       - WAVEFRONT_URL=https://[YOUR TENANT].wavefront.com/api
       - WAVEFRONT_TOKEN=[YOUR API KEY]
 ```
-3. Deploy using local containers
-```
-docker-compose up -d
-```
-3. OR deploy using hosted containers:
-```
-export export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/; docker-compose  up -d
-```
-4. Verify containers are running:
+3. Deploy the applcaition
+  1. Deploy using local containers:
+    ```
+    docker-compose up -d
+    ```
+  1. OR deploy using hosted containers:
+    ```
+    export export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/; docker-compose  up -d
+    ```
+4. Verify that the containers are running:
 ```
 ~/l/d/d/docker-compose ❯❯❯ docker-compose ps
                                                                                                           ✘ 130 
@@ -176,26 +185,28 @@ warehouse                  python3 manage.py runserve ...   Up
 wavefront-proxy            /bin/bash /opt/wavefront/w ...   Up      2878/tcp, 3878/tcp, 4242/tcp  ```
 ```
 
-## Deploy with `kubectl`
-- The yaml file are split into the `deploy`, `namespace` and `services` folders. 
-- This facilitates redeploying the apps in the `deploy` folder without changing the k8s service or namespace (easier redeploys).
+### Deploy With `kubectl`
+- The yaml file are split into `deploy`, `namespace` and `services` folders. 
+- This facilitates redeploying the apps in the `deploy` folder without changing the k8s service or namespace (ensures esay redeploys).
 - Deploy the namespace first:
-```
-kubectl apply -f namespace/
-```
+  ```
+  kubectl apply -f namespace/
+  ```
 - Deploy the Wavefront proxy and shopping service:
-```
-kubectl apply -f services/
-```
+  ```
+  kubectl apply -f services/
+  ```
 - Deploy the app:
-``` 
-kubectl apply -f . 
-```
+  ``` 
+  kubectl apply -f . 
+  ```
 - To redeploy (but not delete the namespace or service):
-```
-kubectl delete -f . 
-kubectl apply -f . 
-```
+  ```
+  kubectl delete -f . 
+  kubectl apply -f . 
+  ```
 ---
-## That's it!
-Please let us know how we can improve!
+
+
+## Getting Support
+Please let us know how we can improve! If you run into any issues with this applcaiton, let us know by creating a GitHub issue. 
