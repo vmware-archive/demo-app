@@ -24,61 +24,60 @@ You need an environment configured to run Kubernetes. See [Install Tools on the 
 #### Configure and Run the Application
 
 1. Clone the repo:
-  ```console
-  git clone https://github.com/wavefrontHQ/demo-app.git
-  cd demo-app/deploy/helm
-  ```
+    ```console
+    git clone https://github.com/wavefrontHQ/demo-app.git
+    cd demo-app/deploy/helm
+    ```
 2. Edit `values.yaml` to match your environment or use the defaults and execute Helm:
-  ```console
-  vi values.yaml
-  ```
+    ```console
+    vi values.yaml
+    ```
 3. Enter the API Token and URL of your instance:
-  ```console
-  wavefront:
-  token: 
-  url: 
-  ```
-
+    ```console
+    wavefront:
+    token: 
+    url: 
+    ```
 4. Optionally, to send logs to Tanzu Observability with `fluentd`, update `values.yaml` and set logs to `true`:
-  ```console
-  logs:
-    enabled: true
-  ```
+    ```console
+    logs:
+      enabled: true
+    ```
 
 5. Install with Helm:
 
-  ```console
-  helm install tacocat-demo .
-  ```
+    ```console
+    helm install tacocat-demo .
+    ```
 6. Verify that the pods are running.
 
-  Example: 
-  ```console
-  k get pods -n  tanzu-observability-demo
+    Example: 
+    ```console
+    k get pods -n  tanzu-observability-demo
 
-  ~/l/d/d/helm ❯❯❯ k get pods -n  tanzu-observability-demo
-  NAME                                                       READY   STATUS    RESTARTS   AGE
-  delivery-blue-764995948c-7g6vn                             1/1     Running   0          14m
-  delivery-green-867f978c5f-gftdt                            1/1     Running   0          13m
-  inventory-blue-b86c59d8d-sv2gg                             1/1     Running   0          13m
-  inventory-green-85679dc4c6-lrhd5                           1/1     Running   0          13m
-  loadgen-65676c865b-hkffn                                   1/1     Running   0          12m
-  notification-blue-5668c6df94-cpvlm                         1/1     Running   0          13m
-  notification-green-76895b75d6-tqr84                        1/1     Running   0          14m
-  packaging-blue-5775f7c86f-tccsc                            1/1     Running   0          14m
-  packaging-green-7cb5644df7-f766l                           1/1     Running   0          14m
-  payments-blue-7486b5bd59-8rggp                             1/1     Running   0          14m
-  payments-green-5bdf5869bc-447xf                            1/1     Running   0          14m
-  printing-blue-9fb48997d-bwsqx                              1/1     Running   0          14m
-  printing-green-7f66cd9bfd-npglt                            1/1     Running   0          14m
-  shopping-blue-68b89984fd-x52bg                             1/1     Running   0          13m
-  shopping-green-666dcc6966-lgmrp                            1/1     Running   0          14m
-  styling-blue-64dbc49f5b-2wrg4                              1/1     Running   0          14m
-  styling-green-75789ddc76-k77nx                             1/1     Running   0          14m
-  tanzu-observability-demo-wavefront-proxy-65c544fdd-6959p   1/1     Running   0          14m
-  warehouse-blue-6cb8f5c988-ltpgv                            1/1     Running   0          14m
-  warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0          14m
-  ```
+    ~/l/d/d/helm ❯❯❯ k get pods -n  tanzu-observability-demo
+    NAME                                                       READY   STATUS    RESTARTS   AGE
+    delivery-blue-764995948c-7g6vn                             1/1     Running   0          14m
+    delivery-green-867f978c5f-gftdt                            1/1     Running   0          13m
+    inventory-blue-b86c59d8d-sv2gg                             1/1     Running   0          13m
+    inventory-green-85679dc4c6-lrhd5                           1/1     Running   0          13m
+    loadgen-65676c865b-hkffn                                   1/1     Running   0          12m
+    notification-blue-5668c6df94-cpvlm                         1/1     Running   0          13m
+    notification-green-76895b75d6-tqr84                        1/1     Running   0          14m
+    packaging-blue-5775f7c86f-tccsc                            1/1     Running   0          14m
+    packaging-green-7cb5644df7-f766l                           1/1     Running   0          14m
+    payments-blue-7486b5bd59-8rggp                             1/1     Running   0          14m
+    payments-green-5bdf5869bc-447xf                            1/1     Running   0          14m
+    printing-blue-9fb48997d-bwsqx                              1/1     Running   0          14m
+    printing-green-7f66cd9bfd-npglt                            1/1     Running   0          14m
+    shopping-blue-68b89984fd-x52bg                             1/1     Running   0          13m
+    shopping-green-666dcc6966-lgmrp                            1/1     Running   0          14m
+    styling-blue-64dbc49f5b-2wrg4                              1/1     Running   0          14m
+    styling-green-75789ddc76-k77nx                             1/1     Running   0          14m
+    tanzu-observability-demo-wavefront-proxy-65c544fdd-6959p   1/1     Running   0          14m
+    warehouse-blue-6cb8f5c988-ltpgv                            1/1     Running   0          14m
+    warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0          14m
+    ```
 ---
 
 ### Build and Run the Application
