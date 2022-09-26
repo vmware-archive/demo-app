@@ -24,59 +24,61 @@ You need an environment configured to run Kubernetes. See [Install Tools on the 
 #### Configure and Run the Application
 
 1. Clone the repo:
-```console
-git clone https://github.com/wavefrontHQ/demo-app.git
-cd demo-app/deploy/helm
-```
-2. Edit  `values.yaml` to match your environment or use the defaults and execute helm:
-```console
-vi values.yaml
-```
+  ```console
+  git clone https://github.com/wavefrontHQ/demo-app.git
+  cd demo-app/deploy/helm
+  ```
+2. Edit `values.yaml` to match your environment or use the defaults and execute Helm:
+  ```console
+  vi values.yaml
+  ```
 3. Enter the API Token and URL of your instance:
-```console
-wavefront:
- token: 
- url: 
- ```
+  ```console
+  wavefront:
+  token: 
+  url: 
+  ```
 
 4. Optionally, to send logs to Tanzu Observability with `fluentd`, update `values.yaml` and set logs to `true`:
-```console
-logs:
-  enabled: true
-```
+  ```console
+  logs:
+    enabled: true
+  ```
 
 5. Install with Helm:
 
-```console
-helm install tacocat-demo .
-```
-6. Verify the pods are running:
-```console
-k get pods -n  tanzu-observability-demo
+  ```console
+  helm install tacocat-demo .
+  ```
+6. Verify that the pods are running.
 
-~/l/d/d/helm ❯❯❯ k get pods -n  tanzu-observability-demo
-NAME                                                       READY   STATUS    RESTARTS   AGE
-delivery-blue-764995948c-7g6vn                             1/1     Running   0          14m
-delivery-green-867f978c5f-gftdt                            1/1     Running   0          13m
-inventory-blue-b86c59d8d-sv2gg                             1/1     Running   0          13m
-inventory-green-85679dc4c6-lrhd5                           1/1     Running   0          13m
-loadgen-65676c865b-hkffn                                   1/1     Running   0          12m
-notification-blue-5668c6df94-cpvlm                         1/1     Running   0          13m
-notification-green-76895b75d6-tqr84                        1/1     Running   0          14m
-packaging-blue-5775f7c86f-tccsc                            1/1     Running   0          14m
-packaging-green-7cb5644df7-f766l                           1/1     Running   0          14m
-payments-blue-7486b5bd59-8rggp                             1/1     Running   0          14m
-payments-green-5bdf5869bc-447xf                            1/1     Running   0          14m
-printing-blue-9fb48997d-bwsqx                              1/1     Running   0          14m
-printing-green-7f66cd9bfd-npglt                            1/1     Running   0          14m
-shopping-blue-68b89984fd-x52bg                             1/1     Running   0          13m
-shopping-green-666dcc6966-lgmrp                            1/1     Running   0          14m
-styling-blue-64dbc49f5b-2wrg4                              1/1     Running   0          14m
-styling-green-75789ddc76-k77nx                             1/1     Running   0          14m
-tanzu-observability-demo-wavefront-proxy-65c544fdd-6959p   1/1     Running   0          14m
-warehouse-blue-6cb8f5c988-ltpgv                            1/1     Running   0          14m
-warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0          14m
-```
+  Example: 
+  ```console
+  k get pods -n  tanzu-observability-demo
+
+  ~/l/d/d/helm ❯❯❯ k get pods -n  tanzu-observability-demo
+  NAME                                                       READY   STATUS    RESTARTS   AGE
+  delivery-blue-764995948c-7g6vn                             1/1     Running   0          14m
+  delivery-green-867f978c5f-gftdt                            1/1     Running   0          13m
+  inventory-blue-b86c59d8d-sv2gg                             1/1     Running   0          13m
+  inventory-green-85679dc4c6-lrhd5                           1/1     Running   0          13m
+  loadgen-65676c865b-hkffn                                   1/1     Running   0          12m
+  notification-blue-5668c6df94-cpvlm                         1/1     Running   0          13m
+  notification-green-76895b75d6-tqr84                        1/1     Running   0          14m
+  packaging-blue-5775f7c86f-tccsc                            1/1     Running   0          14m
+  packaging-green-7cb5644df7-f766l                           1/1     Running   0          14m
+  payments-blue-7486b5bd59-8rggp                             1/1     Running   0          14m
+  payments-green-5bdf5869bc-447xf                            1/1     Running   0          14m
+  printing-blue-9fb48997d-bwsqx                              1/1     Running   0          14m
+  printing-green-7f66cd9bfd-npglt                            1/1     Running   0          14m
+  shopping-blue-68b89984fd-x52bg                             1/1     Running   0          13m
+  shopping-green-666dcc6966-lgmrp                            1/1     Running   0          14m
+  styling-blue-64dbc49f5b-2wrg4                              1/1     Running   0          14m
+  styling-green-75789ddc76-k77nx                             1/1     Running   0          14m
+  tanzu-observability-demo-wavefront-proxy-65c544fdd-6959p   1/1     Running   0          14m
+  warehouse-blue-6cb8f5c988-ltpgv                            1/1     Running   0          14m
+  warehouse-green-5b65b7d764-z8g6n                           1/1     Running   0          14m
+  ```
 ---
 
 ### Build and Run the Application
@@ -105,16 +107,14 @@ export WAVEFRONT_BASE64_TOKEN=<YOUR BASE64 ENCODED TOKEN HERE>
 export WF_PROXY_HOST=${K8S_NAMESPACE}-wavefront-proxy  
 ```
 > * The variables in `values.sh` are used to configure values for the `yaml` files. 
-> * `K8S_REPOSITORY` is the repository URL for container images which needs to be specified in order for the deployment to properly download the images.
-> * You can use the provided K8S_REPOSITORY to deploy and avoid the build and package steps.
-
-3. If running locally with `docker-compose`, `K8S_REPOSITORY` should not be set:
-```
-#export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
-export WF_PROXY_HOST=wavefront-proxy
-```
-
-4. Generate the the YAML files.
+> * `K8S_REPOSITORY` is the repository URL for container images. The repository URL needs to be specified for the deployment to properly download the images.
+> * If you use the value that is already defined for `K8S_REPOSITORY`, skip the build and package steps.
+> If running locally with `docker-compose`, you do not need the `K8S_REPOSITORY` settings:
+  ```
+  #export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
+  export WF_PROXY_HOST=wavefront-proxy
+  ```
+3. Generate the YAML files.
 ```console
 cd deploy/src
 ./cm.sh 
@@ -135,7 +135,7 @@ mvn clean package
 >
 > To run locally with `docker-compose`, `K8S_REPOSITORY` should be undefined or empty.
  
- Create docker images and push to the registry (if `K8S_REPOSITORY` is set).
+ Create docker images and push them to the registry (if `K8S_REPOSITORY` is set).
 
 ```console
 cd ../images-k8s 
@@ -186,7 +186,7 @@ cd ../images-k8s
   ```
 
 #### Deploy With `kubectl`
-- The yaml file are split into `deploy`, `namespace`, and `services` folders. 
+- The yaml files are split into `deploy`, `namespace`, and `services` folders. 
 - With this folder structure, you can redeploy the apps in the `deploy` folder without changing the Kubernetes service or namespace.
 
 Follow these steps:
@@ -208,7 +208,7 @@ Follow these steps:
   kubectl delete -f . 
   kubectl apply -f . 
   ```
----
+
 
 ## Getting Support
 Please let us know how we can improve! If you run into any issues with this applcaiton, let us know by creating a GitHub issue. 
