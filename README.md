@@ -91,50 +91,50 @@ You can build the application and run it locally on your machine or on Docker.
 #### Configure the Application
 
 1. Clone the repo:
-```console
-git clone https://github.com/wavefrontHQ/demo-app.git
-cd demo-app
-```
+  ```console
+  git clone https://github.com/wavefrontHQ/demo-app.git
+  cd demo-app
+  ```
 2. Configure  `deploy/src/values.sh`  with your settings:
-```
-export K8S_NAMESPACE=tacocat
-export K8S_APPLICATION=tacocat
-export K8S_CLUSTER=cluster1
-export K8S_LOCATION=americas
-export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
-export WAVEFRONT_BASE64_TOKEN=<YOUR BASE64 ENCODED TOKEN HERE>
-export WF_PROXY_HOST=${K8S_NAMESPACE}-wavefront-proxy  
-```
-> * The variables in `values.sh` are used to configure values for the `yaml` files. 
-> * `K8S_REPOSITORY` is the repository URL for container images. The repository URL needs to be specified for the deployment to properly download the images.
-> * If you use the value that is already defined for `K8S_REPOSITORY`, skip the build and package steps.
-> If running locally with `docker-compose`, you do not need the `K8S_REPOSITORY` settings:
   ```
-  #export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
-  export WF_PROXY_HOST=wavefront-proxy
+  export K8S_NAMESPACE=tacocat
+  export K8S_APPLICATION=tacocat
+  export K8S_CLUSTER=cluster1
+  export K8S_LOCATION=americas
+  export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
+  export WAVEFRONT_BASE64_TOKEN=<YOUR BASE64 ENCODED TOKEN HERE>
+  export WF_PROXY_HOST=${K8S_NAMESPACE}-wavefront-proxy  
   ```
+  > * The variables in `values.sh` are used to configure values for the `yaml` files. 
+  > * `K8S_REPOSITORY` is the repository URL for container images. The repository URL needs to be specified for the deployment to properly download the images.
+  > * If you use the value that is already defined for `K8S_REPOSITORY`, skip the build and package steps.
+  > If running locally with `docker-compose`, you do not need the `K8S_REPOSITORY` settings:
+    ```
+    #export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
+    export WF_PROXY_HOST=wavefront-proxy
+    ```
 3. Generate the YAML files.
-```console
-cd deploy/src
-./cm.sh 
-```
-> - `cm.sh` creates the 01-app-config-*.yaml files and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the `*yaml` files.
-> - * You must run this step before building the images as it also creates `applicationTag.yaml` files used by the `services.*`.
+  ```console
+  cd deploy/src
+  ./cm.sh 
+  ```
+  > - `cm.sh` creates the 01-app-config-*.yaml files and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the `*yaml` files.
+  > - * You must run this step before building the images as it also creates `applicationTag.yaml` files used by the `services.*`.
 
 #### Build
 
 Build the Java services from the root folder:
-```console
-mvn clean package
-```
-> The .Net service (Payments) and the Golang service (inventory) are built when creating the docker container in the Package step.
+  ```console
+  mvn clean package
+  ```
+  > The .Net service (Payments) and the Golang service (inventory) are built when creating the docker container in the Package step.
 
 #### Package 
 > *Note: This step pushes data to the registry defined in* `K8S_REPOSITORY`. <br>
 >
 > To run locally with `docker-compose`, `K8S_REPOSITORY` should be undefined or empty.
  
- Create docker images and push them to the registry (if `K8S_REPOSITORY` is set).
+Create docker images and push them to the registry (if `K8S_REPOSITORY` is set).
 
 ```console
 cd ../images-k8s 
@@ -144,45 +144,45 @@ cd ../images-k8s
 #### Deploy with `docker-compose`
 
 1. Navigate to the `docker-compose` directory.
-  ```console
-  cd deploy/docker-compose
-  ```
+    ```console
+    cd deploy/docker-compose
+    ```
 2. Edit `docker-compose.yaml` and update the `WAVEFRONT PROXY` settings:
-  ```
-  wavefront-proxy:
-      image: projects.registry.vmware.com/tanzu_observability/proxy:latest
-      container_name: wavefront-proxy
-      environment: 
-        - WAVEFRONT_URL=https://[YOUR TENANT].wavefront.com/api
-        - WAVEFRONT_TOKEN=[YOUR API KEY]
-  ```
+    ```
+    wavefront-proxy:
+        image: projects.registry.vmware.com/tanzu_observability/proxy:latest
+        container_name: wavefront-proxy
+        environment: 
+          - WAVEFRONT_URL=https://[YOUR TENANT].wavefront.com/api
+          - WAVEFRONT_TOKEN=[YOUR API KEY]
+    ```
 3. Deploy the application.
   1. Deploy using local containers:
-    ```
-    docker-compose up -d
-    ```
+      ```
+      docker-compose up -d
+      ```
   1. Or deploy using hosted containers:
-    ```
-    export export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/; docker-compose  up -d
-    ```
+      ```
+      export export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/; docker-compose  up -d
+      ```
 4. Verify that the containers are running:
-  ```
-  ~/l/d/d/docker-compose ❯❯❯ docker-compose ps
-                                                                                                            ✘ 130 
-            Name                        Command               State                         Ports                       
-  ----------------------------------------------------------------------------------------------------------------------
-  delivery                   java -jar /delivery.jar -- ...   Up                                                        
-  docker-compose_loadgen_1   java -jar /loadgen.jar sho ...   Up                                                        
-  inventory                  /inventory /conf/inventory ...   Up                                                        
-  notfication                java -jar /notification.ja ...   Up                                                        
-  packaging                  java -jar /packaging.jar / ...   Up                                                        
-  payments                   dotnet run --no-build -p / ...   Up                                                        
-  printing                   java -jar /printing.jar /c ...   Up                                                        
-  shopping                   java -jar /shopping.jar se ...   Up      0.0.0.0:50050->50050/tcp, 0.0.0.0:50150->50150/tcp
-  styling                    java -jar /styling.jar ser ...   Up                                                        
-  warehouse                  python3 manage.py runserve ...   Up                                                        
-  wavefront-proxy            /bin/bash /opt/wavefront/w ...   Up      2878/tcp, 3878/tcp, 4242/tcp  ```
-  ```
+    ```
+    ~/l/d/d/docker-compose ❯❯❯ docker-compose ps
+                                                                                                              ✘ 130 
+              Name                        Command               State                         Ports                       
+    ----------------------------------------------------------------------------------------------------------------------
+    delivery                   java -jar /delivery.jar -- ...   Up                                                        
+    docker-compose_loadgen_1   java -jar /loadgen.jar sho ...   Up                                                        
+    inventory                  /inventory /conf/inventory ...   Up                                                        
+    notfication                java -jar /notification.ja ...   Up                                                        
+    packaging                  java -jar /packaging.jar / ...   Up                                                        
+    payments                   dotnet run --no-build -p / ...   Up                                                        
+    printing                   java -jar /printing.jar /c ...   Up                                                        
+    shopping                   java -jar /shopping.jar se ...   Up      0.0.0.0:50050->50050/tcp, 0.0.0.0:50150->50150/tcp
+    styling                    java -jar /styling.jar ser ...   Up                                                        
+    warehouse                  python3 manage.py runserve ...   Up                                                        
+    wavefront-proxy            /bin/bash /opt/wavefront/w ...   Up      2878/tcp, 3878/tcp, 4242/tcp  ```
+    ```
 
 #### Deploy With `kubectl`
 - The yaml files are split into `deploy`, `namespace`, and `services` folders. 
@@ -191,22 +191,22 @@ cd ../images-k8s
 Follow these steps:
 
 1. Deploy the namespace first:
-  ```
-  kubectl apply -f namespace/
-  ```
+    ```
+    kubectl apply -f namespace/
+    ```
 1. Deploy the Wavefront proxy and shopping service:
-  ```
-  kubectl apply -f services/
-  ```
+    ```
+    kubectl apply -f services/
+    ```
 1. Deploy the app:
-  ``` 
-  kubectl apply -f . 
-  ```
+    ``` 
+    kubectl apply -f . 
+    ```
 1.  To redeploy (but not delete the namespace or service):
-  ```
-  kubectl delete -f . 
-  kubectl apply -f . 
-  ```
+    ```
+    kubectl delete -f . 
+    kubectl apply -f . 
+    ```
 
 
 ## Getting Support
