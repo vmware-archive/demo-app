@@ -11,9 +11,9 @@ This project is a polyglot demo application with several services to show you ho
 
 ## Prerequisites
 
-To view data in Tanzu Observability by Wavefront you need:
-* A Tanzu Observability account. If you don't have an account register for the [free trial](https://tanzu.vmware.com/observability).
-* Get the API token and the URL of your instance. For more information, see [Managing API Tokens](https://docs.wavefront.com/wavefront_api.html#generating-an-api-token)
+To view data in Tanzu Observability by Wavefront, you need:
+* A Tanzu Observability account. If you don't have an account, register for the [free trial](https://tanzu.vmware.com/observability).
+* Get the API token and the URL of your instance. For more information, see [Managing API Tokens](https://docs.wavefront.com/wavefront_api.html#generating-an-api-token).
 
 ## Send Data
 
@@ -35,7 +35,7 @@ You need an environment configured to run Kubernetes. See [Install Tools on the 
     git clone https://github.com/wavefrontHQ/demo-app.git
     cd demo-app/deploy/helm
     ```
-2. Edit `values.yaml` to match your environment or use the defaults and execute Helm:
+2. Edit `values.yaml` to match your environment:
     ```console
     vi values.yaml
     ```
@@ -116,6 +116,7 @@ You can build the application and run it locally on your machine or on Docker.
   > * `K8S_REPOSITORY` is the repository URL for container images. The repository URL needs to be specified for the deployment to properly download the images.
   > * If you use the value that is already defined for `K8S_REPOSITORY`, skip the build and package steps.
   > If running locally with `docker-compose`, you do not need the `K8S_REPOSITORY` settings:
+    
     ```
     #export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/
     export WF_PROXY_HOST=wavefront-proxy
@@ -126,7 +127,7 @@ You can build the application and run it locally on your machine or on Docker.
   ./cm.sh 
   ```
   > - `cm.sh` creates the 01-app-config-*.yaml files and runs `create-yaml.sh` which uses `envsubst` and `values.sh` to configure all of the `*yaml` files.
-  > - * You must run this step before building the images as it also creates `applicationTag.yaml` files used by the `services.*`.
+  > - You must run this step before building the images as it also creates `applicationTag.yaml` files used by the `services.*`.
 
 #### Build
 
@@ -168,14 +169,14 @@ You can deploy they application using `docker-compose` or `kubectl`.
           - WAVEFRONT_TOKEN=[YOUR API KEY]
     ```
 3. Deploy the application.
-  1. Deploy using local containers:
-      ```
-      docker-compose up -d
-      ```
-  1. Or deploy using hosted containers:
-      ```
-      export export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/; docker-compose  up -d
-      ```
+    1. Deploy using local containers:
+        ```
+        docker-compose up -d
+        ```
+    1. Or deploy using hosted containers:
+        ```
+        export export K8S_REPOSITORY=public.ecr.aws/tanzu_observability_demo_app/to-demo/; docker-compose  up -d
+        ```
 4. Verify that the containers are running:
     ```
     ~/l/d/d/docker-compose ❯❯❯ docker-compose ps
@@ -231,4 +232,5 @@ Once the data is sent, you can:
 See our [documentation](https://docs.wavefront.com/index.html) for details.
 
 ## Getting Support
-Please let us know how we can improve! If you run into any issues with this applcaiton, let us know by creating a GitHub issue. 
+Please let us know how we can improve! 
+If you run into any issues with this applcaiton, let us know by creating a GitHub issue. 
