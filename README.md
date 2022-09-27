@@ -136,6 +136,10 @@ cd ../images-k8s
 ---
 
 ## Deploy with `docker-compose`
+### Prequisites:
+* Edit ```values.sh``` and run ```./cm.sh``` from the configure step above.
+
+### Configure and deploy
 1. Configure
 ```console
 cd deploy/docker-compose
