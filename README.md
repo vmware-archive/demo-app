@@ -1,11 +1,12 @@
 # Tanzu Observability Demo Application
 
-this project is a polyglot demo application with several services to show you how to send your data and view the data on Tanzu Observability.
+This project is a polyglot demo application with several services to show you how to send your data and view the data on Tanzu Observability.
 
 * [Prerequisites](#Prerequisites)
 * [Send Data](#send-data)
   * [Deploy with Helm](#deploy-with-helm)
   * [Build and Run the Application](#build-and-run-the-application)
+* [View Data](#view-data)
 * [Getting Support](#getting-support)
 
 ## Prerequisites
@@ -218,6 +219,16 @@ Follow these steps:
     kubectl apply -f . 
     ```
 
+## View Data
+
+Once the data is sent, you can:
+- Create charts and dashboards to monitor data.
+- Create alerts and get notified when the system notices data anomalies.
+- Get an overview of how the applications and services are linked using the Application Map.
+- Explore the context and the details of your application’s traces using the Traces Browser.
+- See the logs and find the root cause of issues using the Logs Browser.
+
+See our [documentation](https://docs.wavefront.com/index.html) for details.
 
 ## Getting Support
 Please let us know how we can improve! If you run into any issues with this applcaiton, let us know by creating a GitHub issue. 
