@@ -2,6 +2,12 @@
 
 this project is a polyglot demo application with several services to show you how to send your data and view the data on Tanzu Observability.
 
+* [Prerequisites](#Prerequisites)
+* [Send Data](#send-data)
+  * [Deploy with Helm](#deploy-with-helm)
+  * [Build and Run the Application](#build-and-run-the-application)
+* [Getting Support](#getting-support)
+
 ## Prerequisites
 
 To view data in Tanzu Observability by Wavefront you need:
@@ -141,7 +147,11 @@ cd ../images-k8s
 ./all.sh
 ```
 
-#### Deploy with `docker-compose`
+#### Deploy
+
+You can deploy they application using `docker-compose` or `kubectl`.
+
+##### Deploy with `docker-compose`
 
 1. Navigate to the `docker-compose` directory.
     ```console
@@ -184,7 +194,7 @@ cd ../images-k8s
     wavefront-proxy            /bin/bash /opt/wavefront/w ...   Up      2878/tcp, 3878/tcp, 4242/tcp  ```
     ```
 
-#### Deploy With `kubectl`
+##### Deploy With `kubectl`
 - The yaml files are split into `deploy`, `namespace`, and `services` folders. 
 - With this folder structure, you can redeploy the apps in the `deploy` folder without changing the Kubernetes service or namespace.
 
