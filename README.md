@@ -232,5 +232,6 @@ Once the data is sent, you can:
 See our [documentation](https://docs.wavefront.com/index.html) for details.
 
 ## Getting Support
-Please let us know how we can improve! 
-If you run into any issues with this applcaiton, let us know by creating a GitHub issue. 
+Please let us know how we can improve!
+
+If you have problems with this application, let us know by creating a GitHub issue. 
