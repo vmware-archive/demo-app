@@ -7,10 +7,10 @@ else
 	exit
 fi
 
-if [ -z ${K8S_REPOSITORY+x} ]; then 
-        echo "\n\nusage: export K8S_REPOSITORY=[your private registry here]\n\n"
-        exit
-fi
+# if [ -z ${K8S_REPOSITORY+x} ]; then 
+#         echo "\n\nusage: export K8S_REPOSITORY=[your private registry here]\n\n"
+#         exit
+# fi
 
 if [ -z ${1+x} ]; then 
         echo "\n\nusage: ./build.sh [directory]\n\n"
@@ -27,7 +27,7 @@ fi
 
 # remove trailing slash
 IMAGE=$(echo $1 | sed 's:/*$::')
-echo "\n>>> Creating image \"$IMAGE\" and pushing to \"${K8S_REPOSITORY}$IMAGE\"\n"
+echo "\n>>> Creating image \"$IMAGE\"   \n"
 
 if [[ -f prepare.sh ]]; then
 	./prepare.sh $IMAGE
@@ -41,22 +41,19 @@ if [ $IMAGE = 'loadgen' ]; then
         echo $TASDOMAIN
         if [ -z ${TASDOMAIN+x} ]; then 
                 echo "TASDOMAIN not found"
-                exit
         fi
         docker build . -t ${K8S_REPOSITORY}$IMAGE  --build-arg SERVICE_NAME=$IMAGE --build-arg TAS_DOMAIN=$TASDOMAIN
 else
         docker build . -t ${K8S_REPOSITORY}$IMAGE  --build-arg SERVICE_NAME=$IMAGE 
 fi
 
-if [ -z ${K8S_REPOSITORY} ]; then 
-        echo -e "\nnot pushing\n"
-else
+if [${K8S_REPOSITORY} ]; then 
         echo -e "\npushing to ${K8S_REPOSITORY}$IMAGE \n"
 	docker push ${K8S_REPOSITORY}$IMAGE
+else
+        echo -e "\nnot pushing\n"
 fi
 
 if [[ -f clean.sh ]]; then
 	./clean.sh $IMAGE
 fi
-
-

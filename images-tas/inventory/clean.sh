@@ -1,4 +1,4 @@
 #! /bin/bash
 
-rm inventory
+rm -rf inventory
 rm inventory.conf
