@@ -16,19 +16,28 @@ done
 
 if [ -d "../namespace/" ]; then
 	echo "deleting ../namespaces/";
-	rm -rf  ../namespace/;
+	rmdir ../namespace/;
 fi
 
-for f in services/* ; do
-	if test -f "../$f"; then
-		echo "deleting ../$f";
-		rm ../$f;
-	fi
-done
-
 if [ -d "../services/" ]; then
+	for f in ../services/* ; do
+		echo "services/$f";
+		if test -f "../services/$f"; then
+			echo "deleting ../services/$f";
+			rm ../services/$f;
+		fi
+	done
 	echo "deleting ../services/";
-	rm -rf ../services/;
+	rmdir  ../services/;
+fi
+
+if [ -d "../data/" ]; then
+	for f in ../data/* ; do
+		echo "deleting ../data/$f";
+		rm ../data/$f;
+	done
+	echo "deleting ../data/";
+	rmdir  ../data;
 fi
 
 if test -f "01_app-config-blue.yaml"; then
