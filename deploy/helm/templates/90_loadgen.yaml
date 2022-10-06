@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: loadgen
   name: loadgen
   namespace: {{ .Values.namespace   }}
@@ -10,12 +10,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: loadgen
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: loadgen
     spec:
       containers:

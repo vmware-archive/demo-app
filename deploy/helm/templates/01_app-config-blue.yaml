@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace   }}
 data:
   delivery-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: delivery
     shard: blue
@@ -25,7 +25,7 @@ data:
 
   inventory.conf: |
     {
-    	"application": "{{ include "tanzu-observability-demo.fullname" .  }}",
+    	"application": "{{ .Release.Name  }}",
     	"service":     "inventory",
     	"cluster":     "{{ .Values.cluster }}",
     	"shard":       "blue",	
@@ -46,7 +46,7 @@ data:
     }
 
   notification-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: notification
     shard: blue
@@ -68,7 +68,7 @@ data:
 
 
   packaging-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: packaging
     shard: blue
@@ -82,7 +82,7 @@ data:
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
 
   payments-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: payments
     shard: blue
@@ -98,7 +98,7 @@ data:
 
 
   printing-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: printing
     shard: blue
@@ -113,7 +113,7 @@ data:
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
 
   shopping-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: shopping
     shard: blue
@@ -144,7 +144,7 @@ data:
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
 
   shop-ui-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: to-cp-demo-cluster-12
     service: shop-ui
     shard: blue
@@ -157,7 +157,7 @@ data:
       port: 8080
 
   styling-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: styling
     shard: blue
@@ -188,7 +188,7 @@ data:
     wfReportingConfigYamlFile: "/conf/wf-config.yaml"
 
   warehouse-app-tags.yaml: |
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     cluster: {{ .Values.cluster }}
     service: warehouse
     shard: blue

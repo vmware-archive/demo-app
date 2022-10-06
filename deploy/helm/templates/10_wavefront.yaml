@@ -7,7 +7,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
   name: {{ .Values.namespace   }}-wavefront-proxy
   namespace: {{ .Values.namespace   }}
@@ -15,12 +15,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: {{ .Values.namespace   }}-wavefront-proxy
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: {{ .Values.namespace   }}-wavefront-proxy
     spec:
       containers:
@@ -53,7 +53,7 @@ metadata:
   name: {{ .Values.namespace   }}-wavefront-proxy
   namespace: {{ .Values.namespace   }}
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
 spec:
   ports:
@@ -65,5 +65,5 @@ spec:
     targetPort: 30000
     protocol: TCP
   selector:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: {{ .Values.namespace   }}-wavefront-proxy
