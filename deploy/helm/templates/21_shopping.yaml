@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: shopping
     shard: blue
   name: shopping-blue
@@ -11,13 +11,13 @@ spec:
   replicas: {{ .Values.replicaCount.blue  }}
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: shopping
       shard: blue
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: shopping
         shard: blue
     spec:
@@ -56,7 +56,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: shopping
     shard: green
   name: shopping-green
@@ -65,13 +65,13 @@ spec:
   replicas: {{ .Values.replicaCount.green  }}
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: shopping
       shard: green
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: shopping
         shard: green
     spec:
