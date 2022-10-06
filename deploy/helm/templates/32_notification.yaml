@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: notification
     shard: blue
   name: notification-blue
@@ -11,13 +11,13 @@ spec:
   replicas: {{ .Values.replicaCount.blue  }}
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: notification
       shard: blue
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: notification
         shard: blue
     spec:
@@ -52,7 +52,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: notification
     shard: green
   name: notification-green
@@ -61,13 +61,13 @@ spec:
   replicas: {{ .Values.replicaCount.green  }}
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: notification
       shard: green
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: notification
         shard: green
     spec:
@@ -105,7 +105,7 @@ metadata:
   namespace: {{ .Values.namespace   }}
 spec: 
   selector:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: notification  
   type: ClusterIP
   ports:

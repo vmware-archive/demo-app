@@ -55,7 +55,7 @@ Create the name of the service account to use
 */}}
 {{- define "tanzu-observability-demo.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "tanzu-observability-demo.fullname" .) .Values.serviceAccount.name }}
+{{- default (.Release.Name) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
