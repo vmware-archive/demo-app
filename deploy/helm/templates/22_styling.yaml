@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: styling
     shard: blue
   name: styling-blue
@@ -11,13 +11,13 @@ spec:
   replicas: {{ .Values.replicaCount.blue  }}
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: styling
       shard: blue
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: styling
         shard: blue
     spec:
@@ -56,7 +56,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: styling
     shard: green
   name: styling-green
@@ -65,13 +65,13 @@ spec:
   replicas: {{ .Values.replicaCount.green  }}
   selector:
     matchLabels:
-      application: {{ include "tanzu-observability-demo.fullname" .  }}
+      application: {{ .Release.Name  }}
       service: styling
       shard: green
   template:
     metadata:
       labels:
-        application: {{ include "tanzu-observability-demo.fullname" .  }}
+        application: {{ .Release.Name  }}
         service: styling
         shard: green
     spec:
@@ -113,7 +113,7 @@ metadata:
   namespace: {{ .Values.namespace   }}
 spec: 
   selector:
-    application: {{ include "tanzu-observability-demo.fullname" .  }}
+    application: {{ .Release.Name  }}
     service: styling  
   type: ClusterIP
   ports:
