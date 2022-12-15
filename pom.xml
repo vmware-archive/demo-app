@@ -27,7 +27,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dropwizard.version>2.0.21</dropwizard.version>
         <grpc.version>1.37.0</grpc.version>
-        <jackson.version>2.13.3</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <spring.version>2.5.12</spring.version>
     </properties>
 
